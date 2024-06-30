@@ -32,21 +32,21 @@ class BrandController extends Controller
 
         ];
 
-        brand::create($data);
+        Brand::create($data);
 
-        return redirect()->route('brand')->with('message', "Danh mục {$request->name} đã được thêm thành công.");;
+        return redirect()->route('brand')->with('message', "Thương hiệu {$request->name} đã được thêm thành công.");;
     }
 
     public function edit($id)
 
     {
-        $brand = brand::find($id);
+        $brand = Brand::find($id);
 
         return view('admin.brand.form', compact('brand'));
     }
     public function update(Request $request, $id)
     {
-        $brand = brand::find($id);
+        $brand = Brand::find($id);
         $data = [
             'name' => $request->name,
             'slug' => Str::slug($request->name),
@@ -55,14 +55,14 @@ class BrandController extends Controller
 
         brand::find($id)->update($data);
 
-        return redirect()->route('brand')->with('message', "Danh mục {$brand->name} đã được cập nhật.");
+        return redirect()->route('brand')->with('message', "Thương hiệu {$brand->name} đã được cập nhật.");
     }
     public function delete($id)
     {
-        $brand = brand::find($id);
+        $brand = Brand::find($id);
         $brand->delete();
 
-        return redirect()->route('brand')->with('message', "Danh mục {$brand->name} đã được xóa thành công.");
+        return redirect()->route('brand')->with('message', "Thương hiệu {$brand->name} đã được xóa thành công.");
     }
 }
 
