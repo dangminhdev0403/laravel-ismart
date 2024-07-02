@@ -8,11 +8,17 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>@yield('title')</title>
+
+    <!-- Stylesheets -->
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="{{ asset('admin/css/styles.css') }}" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
 
+    <!-- Scripts -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body class="sb-nav-fixed">
@@ -123,14 +129,35 @@
                             </nav>
                         </div>
                         <div class="sb-sidenav-menu-heading">Chức năng</div>
-                        <a class="nav-link collapsed  {{ request()->routeIs('category') ? 'active' : '' }} {{ request()->routeIs('category.*') ? 'active' : '' }}"
+                        {{-- Product --}}
+
+                        <a class="nav-link collapsed  {{ request()->routeIs('products') ? 'active' : '' }} || {{ request()->routeIs('products.*') ? 'active' : '' }}"
+                            href="{{ url('products') }}" data-bs-toggle="collapse" data-bs-target="#collapseProducts"
+                            aria-expanded="false" aria-controls="collapseProducts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Sản phẩm
+                            <div class="sb-sidenav-collapse-arrow"><i
+                                    class="fas fa-angle-{{ request()->routeIs('products') ? 'left' : 'down' }} ||  {{ request()->routeIs('products.*') ? 'left' : 'down' }} "></i>
+                            </div>
+                        </a>
+                        <div class="collapse {{ request()->routeIs('products') ? 'show' : '' }} {{ request()->routeIs('products.*') ? 'show' : '' }} "
+                            id="collapseProducts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{ url('products') }}">Tất cả Sản phẩm</a>
+                                <a class="nav-link {{ request()->routeIs('products.add') ? 'active' : '' }}"
+                                    href="{{ url('products/add') }}">Thêm Sản phẩm</a>
+                            </nav>
+                        </div>
+
+                        {{-- Category --}}
+                        <a class="nav-link collapsed  {{ request()->routeIs('category') ? 'active' : '' }} || {{ request()->routeIs('category.*') ? 'active' : '' }}"
                             href="{{ url('category') }}" data-bs-toggle="collapse"
                             data-bs-target="#collapseCategories" aria-expanded="false"
                             aria-controls="collapseCategories">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Danh mục
                             <div class="sb-sidenav-collapse-arrow"><i
-                                    class="fas fa-angle-{{request()->routeIs('category') ? 'left' : 'down' }}  {{ request()->routeIs('category.*') ? 'left' : 'down' }} "></i>
+                                    class="fas fa-angle-{{ request()->routeIs('category') ? 'left' : 'down' }} ||  {{ request()->routeIs('category.*') ? 'left' : 'down' }} "></i>
                             </div>
                         </a>
                         <div class="collapse {{ request()->routeIs('category') ? 'show' : '' }} {{ request()->routeIs('category.*') ? 'show' : '' }} "
@@ -141,18 +168,19 @@
                                     href="{{ url('category/add') }}">Thêm danh mục</a>
                             </nav>
                         </div>
-                           <a class="nav-link collapsed  {{ request()->routeIs('brand') ? 'active' : '' }} {{ request()->routeIs('brand.*') ? 'active' : '' }}"
-                            href="{{ url('brand') }}" data-bs-toggle="collapse"
-                            data-bs-target="#collapseCategories" aria-expanded="false"
-                            aria-controls="collapseCategories">
+
+                        {{-- Brand --}}
+                        <a class="nav-link collapsed  {{ request()->routeIs('brand') ? 'active' : '' }}||  {{ request()->routeIs('brand.*') ? 'active' : '' }}"
+                            href="{{ url('brand') }}" data-bs-toggle="collapse" data-bs-target="#collapseBrand"
+                            aria-expanded="false" aria-controls="collapseBrand">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Thương hiệu
                             <div class="sb-sidenav-collapse-arrow"><i
-                                    class="fas fa-angle-{{ request()->routeIs('brand') ? 'left' : 'down' }} {{ request()->routeIs('brand.*') ? 'left' : 'down' }}"></i>
+                                    class="fas fa-angle-{{ request()->routeIs('brand') ? 'left' : 'down' }} || {{ request()->routeIs('brand.*') ? 'left' : 'down' }}"></i>
                             </div>
                         </a>
-                        <div class="collapse {{ request()->routeIs('brand') ? 'show' : '' }} {{ request()->routeIs('brand.*') ? 'show' : '' }} "
-                            id="collapseCategories" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse {{ request()->routeIs('brand') ? 'show' : '' }} || {{ request()->routeIs('brand.*') ? 'show' : '' }} "
+                            id="collapseBrand" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="{{ url('brand') }}">Tất cả thương hiệu</a>
                                 <a class="nav-link {{ request()->routeIs('brand.add') ? 'active' : '' }}"
@@ -185,17 +213,17 @@
             </footer>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('admin/js/scripts.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('admin/assets/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('admin/assets/demo/chart-bar-demo.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    >
     <script src="{{ asset('admin/js/datatables-simple-demo.js') }}"></script>
-
     @stack('scripts')
+    @stack('scripts2')
+
+
 </body>
 
 </html>

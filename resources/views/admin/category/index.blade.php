@@ -6,7 +6,7 @@
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Tất cả danh mục</h6>
             </div>
-          
+
             <div class="card-body">
                 <a href="{{ url('category/add') }}" class="btn btn-primary mb-3">Thêm danh mục</a>
                 <div class="table-responsive">
@@ -45,7 +45,6 @@
 @endsection
 
 
-
 @push('scripts')
     @if (session('message'))
         <script>
@@ -62,18 +61,18 @@
     <script>
         document.addEventListener('click', function(event) {
             if (event.target.classList.contains('delete-link')) {
-                event.preventDefault();
-                deleteCategory(event.target);
+                event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+                deletebrand(event.target);
             }
         });
 
-        function deleteCategory(link) {
+        function deletebrand(link) {
             const url = link.href;
             const name = link.dataset.name;
 
             Swal.fire({
                 title: "Xác nhận xóa",
-                text: `Bạn có chắc chắn muốn xóa danh mục ${name}?`,
+                text: `Bạn có chắc chắn muốn xóa sản phẩm ${name}?`,
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -82,9 +81,12 @@
                 cancelButtonText: "Hủy",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = url;
+                    window.location.href = url; // Chỉ thực hiện khi đã xác nhận xóa
                 }
             });
         }
     </script>
+
+
 @endpush
+
