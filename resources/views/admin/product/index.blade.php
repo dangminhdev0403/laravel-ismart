@@ -18,7 +18,8 @@
                                 <th>Danh mục</th>
                                 <th>Thương hiệu</th>
                                 <th>Giá</th>
-                                <th>Action</th>
+                                <th>Actions</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -38,34 +39,57 @@
     <script>
         $(function() {
             var table = $('#dataTable').DataTable({
+                "columnDefs": [{
+                    "targets": 0,
+                    "orderable": false,
+                    "searchable": false,
+                    "render": function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                }],
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('products') }}",
-                columns: [{
-                        data: 'id',
-                        name: 'id'
+                columns: [
+
+                    {
+                        data: 'name',
+                        name: 'name'
                     },
+
                     {
                         data: 'name',
                         name: 'name'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'cname',
+                        name: 'cname'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'bname',
+                        name: 'bname'
                     },
                     {
                         data: 'price',
                         name: 'price'
                     },
-                    {
-                        data: 'actions',
-                        name: 'actions'
-                    },
 
+                    {
+                        "data": "actions",
+
+                        "render": function(data, type, row) {
+                            return `
+                        <a href="products/edit/${row.id}" class="btn btn btn-warning">Sửa</a>
+                        <a href="products/delete/${row.id}" class="btn btn-danger delete-link"
+                                            onclick="deletebrand()" data-name="${row.name}">Xoá</a>
+
+
+
+                    `;
+                        },
+                        "orderable": false,
+                        "searchable": false
+                    }
 
                 ]
             });
@@ -82,11 +106,15 @@
                 icon: "success",
                 showConfirmButton: true,
                 confirmButtonText: "OK",
-
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    @php
+                        session()->forget('message');
+                    @endphp
+                }
             });
         </script>
     @endif
-
     <script>
         document.addEventListener('click', function(event) {
             if (event.target.classList.contains('delete-link')) {

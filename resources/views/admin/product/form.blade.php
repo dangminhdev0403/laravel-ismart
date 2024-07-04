@@ -1,7 +1,8 @@
 @extends('layouts.admin')
 @section('title', ' Thao tác Sản phẩm')
 @section('content')
-    <form action="{{ isset($product) ? route('products.update', $product->id) : route('products.save') }}" method="post">
+    <form action="{{ isset($product) ? route('products.update', $product->id) : route('products.save') }}" method="post"
+        enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-12">
@@ -16,6 +17,28 @@
                             <input type="text" class="form-control" id="name" name="name"
                                 value="{{ isset($product) ? $product->name : '' }}">
                         </div>
+
+                        <div class="form-group">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <label for="images">Hình ảnh Sản phẩm</label>
+                            <input type="file" class="form-control" id="images" name="images[]" multiple>
+
+                            @if (isset($product))
+                                @foreach ($images as $image)
+                                    <img src="{{  asset($image->image_name) }}" alt="" srcset="" width="100px" style="margin: 20px 0">
+
+                                @endforeach
+                            @endif
+                        </div>
+
                         <div class="form-group">
                             <label for="price">Giá Sản phẩm</label>
                             <input type="text" class="form-control" id="price" name="price"
@@ -43,6 +66,18 @@
                                 @endforeach
                             </select>
                         </div>
+                        {{-- Mô tả --}}
+                        <div class="form-group">
+                            <label for="description">Mô tả</label>
+                            <textarea name="description" id="description1" cols="30" rows="10">
+                           {{ isset($product) ? $product->description : '' }}</textarea>
+                        </div>
+                        {{-- Nọi dung --}}
+                        <div class="form-group">
+                            <label for="content"> Chi tiết</label>
+                            <textarea name="content" id="content1" cols="30" rows="10">
+                            {{ isset($product) ? $product->content : '' }}</textarea>
+                        </div>
 
 
                     </div>
@@ -55,3 +90,36 @@
 
     </form>
 @endsection
+
+@push('scripts')
+    <script>
+        tinymce.init({
+            selector: 'textarea#description1',
+            height: 200,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+        });
+        tinymce.init({
+            selector: 'textarea#content1',
+            height: 500,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+        });
+    </script>
+@endpush

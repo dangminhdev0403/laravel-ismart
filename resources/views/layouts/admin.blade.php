@@ -14,11 +14,19 @@
     <link href="{{ asset('admin/css/styles.css') }}" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
 
+
     <!-- Scripts -->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    {{-- TinyCME --}}
+    <script src="https://cdn.tiny.cloud/1/tvilg3hpnwujo4kchvbhw5j17e6g7cytu1y4fxqp7qwfachz/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+
+
+
 </head>
 
 <body class="sb-nav-fixed">
@@ -197,6 +205,7 @@
         </div>
         <div id="layoutSidenav_content">
             <main>
+
                 @yield('content')
             </main>
             <footer class="py-4 bg-light mt-auto">
@@ -213,15 +222,19 @@
             </footer>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
     <script src="{{ asset('admin/js/scripts.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('admin/assets/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('admin/assets/demo/chart-bar-demo.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('admin/js/datatables-simple-demo.js') }}"></script>
+
+
+
     @stack('scripts')
-    @stack('scripts2')
 
 
 </body>

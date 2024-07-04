@@ -7,8 +7,11 @@
     "require": {
         "php": "^8.2",
         "hardevine/shoppingcart": "^3.3",
+        "intervention/image": "*",
+        "jenssegers/imagehash": "^0.10.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "tinymce/tinymce": "^7.2",
         "yajra/laravel-datatables-oracle": "11"
     },
     "require-dev": {
