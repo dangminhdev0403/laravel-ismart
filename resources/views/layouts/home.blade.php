@@ -33,19 +33,19 @@
                         <div id="main-menu-wp" class="fl-right">
                             <ul id="main-menu" class="clearfix">
                                 <li>
-                                    <a href="?page=home" title="">Trang chủ</a>
+                                    <a href="{{ route('home') }}" title="">Trang chủ</a>
                                 </li>
                                 <li>
-                                    <a href="?page=category_product" title="">Sản phẩm</a>
+                                    <a href="{{ route('home.products') }}" title="">Sản phẩm</a>
                                 </li>
                                 <li>
-                                    <a href="?page=blog" title="">Blog</a>
+                                    <a href="{{ route('blog') }}" title="">Blog</a>
                                 </li>
                                 <li>
-                                    <a href="?page=detail_blog" title="">Giới thiệu</a>
+                                    <a href="{{ route('about') }}" title="">Giới thiệu</a>
                                 </li>
                                 <li>
-                                    <a href="?page=detail_blog" title="">Liên hệ</a>
+                                    <a href="{{ route('contact') }}" title="">Liên hệ</a>
                                 </li>
                             </ul>
                         </div>
@@ -53,7 +53,7 @@
                 </div>
                 <div id="head-body" class="clearfix">
                     <div class="wp-inner">
-                        <a href="?page=home" title="" id="logo" class="fl-left"><img
+                        <a href="{{ route('home') }}" title="" id="logo" class="fl-left"><img
                                 src="{{ asset('product/public/images/logo.png') }}" /></a>
                         <div id="search-wp" class="fl-left">
                             <form method="POST" action="">

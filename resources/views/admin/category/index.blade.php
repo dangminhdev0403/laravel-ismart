@@ -8,7 +8,7 @@
             </div>
 
             <div class="card-body">
-                <a href="{{ url('category/add') }}" class="btn btn-primary mb-3">Thêm danh mục</a>
+                <a href="{{ url('admin/category/add') }}" class="btn btn-primary mb-3">Thêm danh mục</a>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>

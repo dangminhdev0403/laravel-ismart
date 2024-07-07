@@ -140,7 +140,7 @@
                         {{-- Product --}}
 
                         <a class="nav-link collapsed  {{ request()->routeIs('products') ? 'active' : '' }} || {{ request()->routeIs('products.*') ? 'active' : '' }}"
-                            href="{{ url('products') }}" data-bs-toggle="collapse" data-bs-target="#collapseProducts"
+                            href="{{ url('admin/products') }}" data-bs-toggle="collapse" data-bs-target="#collapseProducts"
                             aria-expanded="false" aria-controls="collapseProducts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Sản phẩm
@@ -151,15 +151,15 @@
                         <div class="collapse {{ request()->routeIs('products') ? 'show' : '' }} {{ request()->routeIs('products.*') ? 'show' : '' }} "
                             id="collapseProducts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ url('products') }}">Tất cả Sản phẩm</a>
+                                <a class="nav-link" href="{{ url('admin/products') }}">Tất cả Sản phẩm</a>
                                 <a class="nav-link {{ request()->routeIs('products.add') ? 'active' : '' }}"
-                                    href="{{ url('products/add') }}">Thêm Sản phẩm</a>
+                                    href="{{ url('admin/products/add') }}">Thêm Sản phẩm</a>
                             </nav>
                         </div>
 
                         {{-- Category --}}
                         <a class="nav-link collapsed  {{ request()->routeIs('category') ? 'active' : '' }} || {{ request()->routeIs('category.*') ? 'active' : '' }}"
-                            href="{{ url('category') }}" data-bs-toggle="collapse"
+                            href="{{ url('admin/category') }}" data-bs-toggle="collapse"
                             data-bs-target="#collapseCategories" aria-expanded="false"
                             aria-controls="collapseCategories">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -171,15 +171,15 @@
                         <div class="collapse {{ request()->routeIs('category') ? 'show' : '' }} {{ request()->routeIs('category.*') ? 'show' : '' }} "
                             id="collapseCategories" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ url('category') }}">Tất cả danh mục</a>
+                                <a class="nav-link" href="{{ url('admin/category') }}">Tất cả danh mục</a>
                                 <a class="nav-link {{ request()->routeIs('category.add') ? 'active' : '' }}"
-                                    href="{{ url('category/add') }}">Thêm danh mục</a>
+                                    href="{{ url('admin/category/add') }}">Thêm danh mục</a>
                             </nav>
                         </div>
 
                         {{-- Brand --}}
                         <a class="nav-link collapsed  {{ request()->routeIs('brand') ? 'active' : '' }}||  {{ request()->routeIs('brand.*') ? 'active' : '' }}"
-                            href="{{ url('brand') }}" data-bs-toggle="collapse" data-bs-target="#collapseBrand"
+                            href="{{ url('admin/brand') }}" data-bs-toggle="collapse" data-bs-target="#collapseBrand"
                             aria-expanded="false" aria-controls="collapseBrand">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Thương hiệu
@@ -190,9 +190,9 @@
                         <div class="collapse {{ request()->routeIs('brand') ? 'show' : '' }} || {{ request()->routeIs('brand.*') ? 'show' : '' }} "
                             id="collapseBrand" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ url('brand') }}">Tất cả thương hiệu</a>
+                                <a class="nav-link" href="{{ url('admin/brand') }}">Tất cả thương hiệu</a>
                                 <a class="nav-link {{ request()->routeIs('brand.add') ? 'active' : '' }}"
-                                    href="{{ url('brand/add') }}">Thêm thương hiệu</a>
+                                    href="{{ url('admin/brand/add') }}">Thêm thương hiệu</a>
                             </nav>
                         </div>
                     </div>

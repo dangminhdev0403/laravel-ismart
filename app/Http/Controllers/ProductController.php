@@ -73,9 +73,12 @@ class ProductController extends Controller
             'brand_id' => $request->brand_id,
             'category_id' => $request->category_id,
             'price' => $request->price,
+            'sale_price' => '0',
             'description' => $request->description,
             'content' => $request->content,
             'status' => 'Active',
+
+
         ];
 
 
@@ -141,7 +144,7 @@ class ProductController extends Controller
         if ($files = $request->file('images')) {
             //xoá ảnh tồn tại
             $images = ImageProduct::where('product_id' , '=' , $id)->get();
-              
+
                 foreach($images as $image){
 
                     if(File::exists($image->image_name)){
