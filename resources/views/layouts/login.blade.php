@@ -194,6 +194,7 @@
         </div>
         <div id="btn-top"><img src="{{ asset('product/public/images/icon-to-top.png') }}" alt="" /></div>
         <div id="fb-root"></div>
+
         <script>
             (function(d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
@@ -208,7 +209,7 @@
         	<script src="{{ asset('formlogin/js/jquery.min.js') }}"></script>
             <script src="{{ asset('formlogin/js/popper.js') }}"></script>
             <script src="{{ asset('formlogin/js/bootstrap.min.js') }}"></script>
-            <script src="{{ asset('formlogin/js/main.js') }}"></script>
-</body>
+                <script src="{{ asset('formlogin/js/main.js') }}"></script>
+                @stack('script')
 
 </html>

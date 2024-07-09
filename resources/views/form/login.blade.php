@@ -49,14 +49,17 @@
 
                                 </div>
                                 <div class="form-group mb-3">
-
                                     <x-input-label class="label" for="password" :value="__('Mật khẩu')" />
 
-                                    <x-text-input id="password" class="block mt-1 w-full form-control" type="password"
-                                        name="password" required autocomplete="current-password" />
+                                    <div class="input-group">
+                                        <x-text-input id="password" class="block mt-1 w-full form-control" type="password"
+                                            name="password" required autocomplete="current-password" />
+
+                                    </div>
 
                                     <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
                                 </div>
+
                                 <div class="form-group">
                                     <button type="submit" class="form-control btn btn-primary submit px-3">Đăng
                                         nhập</button>
@@ -87,4 +90,13 @@
             </div>
         </div>
     </section>
+
 @endsection
+
+@push('script')
+
+
+
+
+@endpush
+

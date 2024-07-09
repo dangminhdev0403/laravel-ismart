@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\NoCache;
+use App\Http\Middleware\SaveCart;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,7 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias(
 
             [
-                'delcache'=> NoCache::class
+                'delcache'=> NoCache::class,
+                'savecart'=>SaveCart::class
             ]
             );
     })

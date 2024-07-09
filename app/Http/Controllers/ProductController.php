@@ -180,7 +180,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $product->delete();
-
+    
         return redirect()->route('products')->with('message', "Sản phẩm {$product->name} đã được xóa thành công.");
     }
 }

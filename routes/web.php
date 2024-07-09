@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
 
 //?Admin
 Route::middleware('auth')->prefix('admin')->group(function () {
-    //? admin/category
+
     //! Category
     Route::controller(CategoryController::class)->prefix('category')->group(function () {
         Route::get('/', 'index')->name('category');
@@ -80,8 +80,11 @@ Route::controller(HomeController::class)->prefix('/')->group(function () {
     Route::get('contact', 'contact')->name('contact');
 });
 //Cart
-Route::middleware('auth')->controller(OrderController::class)->prefix('oder')->group(function(){
-    Route::get('','show')->name('cart.show');
-    Route::get('add/{id}' ,'add')->name('cart.add');
+Route::middleware('auth')->controller(OrderController::class)->prefix('oder')->group(function () {
+    Route::get('', 'show')->name('cart.show');
+    Route::get('add/{id}', 'add')->name('cart.add');
+    Route::get('remove/{id}', 'remove')->name('cart.remove');
+    Route::put('update', 'update')->name('cart.update');
+    Route::get('destroy/', 'destroy')->name('cart.destroy');
 });
 require __DIR__ . '/auth.php';

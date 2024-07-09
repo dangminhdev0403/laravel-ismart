@@ -14,12 +14,16 @@
         type="text/css" />
     <link href="{{ asset('product/public/style.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('product/public/responsive.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script src="{{ asset('product/public/js/jquery-2.2.4.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('product/public/js/elevatezoom-master/jquery.elevatezoom.js') }}" type="text/javascript"></script>
     <script src="{{ asset('product/public/js/bootstrap/bootstrap.min.j') }}s" type="text/javascript"></script>
     <script src="{{ asset('product/public/js/carousel/owl.carousel.js') }}" type="text/javascript"></script>
     <script src="{{ asset('product/public/js/main.js') }}" type="text/javascript"></script>
+
     {{-- bs5 --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -27,6 +31,24 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <style>
+        #delete-cart-all {
+            display: inline-block;
+            padding: 12px 25px;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 13px;
+            border-radius: 3px;
+            background: #c62626;
+            margin-right: 5px;
+            border: 1px solid #d6d6d6;
+            font-family: 'Roboto Bold';
+            font-weight: normal;
+        }
+
+        #info-cart-wp table tbody tr td .num-order {
+            width: 61px;
+        }
+
         /* Tweak to change the look and feel */
         /* Root variables */
         :root {
@@ -166,10 +188,10 @@
             color: #de9c9c;
 
         }
+
         #advisory-wp:after {
             width: 0px;
         }
-
     </style>
 
 
@@ -285,7 +307,7 @@
                                     <div id="cart-wp" class="fl-right">
                                         <div id="btn-cart">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                            <span id="num">3</span>
+                                            <span id="num">{{ Cart::count() }}</span>
                                         </div>
                                         <div id="dropdown">
                                             <p class="desc">Có <span>2 sản phẩm</span> trong giỏ hàng</p>
@@ -320,7 +342,8 @@
                                                 <p class="price fl-right">18.500.000đ</p>
                                             </div>
                                             <dic class="action-cart clearfix">
-                                                <a href="{{ route('cart.show') }}" title="Giỏ hàng" class="view-cart fl-left">Giỏ
+                                                <a href="{{ route('cart.show') }}" title="Giỏ hàng"
+                                                    class="view-cart fl-left">Giỏ
                                                     hàng</a>
                                                 <a href="?page=checkout" title="Thanh toán"
                                                     class="checkout fl-right">Thanh
@@ -461,6 +484,12 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         </script>
+
+
+        @stack('scripts')
+
+
+
 </body>
 
 </html>
