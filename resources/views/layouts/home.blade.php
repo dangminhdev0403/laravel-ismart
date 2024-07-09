@@ -10,7 +10,8 @@
     <link href="{{ asset('product/public/reset.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('product/public/css/carousel/owl.carousel.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('product/public/css/carousel/owl.theme.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('product/public/css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('product/public/css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"
+        type="text/css" />
     <link href="{{ asset('product/public/style.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('product/public/responsive.css') }}" rel="stylesheet" type="text/css" />
 
@@ -19,6 +20,160 @@
     <script src="{{ asset('product/public/js/bootstrap/bootstrap.min.j') }}s" type="text/javascript"></script>
     <script src="{{ asset('product/public/js/carousel/owl.carousel.js') }}" type="text/javascript"></script>
     <script src="{{ asset('product/public/js/main.js') }}" type="text/javascript"></script>
+    {{-- bs5 --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+    <style>
+        /* Tweak to change the look and feel */
+        /* Root variables */
+        :root {
+            --button-background: dodgerblue;
+            --button-color: white;
+
+            --dropdown-highlight: dodgerblue;
+            --dropdown-width: 160px;
+            --dropdown-background: white;
+            --dropdown-color: black;
+        }
+
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            padding: 0;
+            margin-right: 1em;
+            border: none;
+            display: inline-block;
+            /* Để có thể hover được ngay lập tức */
+        }
+
+        .dropdown summary {
+            list-style: none;
+            list-style-type: none;
+            cursor: pointer;
+            display: flex;
+            /* Hiển thị summary dưới dạng flexbox */
+            justify-content: center;
+            /* Căn giữa nội dung theo chiều ngang */
+            align-items: center;
+            /* Căn giữa nội dung theo chiều dọc */
+        }
+
+        .dropdown>summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .dropdown summary:focus {
+            outline: none;
+        }
+
+        .dropdown ul {
+            display: none;
+            position: absolute;
+            top: calc(100% + 5px);
+            /* Hiển thị dropdown dưới phần tử summary */
+            left: 0;
+            margin: 5px 0 0 0;
+            /* Điều chỉnh khoảng cách */
+            padding: 10px 0;
+            /* Điều chỉnh khoảng cách nội dung */
+            width: var(--dropdown-width);
+            box-sizing: border-box;
+            z-index: 2;
+            background: var(--dropdown-background);
+            border-radius: 6px;
+            list-style: none;
+            white-space: nowrap;
+            /* Để các mục trong dropdown không xuống dòng */
+        }
+
+        .dropdown ul li {
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            /* Căn giữa nội dung văn bản trong mỗi mục */
+        }
+
+        .dropdown ul li a:link,
+        .dropdown ul li a:visited {
+            display: block;
+            /* Để mỗi mục là một khối */
+            padding: 10px 0.8rem;
+            box-sizing: border-box;
+            color: var(--dropdown-color);
+            text-decoration: none;
+        }
+
+        .dropdown ul li a:hover {
+            background-color: var(--dropdown-highlight);
+            color: var(--dropdown-background);
+        }
+
+        /* Dropdown triangle */
+        .dropdown ul::before {
+            content: ' ';
+            position: absolute;
+            width: 0;
+            height: 0;
+            top: -10px;
+            left: 50%;
+            margin-left: -10px;
+            border-style: solid;
+            border-width: 0 10px 10px 10px;
+            border-color: transparent transparent var(--dropdown-background) transparent;
+        }
+
+        /* Show dropdown on hover */
+        .dropdown:hover ul {
+            display: block;
+        }
+
+        /* Close the dropdown with outside clicks */
+        .dropdown>summary::before {
+            display: none;
+        }
+
+        .dropdown[open]>summary::before {
+            content: ' ';
+            display: block;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+
+        /* Additional styling for dropdown items */
+        #head-top #main-menu details.dropdown li a {
+            margin: 2px;
+            display: block;
+            color: #000;
+            padding: 10px 15px;
+        }
+
+        .dropdown ul li a:hover {
+            background-color: unset;
+            /* Bỏ background mặc định khi hover */
+
+        }
+
+        #head-top #main-menu details.dropdown li a:hover {
+
+
+            color: #de9c9c;
+
+        }
+        #advisory-wp:after {
+            width: 0px;
+        }
+
+    </style>
+
+
+
 </head>
 
 <body>
@@ -47,6 +202,55 @@
                                 <li>
                                     <a href="{{ route('contact') }}" title="">Liên hệ</a>
                                 </li>
+
+                                @if (Route::has('login'))
+
+                                    @auth
+
+
+
+                                        <li>
+                                            <details class="dropdown ">
+                                                <summary role="button">
+                                                    <a class="button dropdown-toggle">{{ Auth::user()->name }}</a>
+                                                </summary>
+                                                <ul>
+                                                    <li class="">
+                                                        <x-responsive-nav-link :href="route('profile.edit')">
+                                                            {{ __('Profile') }}
+                                                        </x-responsive-nav-link>
+                                                    </li>
+                                                    <li>
+                                                        <form method="POST" action="{{ route('logout') }}">
+                                                            @csrf
+
+                                                            <x-dropdown-link :href="route('logout')"
+                                                                onclick="event.preventDefault();
+                                                                                    this.closest('form').submit();">
+                                                                {{ __('Đăng xuất') }}
+                                                            </x-dropdown-link>
+                                                </ul>
+                                            </details>
+                                        </li>
+                                    @else
+                                        <li>
+                                            <a href="{{ route('login') }}"
+                                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                                                Đăng nhập
+                                            </a>
+                                        </li>
+
+                                        @if (Route::has('register'))
+                                            <li>
+                                                <a href="{{ route('register') }}"
+                                                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                                                    Đăng kí
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endauth
+
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -67,53 +271,67 @@
                                 <span class="title">Tư vấn</span>
                                 <span class="phone">0987.654.321</span>
                             </div>
-                            <div id="btn-respon" class="fl-right"><i class="fa fa-bars" aria-hidden="true"></i></div>
-                            <a href="?page=cart" title="giỏ hàng" id="cart-respon-wp" class="fl-right">
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                <span id="num">2</span>
-                            </a>
-                            <div id="cart-wp" class="fl-right">
-                                <div id="btn-cart">
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                    <span id="num">2</span>
-                                </div>
-                                <div id="dropdown">
-                                    <p class="desc">Có <span>2 sản phẩm</span> trong giỏ hàng</p>
-                                    <ul class="list-cart">
-                                        <li class="clearfix">
-                                            <a href="" title="" class="thumb fl-left">
-                                                <img src="public/images/img-pro-11.png" alt="">
-                                            </a>
-                                            <div class="info fl-right">
-                                                <a href="" title="" class="product-name">Sony Express
-                                                    X6</a>
-                                                <p class="price">6.250.000đ</p>
-                                                <p class="qty">Số lượng: <span>1</span></p>
-                                            </div>
-                                        </li>
-                                        <li class="clearfix">
-                                            <a href="" title="" class="thumb fl-left">
-                                                <img src="public/images/img-pro-23.png" alt="">
-                                            </a>
-                                            <div class="info fl-right">
-                                                <a href="" title="" class="product-name">Laptop Lenovo
-                                                    10</a>
-                                                <p class="price">16.250.000đ</p>
-                                                <p class="qty">Số lượng: <span>1</span></p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="total-price clearfix">
-                                        <p class="title fl-left">Tổng:</p>
-                                        <p class="price fl-right">18.500.000đ</p>
+
+                            @if (Route::has('login'))
+                                @auth
+                                    <div id="btn-respon" class="fl-right"><i class="fa fa-bars" aria-hidden="true"></i>
                                     </div>
-                                    <dic class="action-cart clearfix">
-                                        <a href="?page=cart" title="Giỏ hàng" class="view-cart fl-left">Giỏ hàng</a>
-                                        <a href="?page=checkout" title="Thanh toán" class="checkout fl-right">Thanh
-                                            toán</a>
-                                    </dic>
-                                </div>
-                            </div>
+                                    <a href="?page=cart" title="giỏ hàng" id="cart-respon-wp" class="fl-right">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        <span id="num">3</span>
+                                    </a>
+
+
+                                    <div id="cart-wp" class="fl-right">
+                                        <div id="btn-cart">
+                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                            <span id="num">3</span>
+                                        </div>
+                                        <div id="dropdown">
+                                            <p class="desc">Có <span>2 sản phẩm</span> trong giỏ hàng</p>
+                                            <ul class="list-cart">
+                                                <li class="clearfix">
+                                                    <a href="" title="" class="thumb fl-left">
+                                                        <img src="public/images/img-pro-11.png" alt="">
+                                                    </a>
+                                                    <div class="info fl-right">
+                                                        <a href="" title="" class="product-name">Sony
+                                                            Express
+                                                            X6</a>
+                                                        <p class="price">6.250.000đ</p>
+                                                        <p class="qty">Số lượng: <span>1</span></p>
+                                                    </div>
+                                                </li>
+                                                <li class="clearfix">
+                                                    <a href="" title="" class="thumb fl-left">
+                                                        <img src="public/images/img-pro-23.png" alt="">
+                                                    </a>
+                                                    <div class="info fl-right">
+                                                        <a href="" title="" class="product-name">Laptop
+                                                            Lenovo
+                                                            10</a>
+                                                        <p class="price">16.250.000đ</p>
+                                                        <p class="qty">Số lượng: <span>1</span></p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="total-price clearfix">
+                                                <p class="title fl-left">Tổng:</p>
+                                                <p class="price fl-right">18.500.000đ</p>
+                                            </div>
+                                            <dic class="action-cart clearfix">
+                                                <a href="{{ route('cart.show') }}" title="Giỏ hàng" class="view-cart fl-left">Giỏ
+                                                    hàng</a>
+                                                <a href="?page=checkout" title="Thanh toán"
+                                                    class="checkout fl-right">Thanh
+                                                    toán</a>
+                                            </dic>
+                                        </div>
+                                    </div>
+                                @endauth
+                            @endif
+
+                            {{-- ! End Cart --}}
                         </div>
                     </div>
                 </div>

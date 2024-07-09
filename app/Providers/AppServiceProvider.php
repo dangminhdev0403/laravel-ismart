@@ -26,5 +26,7 @@ class AppServiceProvider extends ServiceProvider
         //
         $loader = AliasLoader::getInstance();
         $loader->alias('DataTables', \Yajra\DataTables\Facades\DataTables::class);
+        $loader->alias('Cart', \Gloudemans\Shoppingcart\Facades\Cart::class); 
+
     }
 }

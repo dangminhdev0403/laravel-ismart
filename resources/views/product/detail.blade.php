@@ -97,7 +97,7 @@
                                 <a title="" id="plus"><i class="fa fa-plus"></i></a>
                             </div>
                             <a href="?page=cart" title="Thêm giỏ hàng" class="add-cart">Thêm giỏ hàng</a>
-                            <a href="?page=cart" title="Thêm giỏ hàng" class=" add-cart buy-now ">Mua ngay</a>
+                            <a href="?page=cart" title="Thêm giỏ hàng" class="add-cart buy-now">Mua ngay</a>
                         </div>
                     </div>
                 </div>

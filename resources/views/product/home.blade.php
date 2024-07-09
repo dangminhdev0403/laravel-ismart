@@ -86,7 +86,7 @@
 
                                 </div>
                                 <div class="action clearfix">
-                                    <a href="?page=cart" title="" class="add-cart fl-left">Thêm giỏ hàng</a>
+                                    <a href="{{ route('cart.add',$product->id) }}" title="" class="add-cart fl-left">Thêm giỏ hàng</a>
                                     <a href="?page=checkout" title="" class="buy-now fl-right">Mua ngay</a>
                                 </div>
                             </li>
