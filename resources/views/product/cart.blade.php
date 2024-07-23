@@ -23,7 +23,10 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <td>Mã sản phẩm</td>
+                                    <td>
+                                        <input type="checkbox" id="check-all">
+                                        <label for="check-all">Chọn sản phẩm</label>
+                                    </td>
                                     <td>Ảnh sản phẩm</td>
                                     <td>Tên sản phẩm</td>
                                     <td>Giá sản phẩm</td>
@@ -35,16 +38,17 @@
                             <tbody>
                                 @foreach (Cart::content() as $row)
                                     <tr data-row-id="{{ $row->rowId }}">
-                                        <td>{{ $row->rowId }}</td>
+                                        <td>
+                                            <input type="checkbox" class="product-checkbox" data-rowid="{{ $row->rowId }}"
+                                                onchange="updateTotal()">
+                                        </td>
                                         <td>
                                             <a href="" title="" class="thumb">
                                                 <img src="{{ asset($row->options->image) }}" alt="">
                                             </a>
                                         </td>
-                                        <td>
-                                            <a href="" title="" class="name-product">{{ $row->name }}</a>
-                                        </td>
-                                        <td>{{ number_format($row->price, 0, '', '.') }} đ</td>
+                                        <td class="product-name">{{ $row->name }}</td>
+                                        <td class="product-price">{{ number_format($row->price, 0, '', '.') }} đ</td>
                                         <td>
                                             <input type="number" name="quantity" min="1" value="{{ $row->qty }}"
                                                 data-rowid="{{ $row->rowId }}" onchange="updateQuantity(this)"
@@ -65,7 +69,7 @@
                                     <td colspan="7" style="border: none">
                                         <div class="clearfix">
                                             <p id="total-price" class="fl-right">Tổng giá:
-                                                <span id="cart-subtotal">{{ Cart::subtotal() }} đ</span>
+                                                <span id="cart-subtotal">0 đ</span>
                                             </p>
                                         </div>
                                     </td>
@@ -74,15 +78,16 @@
                                     <td colspan="7">
                                         <div class="clearfix">
                                             <div class="fl-right">
-                                                <a href="{{ route('cart.destroy') }}" title="" id="delete-cart-all">Xoá tât cả </a>
-                                                <a href="?page=checkout" title="" id="checkout-cart">Thanh toán</a>
+                                                <a href="javascript:void(0)" title="" id="delete-cart-all">Xoá đã
+                                                    chọn</a>
+                                                <a href="{{ route('cart.pay') }}" title="" id="checkout-cart">Thanh
+                                                    toán</a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                             </tfoot>
                         </table>
-
                     @else
                         <div class="alert alert-danger text-center " style="margin-top: 119px;">
                             Bạn chưa có sản phẩm nào trong giỏ hàng
@@ -111,5 +116,50 @@
             $('#quantity').val($(qty).val());
             $('#updateQty').submit();
         }
+
+        function updateTotal() {
+            let total = 0;
+            $('.product-checkbox:checked').each(function() {
+                let row = $(this).closest('tr');
+                let rowTotal = row.find('.row-total').text().replace(/[^0-9]/g, '');
+                total += parseInt(rowTotal);
+            });
+            $('#cart-subtotal').text(total.toLocaleString() + ' đ');
+        }
+
+        // Xử lý sự kiện chọn tất cả
+        $(document).on('change', '#check-all', function() {
+            $('.product-checkbox').prop('checked', $(this).prop('checked'));
+            updateTotal();
+        });
+
+        // Xử lý sự kiện click vào link Xoá đã chọn
+        $(document).on('click', '#delete-cart-all', function() {
+            if (confirm('Bạn có chắc chắn muốn xóa các sản phẩm đã chọn?')) {
+                let selectedRows = $('.product-checkbox:checked').map(function() {
+                    return $(this).data('rowid');
+                }).get();
+                if (selectedRows.length > 0) {
+                    let url = "{{ route('cart.remove', ':ids') }}";
+                    url = url.replace(':ids', selectedRows.join(','));
+                    $.ajax({
+                        url: url,
+                        type: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            window.location.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr);
+                            alert('Đã xảy ra lỗi! Vui lòng thử lại sau.');
+                        }
+                    });
+                } else {
+                    alert('Vui lòng chọn ít nhất một sản phẩm để xóa.');
+                }
+            }
+        });
     </script>
 @endpush

@@ -83,8 +83,9 @@ Route::controller(HomeController::class)->prefix('/')->group(function () {
 Route::middleware('auth')->controller(OrderController::class)->prefix('oder')->group(function () {
     Route::get('', 'show')->name('cart.show');
     Route::get('add/{id}', 'add')->name('cart.add');
-    Route::get('remove/{id}', 'remove')->name('cart.remove');
+    Route::get('remove/{rowId?}', 'remove')->name('cart.remove');
     Route::put('update', 'update')->name('cart.update');
-    Route::get('destroy/', 'destroy')->name('cart.destroy');
+    Route::get('destroy', 'destroy')->name('cart.destroy');
+    Route::get('pay', 'pay')->name('cart.pay');
 });
 require __DIR__ . '/auth.php';

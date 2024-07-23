@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class OrderController extends Controller
 
 
 
-        return redirect()->route('cart.show');
+        return redirect()->route('home');
     }
 
     public function remove($rowId)
@@ -68,5 +69,9 @@ class OrderController extends Controller
         Cart::restore(Auth::id());
 
         return response()->json(['message' => 'Cart restored from database successfully!']);
+    }
+
+    public function pay(){
+      return view('product.order');
     }
 }
