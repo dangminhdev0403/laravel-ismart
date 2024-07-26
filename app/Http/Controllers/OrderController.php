@@ -14,6 +14,7 @@ class OrderController extends Controller
     public function show()
     {
         $cart = Cart::content();
+
         return view('product.cart', compact('cart'));
     }
     public function add(Request $request, $id)
@@ -33,18 +34,21 @@ class OrderController extends Controller
 
 
 
-        return redirect()->route('home');
+        return redirect()->route('detailProduct', $product->id)->with('message', 'Thêm vào giỏ hàng thành công');
     }
 
     public function remove($rowId)
     {
         Cart::remove($rowId);
-        return redirect()->route('cart.show');
+        return redirect()->back()->with('message','Xoá thành công');
     }
+
+
+    
     public function destroy()
     {
         Cart::destroy();
-        return redirect()->route('cart.show');
+        return redirect()->route('cart.show')->with('message','Xoá tất cả thành công');
     }
 
 
@@ -71,7 +75,27 @@ class OrderController extends Controller
         return response()->json(['message' => 'Cart restored from database successfully!']);
     }
 
-    public function pay(){
-      return view('product.order');
+    public function pay(Request $request)
+    {
+
+        $list_check = $request->input('products');
+        // dd($list_check);
+        $selectedProducts = array_filter($list_check, function ($product) {
+            return isset($product['selected']);
+
+        });
+
+        // dd($selectedProducts);
+
+        if (!empty($selectedProducts)) {
+            return view('product.order',compact('selectedProducts'));
+        } else {
+
+            return redirect()->back()->with('error', 'Chưa có đơn hàng nào được dặt');
+        }
     }
+
+
+
+
 }

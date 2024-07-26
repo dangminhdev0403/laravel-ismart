@@ -33,8 +33,8 @@
 
                             @if (isset($product))
                                 @foreach ($images as $image)
-                                    <img src="{{  asset($image->image_name) }}" alt="" srcset="" width="100px" style="margin: 20px 0">
-
+                                    <img src="{{ asset($image->image_name) }}" alt="" srcset="" width="100px"
+                                        style="margin: 20px 0">
                                 @endforeach
                             @endif
                         </div>
@@ -55,17 +55,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="brand_id">Thương hiệu sản phảm</label>
-                            <select name="brand_id" id="brand_id" class="custom-select form-control">
-                                <option value="" selected disabled hidden>-- Chọn danh mục --</option>
-                                @foreach ($brand as $row)
-                                    <option value="{{ $row->id }}"
-                                        {{ isset($product) ? ($product->brand_id == $row->id ? 'selected' : '') : '' }}>
-                                        {{ $row->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+
                         {{-- Mô tả --}}
                         <div class="form-group">
                             <label for="description">Mô tả</label>

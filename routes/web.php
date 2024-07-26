@@ -42,16 +42,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     });
     //=====
 
-    //! Brand
-    Route::controller(BrandController::class)->prefix('brand')->group(function () {
-        Route::get('/', 'index')->name('brand');
-        Route::get('/add', 'add')->name('brand.add');
-        Route::post('/save', 'save')->name('brand.save');
-        Route::get('/edit/{id}', 'edit')->name('brand.edit');
-        Route::post('/update/{id}', 'update')->name('brand.update');
-        Route::get('/delete/{id}', 'delete')->name('brand.delete');
-    });
-    //=====
+
     //!Product
     Route::controller(ProductController::class)->prefix('products')->group(function () {
         Route::get('/', 'index')->name('products');
@@ -80,12 +71,12 @@ Route::controller(HomeController::class)->prefix('/')->group(function () {
     Route::get('contact', 'contact')->name('contact');
 });
 //Cart
-Route::middleware('auth')->controller(OrderController::class)->prefix('oder')->group(function () {
+Route::middleware('auth')->controller(OrderController::class)->prefix('order')->group(function () {
     Route::get('', 'show')->name('cart.show');
     Route::get('add/{id}', 'add')->name('cart.add');
     Route::get('remove/{rowId?}', 'remove')->name('cart.remove');
     Route::put('update', 'update')->name('cart.update');
     Route::get('destroy', 'destroy')->name('cart.destroy');
-    Route::get('pay', 'pay')->name('cart.pay');
+    Route::post('pay', 'pay')->name('cart.pay');
 });
 require __DIR__ . '/auth.php';

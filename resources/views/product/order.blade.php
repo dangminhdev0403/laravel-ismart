@@ -16,6 +16,7 @@
             </div>
         </div>
     </div>
+
     <div id="wrapper" class="wp-inner clearfix">
         <div class="section" id="customer-info-wp">
             <div class="section-head">
@@ -61,23 +62,33 @@
                     <thead>
                         <tr>
                             <td>Sản phẩm</td>
+
                             <td>Tổng</td>
                         </tr>
                     </thead>
                     <tbody>
+
+                        @php
+                        $total = 0;
+                     @endphp
+                        @foreach ($selectedProducts as $row)
+
                         <tr class="cart-item">
-                            <td class="product-name">Son môi nữ cá tính<strong class="product-quantity">x 1</strong></td>
-                            <td class="product-total">350.000đ</td>
+                            <td class="product-name">{{ $row['name'] }}<strong class="product-quantity">x {{ $row['quantity'] }}</strong></td>
+                            <td class="product-total">{{ number_format($row['price']*$row['quantity'], 0, '', '.') }} đ</td>
                         </tr>
-                        <tr class="cart-item">
-                            <td class="product-name">Đồ tẩy trang nhập khẩu Mỹ<strong class="product-quantity">x 2</strong></td>
-                            <td class="product-total">500.000đ</td>
-                        </tr>
+                        @php
+                           $total += $row['price']*$row['quantity'];
+                        @endphp
+
+                        @endforeach
+
+
                     </tbody>
                     <tfoot>
                         <tr class="order-total">
                             <td>Tổng đơn hàng:</td>
-                            <td><strong class="total-price">800.000đ</strong></td>
+                            <td><strong class="total-price">{{ number_format($total, 0, '', '.') }} đ</strong></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -94,10 +105,41 @@
                     </ul>
                 </div>
                 <div class="place-order-wp clearfix">
-                    <input type="submit" id="order-now" value="Đặt hàng">
+                    <input type="submit" id="order-now" value="Đặt hàng" class="delete-link">
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('delete-link')) {
+            event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+            deletebrand(event.target);
+        }
+    });
+
+    function deletebrand(link) {
+        const url = link.href;
+
+
+        Swal.fire({
+            title: "Xác nhận đặt hàng",
+            text: `Bạn có chắc chắn muốn đặt hàng?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Đặt ngay",
+            cancelButtonText: "Không",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url; // Chỉ thực hiện khi đã xác nhận xóa
+            }
+        });
+    }
+</script>
+@endpush

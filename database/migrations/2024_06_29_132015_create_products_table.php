@@ -22,7 +22,6 @@ return new class extends Migration
             $table->integer('order')->nullable();
             $table->integer('sku')->nullable();
             $table->integer('quantity')->nullable();
-            $table->integer('brand_id')->nullable()->comment('Mã thương hiệu');
             $table->integer('category_id')->nullable();
             $table->integer('is_featured')->nullable();
             $table->integer('is_variantion')->nullable()->comment('Biến thể');

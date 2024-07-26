@@ -16,7 +16,6 @@
                                 <th>No</th>
                                 <th>Sản phẩm</th>
                                 <th>Danh mục</th>
-                                <th>Thương hiệu</th>
                                 <th>Giá</th>
                                 <th>Actions</th>
 
@@ -36,68 +35,74 @@
 
 
 @push('scripts')
-    <script>
-        $(function() {
-            var table = $('#dataTable').DataTable({
-                "columnDefs": [{
-                    "targets": 0,
+{{-- !Datatable  --}}
+<script>
+    $(function() {
+        var table = $('#dataTable').DataTable({
+            "columnDefs": [{
+                "targets": 0,
+                "orderable": false,
+                "searchable": false,
+                "render": function(data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            }],
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('products') }}",
+            columns: [
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'cname',
+                    name: 'cname'
+                },
+                {
+                    data: 'price',
+                    name: 'price'
+                },
+                {
+                    "data": "actions",
+                    "render": function(data, type, row) {
+                        return `
+                            <a href="products/edit/${row.id}" class="btn btn-warning">Sửa</a>
+                            <a href="products/delete/${row.id}" class="btn btn-danger delete-link" onclick="deletebrand()" data-name="${row.name}">Xoá</a>
+                        `;
+                    },
                     "orderable": false,
-                    "searchable": false,
-                    "render": function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                }],
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('products') }}",
-                columns: [
-
-                    {
-                        data: 'name',
-                        name: 'name'
-                    },
-
-                    {
-                        data: 'name',
-                        name: 'name'
-                    },
-                    {
-                        data: 'cname',
-                        name: 'cname'
-                    },
-                    {
-                        data: 'bname',
-                        name: 'bname'
-                    },
-                    {
-                        data: 'price',
-                        name: 'price'
-                    },
-
-                    {
-                        "data": "actions",
-
-                        "render": function(data, type, row) {
-                            return `
-                        <a href="products/edit/${row.id}" class="btn btn btn-warning">Sửa</a>
-                        <a href="products/delete/${row.id}" class="btn btn-danger delete-link"
-                                            onclick="deletebrand()" data-name="${row.name}">Xoá</a>
+                    "searchable": false
+                }
+            ],
+            "language": {
+                "sProcessing":   "Đang xử lý...",
+                "sLengthMenu":   "Xem _MENU_ sản phẩm",
+                "sZeroRecords":  "Không tìm thấy sản phẩm phù hợp",
+                "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ sản phẩm",
+                "sInfoEmpty":    "",
+                "sInfoFiltered": "",
+                "sInfoPostFix":  "",
+                "sSearch":       "Tìm:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "Đầu",
+                    "sPrevious": "Trước",
+                    "sNext":     "Tiếp",
+                    "sLast":     "Cuối"
+                }
+            }
+        });
+    })
+</script>
 
 
 
-                    `;
-                        },
-                        "orderable": false,
-                        "searchable": false
-                    }
-
-                ]
-            });
-        })
-    </script>
-
-
-
+    {{-- ! Alert 2 --}}
     @if (session('message'))
         <script>
             Swal.fire({

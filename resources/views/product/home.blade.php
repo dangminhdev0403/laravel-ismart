@@ -63,53 +63,49 @@
                         <h3 class="section-title">Sản phẩm nổi bật</h3>
                     </div>
                     <div class="section-detail">
-                        <ul class="list-item">
+                        @if ($products->isEmpty())
+                        <h3 class="text-danger  text-center">Không có sản phẩm nào trong danh mục này</h3>
 
 
-                            @foreach ($products as  $product)
 
+
+
+                            @else
+                            <ul class="list-item">
+                            @foreach ($products as $product)
                             <li>
-                                <a href="{{ route('detailProduct',$product->id) }}" title="" class="thumb">
-                                    <img src="{{asset($product->images[0]->image_name )}}">
-                                <a href="{{ route('detailProduct',$product->id) }}" title="" class="product-name">{{ $product->name }}
+                                <a href="{{ route('detailProduct', $product->id) }}" title="" class="thumb">
+                                    <img src="{{ asset($product->images[0]->image_name) }}"
+                                        style="width: 133px ; height: 133px; object-fit: cover;">
+                                    <a href="{{ route('detailProduct', $product->id) }}" title=""
+                                        class="product-name">{{ $product->name }}
                                     </a>
-                                <div class="price">
+                                    <div class="price">
 
-                                    @if ($product->sale_price >0)
-                                    <span class="new">{{  number_format($product->sale_price, 0, '', '.')  }} đ</span>
-                                    <span class="old">{{  number_format($product->price, 0, '', '.')  }} đ</span>
-                                    @else
-                                    <span class="new"> {{ number_format($product->price, 0, '', '.') }} đ</span>
-                                    @endif
+                                        @if ($product->sale_price > 0)
+                                            <span
+                                                class="new">{{ number_format($product->sale_price, 0, '', '.') }}
+                                                đ</span>
+                                            <span class="old">{{ number_format($product->price, 0, '', '.') }}
+                                                đ</span>
+                                        @else
+                                            <span class="new"> {{ number_format($product->price, 0, '', '.') }}
+                                                đ</span>
+                                        @endif
 
 
 
-                                </div>
-                                <div class="action clearfix">
-                                    <a href="{{ route('cart.add',$product->id) }}" title="" class="add-cart fl-left">Thêm giỏ hàng</a>
-                                    <a href="?page=checkout" title="" class="buy-now fl-right">Mua ngay</a>
-                                </div>
+                                    </div>
+                                 
                             </li>
-                            @endforeach
+                        @endforeach
 
 
-                            <li>
-                                <a href="?page=detail_product" title="" class="thumb">
-                                    <img src="{{ asset('product/public/images/img-pro-05.png') }}">
-                                </a>
-                                <a href="?page=detail_product" title="" class="product-name">Laptop Lenovo IdeaPad
-                                    120S</a>
-                                <div class="price">
-                                    <span class="new">5.190.000đ</span>
-                                    <span class="old">6.190.000đ</span>
-                                </div>
-                                <div class="action clearfix">
-                                    <a href="?page=cart" title="" class="add-cart fl-left">Thêm giỏ hàng</a>
-                                    <a href="?page=checkout" title="" class="buy-now fl-right">Mua ngay</a>
-                                </div>
-                            </li>
+
+
 
                         </ul>
+                        @endif
                     </div>
                 </div>
                 <div class="section" id="list-product-wp">
@@ -361,10 +357,10 @@
                 </div>
             </div>
             <div class="sidebar fl-left">
-               {{-- !Category --}}
+                {{-- !Category --}}
                 @include('layouts.navbar')
 
-              @include('layouts.selling')
+                @include('layouts.selling')
                 <div class="section" id="banner-wp">
                     <div class="section-detail">
                         <a href="" title="" class="thumb">

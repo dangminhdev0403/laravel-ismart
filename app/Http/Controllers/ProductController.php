@@ -22,27 +22,31 @@ class ProductController extends Controller
         // Lấy danh sách sản phẩm
         $products = Product::query()
             ->join('categories', 'categories.id', '=', 'products.category_id')
-            ->join('brands', 'brands.id', '=', 'products.brand_id')
+
             ->select([
                 'products.id as id',
                 'products.name as name',
                 'products.price as price',
                 'categories.name as cname',
-                'brands.name as bname',
 
             ]);
 
         // Xử lý dữ liệu cho DataTables
         $data = DataTables::of($products)
-
             ->setRowClass(function ($product) {
                 return $product->id % 2 == 0 ? 'text-danger' : 'text-primary';
             })
-
-
+            ->filter(function ($query) use ($request) {
+                if ($request->has('search') && $request->get('search')['value'] != '') {
+                    $search = strtolower($request->get('search')['value']);
+                    $query->where(function ($q) use ($search) {
+                        $q->whereRaw('LOWER(products.name) LIKE ?', ["%$search%"])
+                            ->orWhereRaw('LOWER(categories.name) LIKE ?', ["%$search%"]);
+                    });
+                }
+            })
             ->toJson(); // Trả về dữ liệu JSON cho DataTables
 
-        // return $data;
         // Nếu request là Ajax thì trả về dữ liệu JSON
         if ($request->ajax()) {
             return $data;
@@ -57,8 +61,8 @@ class ProductController extends Controller
     public function add()
     {
         $category = Category::get();
-        $brand = Brand::get();
-        return view('admin.product.form', compact('category', 'brand'));
+
+        return view('admin.product.form', compact('category'));
     }
 
     public function save(Request $request)
@@ -70,7 +74,7 @@ class ProductController extends Controller
         $data = [
             'name' => $request->name,
             'slug' => Str::slug($request->name),
-            'brand_id' => $request->brand_id,
+
             'category_id' => $request->category_id,
             'price' => $request->price,
             'sale_price' => '0',
@@ -115,10 +119,10 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $category = Category::get();
-        $brand = Brand::get();
-        $images = ImageProduct::where('product_id' , '=' , $id)->get();
+
+        $images = ImageProduct::where('product_id', '=', $id)->get();
         //dd($images);
-        return view('admin.product.form', compact('category', 'brand', 'product' ,'images'));
+        return view('admin.product.form', compact('category', 'product', 'images'));
     }
     public function update(Request $request, $id)
     {
@@ -143,18 +147,18 @@ class ProductController extends Controller
         // ! UP load file
         if ($files = $request->file('images')) {
             //xoá ảnh tồn tại
-            $images = ImageProduct::where('product_id' , '=' , $id)->get();
+            $images = ImageProduct::where('product_id', '=', $id)->get();
 
-                foreach($images as $image){
+            foreach ($images as $image) {
 
-                    if(File::exists($image->image_name)){
-                        File::delete($image->image_name);
-                    }
-
-
-                    $image->delete();
-                    Log::info('Image record deleted from database: ' . $image->id);
+                if (File::exists($image->image_name)) {
+                    File::delete($image->image_name);
                 }
+
+
+                $image->delete();
+                Log::info('Image record deleted from database: ' . $image->id);
+            }
 
             //Thêm lại
             foreach ($files as $key => $file) {
@@ -180,7 +184,19 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $product->delete();
-    
+        //xoá ảnh tồn tại
+        $images = ImageProduct::where('product_id', '=', $id)->get();
+
+        foreach ($images as $image) {
+
+            if (File::exists($image->image_name)) {
+                File::delete($image->image_name);
+            }
+
+
+            $image->delete();
+            Log::info('Image record deleted from database: ' . $image->id);
+        }
         return redirect()->route('products')->with('message', "Sản phẩm {$product->name} đã được xóa thành công.");
     }
 }

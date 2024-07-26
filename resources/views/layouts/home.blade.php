@@ -215,7 +215,7 @@
                                 <li>
                                     <a href="{{ route('home.products') }}" title="">Sản phẩm</a>
                                 </li>
-                                
+
                                 <li>
                                     <a href="{{ route('about') }}" title="">Giới thiệu</a>
                                 </li>
@@ -292,85 +292,107 @@
                                 <span class="phone">0987.654.321</span>
                             </div>
 
+
+
                             @if (Route::has('login'))
-                                @auth
-                                    <div id="btn-respon" class="fl-right"><i class="fa fa-bars" aria-hidden="true"></i>
-                                    </div>
-                                    <a href="?page=cart" title="giỏ hàng" id="cart-respon-wp" class="fl-right">
-                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                        <span id="num">3</span>
-                                    </a>
-
-                                    @if (Route::is('cart.show'))
-                                        <div> </div>
-                                    @else
-                                        <div id="cart-wp" class="fl-right">
-                                            <a id="btn-cart" href="{{ route('cart.show') }}" class="text-white">
-                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                                <span id="num">{{ Cart::count() }}</span>
-                                            </a>
-                                            <div id="dropdown">
-                                                @if (Cart::count() > 0)
-                                                    <ul class="list-cart">
-                                                        @php
-                                                            $count = 0;
-                                                        @endphp
-                                                        @foreach (Cart::content() as $cart)
-
-                                                            @if ($count < 5)
-                                                                <li class="clearfix">
-
-
-                                                                    <a href="" title=""
-                                                                        class="thumb fl-left">
-                                                                        <img src="{{ asset($cart->options->image) }}"
-                                                                            alt="">
-                                                                    </a>
-                                                                    <div class="info fl-right">
-                                                                        <a href="" title=""
-                                                                            class="product-name">{{ $cart->name }}</a>
-                                                                        <p class="price">
-                                                                            {{ number_format($cart->price, 0, '', '.') }} đ
-                                                                        </p>
-                                                                        <p class="qty">Số lượng: <span>
-                                                                                {{ $cart->qty }}</span></p>
-                                                                    </div>
-                                                                    @php
-                                                                        $count++;
-                                                                    @endphp
-                                                                </li>
-                                                            @else
-                                                            @break
-                                                        @endif
-                                                    @endforeach
-
-
-                                                </ul>
-                                                <p class="desc text-center">Hiện<span>{{ $count }}/{{ Cart::content()->count() }}</span> sản phẩm trong giỏ </p>
-                                                <div class="total-price clearfix">
-                                                    <p class="title fl-left">Tổng:</p>
-                                                    <p class="price fl-right">{{ Cart::subtotal() }}đ</p>
-                                                </div>
-                                                <div class="action-cart clearfix">
-                                                    <a href="{{ route('cart.show') }}" title="Giỏ hàng"
-                                                        class="view-cart fl-left">Giỏ
-                                                        hàng</a>
-                                                    <a href="?page=checkout" title="Thanh toán"
-                                                        class="checkout fl-right">Thanh
-                                                        toán</a>
-                                                </div>
-                                            @else
-                                                <p class="desc text-center mt-5"><span>Chưa có sản phẩm nào </span>
-                                                </p>
-                                            @endif
-
+                                <form action="{{ route('cart.pay')}}" method="post" id="myForm">
+                                    @csrf
+                                    @auth
+                                        <div id="btn-respon" class="fl-right"><i class="fa fa-bars" aria-hidden="true"></i>
                                         </div>
-                                    </div>
-                                @endif
+                                        <a href="?page=cart" title="giỏ hàng" id="cart-respon-wp" class="fl-right">
+                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                            <span id="num">3</span>
+                                        </a>
+
+                                        @if (Route::is('cart.show'))
+                                            <div> </div>
+                                        @else
+                                            <div id="cart-wp" class="fl-right">
+                                                <a id="btn-cart" href="{{ route('cart.show') }}" class="text-white">
+                                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                    <span id="num">{{ Cart::count() }}</span>
+                                                </a>
+                                                <div id="dropdown">
+
+                                                    @if (Cart::count() > 0)
+                                                        <ul class="list-cart">
+                                                            @php
+                                                                $count = 0;
+                                                            @endphp
+                                                            @foreach (Cart::content() as $cart)
+                                                                @if ($count < 5)
+                                                                <li style="display: none">
+                                                                    <input type="hidden" class="product-checkbox"
+                                                                        name="products[{{ $loop->index }}][selected]" value="1"
+                                                                        onchange="updateTotal()">
+                                                                    <input type="hidden" name="products[{{ $loop->index }}][rowId]"
+                                                                        value="{{ $cart->rowId }}">
+                                                                    <input type="hidden" name="products[{{ $loop->index }}][name]"
+                                                                        value="{{ $cart->name }}">
+                                                                    <input type="hidden" name="products[{{ $loop->index }}][quantity]"
+                                                                        value="{{ $cart->qty }}">
+                                                                    <input type="hidden" name="products[{{ $loop->index }}][price]"
+                                                                        value="{{ $cart->price }}">
+                                                                </li>
+                                                                    <li class="clearfix">
+
+
+                                                                        <a href="" title=""
+                                                                            class="thumb fl-left">
+                                                                            <img src="{{ asset($cart->options->image) }}"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="info fl-right">
+                                                                            <a href="" title=""
+                                                                                class="product-name">{{ $cart->name }}</a>
+                                                                            <p class="price">
+                                                                                {{ number_format($cart->price, 0, '', '.') }}
+                                                                                đ
+                                                                            </p>
+                                                                            <p class="qty">Số lượng: <span>
+                                                                                    {{ $cart->qty }}</span></p>
+                                                                        </div>
+                                                                        @php
+                                                                            $count++;
+                                                                        @endphp
+                                                                    </li>
+                                                                @else
+                                                                @break
+                                                            @endif
+                                                        @endforeach
+
+
+                                                    </ul>
+                                                    <p class="desc text-center">
+                                                        Hiện<span>{{ $count }}/{{ Cart::content()->count() }}</span>
+                                                        sản phẩm trong giỏ </p>
+                                                    <div class="total-price clearfix">
+                                                        <p class="title fl-left">Tổng:</p>
+                                                        <p class="price fl-right">{{ Cart::subtotal() }}đ</p>
+                                                    </div>
+                                                    <div class="action-cart clearfix">
+                                                        <a href="{{ route('cart.show') }}" title="Giỏ hàng"
+                                                            class="view-cart fl-left">Xem thêm
+                                                        </a>
+                                                        <a  type="submit"   title="Thanh toán" href="#"
+                                                            class="checkout fl-right" onclick="document.getElementById('myForm').submit();">Thanh
+                                                            toán</a>
+                                                    </div>
+                                                @else
+                                                    <p class="desc text-center mt-5"><span>Chưa có sản phẩm nào </span>
+                                                    </p>
+                                                @endif
+
+                                            </div>
+                                        </div>
+                                    @endif
 
 
 
-                            @endauth
+                                @endauth
+                            </form>
+
                         @endif
 
                         {{-- ! End Cart --}}
@@ -504,6 +526,7 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @stack('scripts')
 

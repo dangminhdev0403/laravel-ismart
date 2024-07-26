@@ -35,8 +35,12 @@ class HomeController extends Controller
 
     public function detailProduct($id){
         $product =Product::find($id);
-        //dd($product);
-        return view('product.detail',compact('product'));
+        $slug = $product ->category->slug;
+        $category_id = Category::where('slug',$slug)->value('id');
+         $products_same = Product::where('category_id','=',$category_id)->orderBy('created_at', 'desc')->paginate(15);
+
+
+        return view('product.detail',compact('product','products_same'));
     }
 
     public function products(){

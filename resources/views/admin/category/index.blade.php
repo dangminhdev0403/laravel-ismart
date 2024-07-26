@@ -72,7 +72,7 @@
 
             Swal.fire({
                 title: "Xác nhận xóa",
-                text: `Bạn có chắc chắn muốn xóa sản phẩm ${name}?`,
+                text: `Bạn có chắc chắn muốn xóa danh mục ${name}?`,
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",

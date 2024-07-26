@@ -8,11 +8,15 @@
                 <div class="secion-detail">
                     <ul class="list-item clearfix">
                         <li>
-                            <a href="" title="">Trang chủ</a>
+                            <a href="{{ route('home') }}" title="">Trang chủ</a>
                         </li>
                         <li>
                             <a href="{{ route('getProductByCategory', $product->category->slug) }}"
-                                title="">{{ $product->category->name }}</a>
+                                title=""> {{ $product->category->name }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('detailProduct', $product->id) }}"
+                                title=""> {{ $product->name }}</a>
                         </li>
                     </ul>
                 </div>
@@ -96,8 +100,8 @@
                                 <input type="text" name="num-order" value="1" id="num-order">
                                 <a title="" id="plus"><i class="fa fa-plus"></i></a>
                             </div>
-                            <a href="?page=cart" title="Thêm giỏ hàng" class="add-cart">Thêm giỏ hàng</a>
-                            <a href="?page=cart" title="Thêm giỏ hàng" class="add-cart buy-now">Mua ngay</a>
+                            <a href="{{ route('cart.add',$product->id) }}" title="Thêm giỏ hàng" class="add-cart">Thêm giỏ hàng</a>
+                            <a href="{{ route('cart.pay') }}" title="Thêm giỏ hàng" class="add-cart buy-now">Mua ngay</a>
                         </div>
                     </div>
                 </div>
@@ -115,104 +119,34 @@
                     </div>
                     <div class="section-detail">
                         <ul class="list-item">
-                            <li>
-                                <a href="" title="" class="thumb">
-                                    <img src="public/images/img-pro-17.png">
-                                </a>
-                                <a href="" title="" class="product-name">Laptop HP Probook 4430s</a>
-                                <div class="price">
-                                    <span class="new">17.900.000đ</span>
-                                    <span class="old">20.900.000đ</span>
-                                </div>
-                                <div class="action clearfix">
-                                    <a href="" title="" class="add-cart fl-left">Thêm giỏ hàng</a>
-                                    <a href="" title="" class="buy-now fl-right">Mua ngay</a>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="" title="" class="thumb">
-                                    <img src="public/images/img-pro-18.png">
-                                </a>
-                                <a href="" title="" class="product-name">Laptop HP Probook 4430s</a>
-                                <div class="price">
-                                    <span class="new">17.900.000đ</span>
-                                    <span class="old">20.900.000đ</span>
-                                </div>
-                                <div class="action clearfix">
-                                    <a href="" title="" class="add-cart fl-left">Thêm giỏ hàng</a>
-                                    <a href="" title="" class="buy-now fl-right">Mua ngay</a>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="" title="" class="thumb">
-                                    <img src="public/images/img-pro-19.png">
-                                </a>
-                                <a href="" title="" class="product-name">Laptop HP Probook 4430s</a>
-                                <div class="price">
-                                    <span class="new">17.900.000đ</span>
-                                    <span class="old">20.900.000đ</span>
-                                </div>
-                                <div class="action clearfix">
-                                    <a href="" title="" class="add-cart fl-left">Thêm giỏ hàng</a>
-                                    <a href="" title="" class="buy-now fl-right">Mua ngay</a>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="" title="" class="thumb">
-                                    <img src="public/images/img-pro-20.png">
-                                </a>
-                                <a href="" title="" class="product-name">Laptop HP Probook 4430s</a>
-                                <div class="price">
-                                    <span class="new">17.900.000đ</span>
-                                    <span class="old">20.900.000đ</span>
-                                </div>
-                                <div class="action clearfix">
-                                    <a href="" title="" class="add-cart fl-left">Thêm giỏ hàng</a>
-                                    <a href="" title="" class="buy-now fl-right">Mua ngay</a>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="" title="" class="thumb">
-                                    <img src="public/images/img-pro-21.png">
-                                </a>
-                                <a href="" title="" class="product-name">Laptop HP Probook 4430s</a>
-                                <div class="price">
-                                    <span class="new">17.900.000đ</span>
-                                    <span class="old">20.900.000đ</span>
-                                </div>
-                                <div class="action clearfix">
-                                    <a href="" title="" class="add-cart fl-left">Thêm giỏ hàng</a>
-                                    <a href="" title="" class="buy-now fl-right">Mua ngay</a>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="" title="" class="thumb">
-                                    <img src="public/images/img-pro-22.png">
-                                </a>
-                                <a href="" title="" class="product-name">Laptop HP Probook 4430s</a>
-                                <div class="price">
-                                    <span class="new">17.900.000đ</span>
-                                    <span class="old">20.900.000đ</span>
-                                </div>
-                                <div class="action clearfix">
-                                    <a href="" title="" class="add-cart fl-left">Thêm giỏ hàng</a>
-                                    <a href="" title="" class="buy-now fl-right">Mua ngay</a>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="" title="" class="thumb">
-                                    <img src="public/images/img-pro-23.png">
-                                </a>
-                                <a href="" title="" class="product-name">Laptop HP Probook 4430s</a>
-                                <div class="price">
-                                    <span class="new">17.900.000đ</span>
-                                    <span class="old">20.900.000đ</span>
-                                </div>
-                                <div class="action clearfix">
-                                    <a href="" title="" class="add-cart fl-left">Thêm giỏ hàng</a>
-                                    <a href="" title="" class="buy-now fl-right">Mua ngay</a>
-                                </div>
-                            </li>
+
+                          @foreach ($products_same as $product_same)
+                          <li>
+                            <a href="" title="" class="thumb">
+                                <img src="{{ asset($product->images[0]->image_name) }}"
+                                style="width: 133px ; height: 133px; object-fit: cover;">
+                            </a>
+                            <a href="" title="" class="product-name">{{ $product_same ->name }}</a>
+                            <div class="price">
+
+                                @if ($product->sale_price > 0)
+                                    <span
+                                        class="new">{{ number_format($product->sale_price, 0, '', '.') }}
+                                        đ</span>
+                                    <span class="old">{{ number_format($product->price, 0, '', '.') }}
+                                        đ</span>
+                                @else
+                                    <span class="new"> {{ number_format($product->price, 0, '', '.') }}
+                                        đ</span>
+                                @endif
+
+
+
+                            </div>
+
+                        </li>
+
+                          @endforeach
                         </ul>
                     </div>
                 </div>
@@ -284,3 +218,18 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (session('message'))
+<script>
+    Swal.fire({
+        title: "Thành công",
+        text: "{{ session('message') }}",
+        icon: "success",
+        showConfirmButton: true,
+        confirmButtonText: "OK",
+
+    });
+</script>
+@endif
+@endpush
