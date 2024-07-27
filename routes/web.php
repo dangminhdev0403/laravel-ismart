@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -78,5 +79,9 @@ Route::middleware('auth')->controller(OrderController::class)->prefix('order')->
     Route::put('update', 'update')->name('cart.update');
     Route::get('destroy', 'destroy')->name('cart.destroy');
     Route::post('pay', 'pay')->name('cart.pay');
+    Route::post('checkout','checkout')->name('cart.checkout');
+
 });
+
+
 require __DIR__ . '/auth.php';

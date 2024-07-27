@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('status')->default('Đang xử lí');
             $table->integer('phone');
             $table->decimal('total_price',10,2);
-
+            $table->string('note');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

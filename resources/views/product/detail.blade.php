@@ -11,12 +11,11 @@
                             <a href="{{ route('home') }}" title="">Trang chủ</a>
                         </li>
                         <li>
-                            <a href="{{ route('getProductByCategory', $product->category->slug) }}"
-                                title=""> {{ $product->category->name }}</a>
+                            <a href="{{ route('getProductByCategory', $product->category->slug) }}" title="">
+                                {{ $product->category->name }}</a>
                         </li>
                         <li>
-                            <a href="{{ route('detailProduct', $product->id) }}"
-                                title=""> {{ $product->name }}</a>
+                            <a href="{{ route('detailProduct', $product->id) }}" title=""> {{ $product->name }}</a>
                         </li>
                     </ul>
                 </div>
@@ -95,13 +94,19 @@
                             @else
                                 <p class="price">{{ number_format($product->price, 0, '', '.') }}đ</p>
                             @endif
-                            <div id="num-order-wp">
-                                <a title="" id="minus"><i class="fa fa-minus"></i></a>
-                                <input type="text" name="num-order" value="1" id="num-order">
-                                <a title="" id="plus"><i class="fa fa-plus"></i></a>
-                            </div>
-                            <a href="{{ route('cart.add',$product->id) }}" title="Thêm giỏ hàng" class="add-cart">Thêm giỏ hàng</a>
-                            <a href="{{ route('cart.pay') }}" title="Thêm giỏ hàng" class="add-cart buy-now">Mua ngay</a>
+                            <form method="GET" action="{{ route('cart.add', $product->id) }}">
+                                <div id="num-order-wp">
+                                    <a title="" id="minus"><i class="fa fa-minus"></i></a>
+
+                                    <input type="text" name="quantity" value="1" min="1" id="num-order">
+                                    <a title="" id="plus"><i class="fa fa-plus"></i></a>
+                                </div>
+                                <a href="#" title="Thêm giỏ hàng" class="add-cart" onClick="submitForm(event)">Thêm
+                                    giỏ hàng</a>
+                                <a href="{{ route('cart.pay') }}" title="Thêm giỏ hàng" class="add-cart buy-now">Mua
+                                    ngay</a>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -110,7 +115,7 @@
                         <h3 class="section-title">Mô tả sản phẩm</h3>
                     </div>
                     <div class="section-detail">
-                        {!! $product ->content !!}
+                        {!! $product->content !!}
                     </div>
                 </div>
                 <div class="section" id="same-category-wp">
@@ -120,33 +125,31 @@
                     <div class="section-detail">
                         <ul class="list-item">
 
-                          @foreach ($products_same as $product_same)
-                          <li>
-                            <a href="" title="" class="thumb">
-                                <img src="{{ asset($product->images[0]->image_name) }}"
-                                style="width: 133px ; height: 133px; object-fit: cover;">
-                            </a>
-                            <a href="" title="" class="product-name">{{ $product_same ->name }}</a>
-                            <div class="price">
+                            @foreach ($products_same as $product_same)
+                                <li>
+                                    <a href="" title="" class="thumb">
+                                        <img src="{{ asset($product->images[0]->image_name) }}"
+                                            style="width: 133px ; height: 133px; object-fit: cover;">
+                                    </a>
+                                    <a href="" title="" class="product-name">{{ $product_same->name }}</a>
+                                    <div class="price">
 
-                                @if ($product->sale_price > 0)
-                                    <span
-                                        class="new">{{ number_format($product->sale_price, 0, '', '.') }}
-                                        đ</span>
-                                    <span class="old">{{ number_format($product->price, 0, '', '.') }}
-                                        đ</span>
-                                @else
-                                    <span class="new"> {{ number_format($product->price, 0, '', '.') }}
-                                        đ</span>
-                                @endif
-
+                                        @if ($product->sale_price > 0)
+                                            <span class="new">{{ number_format($product->sale_price, 0, '', '.') }}
+                                                đ</span>
+                                            <span class="old">{{ number_format($product->price, 0, '', '.') }}
+                                                đ</span>
+                                        @else
+                                            <span class="new"> {{ number_format($product->price, 0, '', '.') }}
+                                                đ</span>
+                                        @endif
 
 
-                            </div>
 
-                        </li>
+                                    </div>
 
-                          @endforeach
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -219,17 +222,23 @@
     </div>
 @endsection
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@if (session('message'))
-<script>
-    Swal.fire({
-        title: "Thành công",
-        text: "{{ session('message') }}",
-        icon: "success",
-        showConfirmButton: true,
-        confirmButtonText: "OK",
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('message'))
+        <script>
+            Swal.fire({
+                title: "Thành công",
+                text: "{{ session('message') }}",
+                icon: "success",
+                showConfirmButton: true,
+                confirmButtonText: "OK",
 
-    });
-</script>
-@endif
+            });
+        </script>
+    @endif
+    <script>
+        function submitForm(event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
+            event.target.closest('form').submit(); // Gọi hàm submit của form
+        }
+    </script>
 @endpush

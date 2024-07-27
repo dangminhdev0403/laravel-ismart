@@ -64,47 +64,43 @@
                     </div>
                     <div class="section-detail">
                         @if ($products->isEmpty())
-                        <h3 class="text-danger  text-center">Không có sản phẩm nào trong danh mục này</h3>
-
-
-
-
-
-                            @else
+                            <h3 class="text-danger  text-center">Không có sản phẩm nào trong danh mục này</h3>
+                        @else
                             <ul class="list-item">
-                            @foreach ($products as $product)
-                            <li>
-                                <a href="{{ route('detailProduct', $product->id) }}" title="" class="thumb">
-                                    <img src="{{ asset($product->images[0]->image_name) }}"
-                                        style="width: 133px ; height: 133px; object-fit: cover;">
-                                    <a href="{{ route('detailProduct', $product->id) }}" title=""
-                                        class="product-name">{{ $product->name }}
-                                    </a>
-                                    <div class="price">
+                                @foreach ($products as $product)
+                                    <li style="  padding:   10px 10px 7px;">
+                                        <a href="{{ route('detailProduct', $product->id) }}" title="" class="thumb">
+                                            <img src="{{ asset($product->images[0]->image_name) }}"
+                                                style="width: 133px ; height: 133px; object-fit: cover; padding:
+0px 0px 0px 23px;">
+                                            <a href="{{ route('detailProduct', $product->id) }}" title=""
+                                                class="product-name">{{ $product->name }}
+                                            </a>
+                                            <div class="price">
 
-                                        @if ($product->sale_price > 0)
-                                            <span
-                                                class="new">{{ number_format($product->sale_price, 0, '', '.') }}
-                                                đ</span>
-                                            <span class="old">{{ number_format($product->price, 0, '', '.') }}
-                                                đ</span>
-                                        @else
-                                            <span class="new"> {{ number_format($product->price, 0, '', '.') }}
-                                                đ</span>
-                                        @endif
-
-
-
-                                    </div>
-                                 
-                            </li>
-                        @endforeach
+                                                @if ($product->sale_price > 0)
+                                                    <span
+                                                        class="new">{{ number_format($product->sale_price, 0, '', '.') }}
+                                                        đ</span>
+                                                    <span class="old">{{ number_format($product->price, 0, '', '.') }}
+                                                        đ</span>
+                                                @else
+                                                    <span class="new"> {{ number_format($product->price, 0, '', '.') }}
+                                                        đ</span>
+                                                @endif
 
 
 
+                                            </div>
+
+                                    </li>
+                                @endforeach
 
 
-                        </ul>
+
+
+
+                            </ul>
                         @endif
                     </div>
                 </div>

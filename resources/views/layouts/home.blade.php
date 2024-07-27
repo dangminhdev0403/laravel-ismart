@@ -31,6 +31,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <style>
+      
         #delete-cart-all {
             display: inline-block;
             padding: 12px 25px;
@@ -369,7 +370,7 @@
                                                         sản phẩm trong giỏ </p>
                                                     <div class="total-price clearfix">
                                                         <p class="title fl-left">Tổng:</p>
-                                                        <p class="price fl-right">{{ Cart::subtotal() }}đ</p>
+                                                        <p class="price fl-right" style="font-size: 14px; margin:12px 0 16px">{{ Cart::subtotal() }} đ</p>
                                                     </div>
                                                     <div class="action-cart clearfix">
                                                         <a href="{{ route('cart.show') }}" title="Giỏ hàng"

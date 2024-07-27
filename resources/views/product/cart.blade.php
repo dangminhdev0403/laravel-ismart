@@ -55,14 +55,17 @@
                                                     value="{{ $row->price }}">
                                             </td>
                                             <td>
-                                                <a href="" title="" class="thumb">
+                                                <a href="{{ route('detailProduct',$row->id) }}" title="" class="thumb">
                                                     <img src="{{ asset($row->options->image) }}" alt="">
                                                 </a>
                                             </td>
                                             <td class="product-name">
 
+                                                <a href="{{ route('detailProduct',$row->id) }}" style="color: #000">
 
-                                                {{ $row->name }}</td>
+                                                {{ $row->name }}
+                                                </a>
+                                            </td>
                                             <td class="product-price">{{ number_format($row->price, 0, '', '.') }} đ</td>
                                             <td>
                                                 <input type="number" name="Qty" min="1"

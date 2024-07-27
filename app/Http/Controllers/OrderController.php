@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Orders\CreateOrderRequest;
 use App\Models\Order;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -21,13 +22,13 @@ class OrderController extends Controller
     {
         $product = Product::find($id);
         $image = $product->images[0]->image_name;
-
+        // dd($request);
         Cart::add(
             [
                 'id' => $product->id,
                 'name' => $product->name,
                 'price' => $product->price,
-                'qty' => 1,
+                'qty' => $request->input('quantity'),
                 'options' => ['image' => $image]
             ]
         );
@@ -40,15 +41,15 @@ class OrderController extends Controller
     public function remove($rowId)
     {
         Cart::remove($rowId);
-        return redirect()->back()->with('message','Xoá thành công');
+        return redirect()->back()->with('message', 'Xoá thành công');
     }
 
 
-    
+
     public function destroy()
     {
         Cart::destroy();
-        return redirect()->route('cart.show')->with('message','Xoá tất cả thành công');
+        return redirect()->route('cart.show')->with('message', 'Xoá tất cả thành công');
     }
 
 
@@ -79,23 +80,48 @@ class OrderController extends Controller
     {
 
         $list_check = $request->input('products');
-        // dd($list_check);
+        //  dd($list_check);
         $selectedProducts = array_filter($list_check, function ($product) {
             return isset($product['selected']);
-
         });
 
-        // dd($selectedProducts);
+        //  dd($selectedProducts);
 
         if (!empty($selectedProducts)) {
-            return view('product.order',compact('selectedProducts'));
+            return view('product.order', compact('selectedProducts'));
         } else {
 
-            return redirect()->back()->with('error', 'Chưa có đơn hàng nào được dặt');
+            return redirect()->back()->with('error', 'Chưa có đơn hàng nào được chọn');
         }
     }
 
+    function checkout(Request $request)
+    {
 
 
 
+
+        $data = $request->except('rowId');
+        //  $data = $request->all();
+        $data['user_id'] = auth()->user()->id;
+        $data['status'] = 'pending';
+        $rowIds = $request->input('rowId', []);
+
+
+
+
+
+        foreach ($rowIds as $rowId) {
+
+
+                Cart::remove($rowId);
+            
+        }
+
+
+        Order::create($data);
+
+
+        return redirect()->route('home')->with('message', 'Đặt hàng thành công');
+    }
 }
