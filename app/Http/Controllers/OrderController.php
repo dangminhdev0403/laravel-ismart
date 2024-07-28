@@ -88,7 +88,7 @@ class OrderController extends Controller
         //  dd($selectedProducts);
 
         if (!empty($selectedProducts)) {
-            return view('product.order', compact('selectedProducts'));
+            return view('product.checkout', compact('selectedProducts'));
         } else {
 
             return redirect()->back()->with('error', 'Chưa có đơn hàng nào được chọn');
@@ -115,13 +115,13 @@ class OrderController extends Controller
 
 
                 Cart::remove($rowId);
-            
+
         }
 
 
         Order::create($data);
 
 
-        return redirect()->route('home')->with('message', 'Đặt hàng thành công');
+        return redirect()->route('order.show')->with('message', 'Đặt hàng thành công');
     }
 }
