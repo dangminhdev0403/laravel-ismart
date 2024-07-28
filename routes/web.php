@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckOutController;
@@ -56,6 +57,11 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::post('edit/{id}', 'update')->name('products.update');
         Route::get('delete/{id}', 'delete')->name('products.delete');
     });
+    //!Order
+    Route::controller(AdminOrderController::class)->prefix('orders')->group(function(){
+        Route::get('','index')->name('admin.oders');
+        Route::get('show/{status}','showByStatus')->name('admin.show');
+    });
 });
 
 
@@ -80,13 +86,16 @@ Route::middleware('auth')->controller(OrderController::class)->prefix('order')->
     Route::get('remove/{rowId?}', 'remove')->name('cart.remove');
     Route::put('update', 'update')->name('cart.update');
     Route::get('destroy', 'destroy')->name('cart.destroy');
-    Route::post('pay', 'pay')->name('cart.pay');
-    Route::post('checkout','checkout')->name('cart.checkout');
+    Route::post('pay', 'pay')->name('cart.pay')->middleware('checkout');
+
+
+    Route::post('checkout','checkout')->name('cart.checkout')->middleware('checkout');
 
 });
-
+  //! Deltail Order
 Route::middleware('auth')->controller(DetailOrderController::class)->prefix('detailorder')->group(function () {
     Route::get('', 'index')->name('order.show');
+    Route::get('cancel/{id}', 'cancel')->name('order.cancel');
 });
 
 

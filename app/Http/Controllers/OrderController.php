@@ -112,16 +112,21 @@ class OrderController extends Controller
 
 
         foreach ($rowIds as $rowId) {
-
-
+            $item = Cart::get($rowId);
+            if($item){
                 Cart::remove($rowId);
+                Order::create($data);
+
+
+
+            }else{
+                return "Lỗi";
+            }
+
 
         }
 
-
-        Order::create($data);
-
-
         return redirect()->route('order.show')->with('message', 'Đặt hàng thành công');
+
     }
 }

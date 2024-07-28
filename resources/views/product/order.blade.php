@@ -56,7 +56,7 @@
                                             <td></td>
                                             @endif
                                             <td>
-                                                {{ $row->created_at }}
+                                                {{ $row->formatted_date }}
                                             </td>
                                             <td>
                                                 <a href="{{ route('detailProduct', $row->id) }}" title=""
@@ -95,9 +95,9 @@
                                             </td>
                                             @if ($row['status'] == 'pending')
                                                 <td>
-                                                    <a href="{{ route('cart.remove', $row->rowId) }}" title=""
-                                                        class="del-product btn delete-link text-danger " onclick="deleteCategory()">
-                                                        Hủy
+                                                    <a href="{{ route('order.cancel',$row->id) }}" title=""
+                                                        class="del-product btn btn-danger delete-link " onclick="deleteCategory()" style="color: white">
+                                                       Hủy
                                                     </a>
                                                 </td>
                                             @else
@@ -211,14 +211,14 @@
 
 
             Swal.fire({
-                title: "Xác nhận xóa",
+                title: "Xác nhận ",
                 text: `Bạn có chắc chắn muốn hủy đơn hàng?`,
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Xóa",
-                cancelButtonText: "Hủy",
+                confirmButtonText: "Chắc chắn",
+                cancelButtonText: "Không",
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = url; // Chỉ thực hiện khi đã xác nhận xóa

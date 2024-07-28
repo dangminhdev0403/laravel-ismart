@@ -25,7 +25,11 @@
 
     <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
 
-
+<style>
+    table th , td{
+        text-align: center;
+    }
+</style>
 
 </head>
 
@@ -33,17 +37,13 @@
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="{{ route('dashboard') }}">Trang Dahboard</a>
+
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                    aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button>
-            </div>
+
         </form>
         <!-- Navbar-->
           <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -76,6 +76,11 @@
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
+                    <div class="sb-sidenav-footer">
+
+                        <h6 class="text-center">{{ Auth::user()->name }}</h6>
+
+                    </div>
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Chính</div>
                         <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} "
@@ -83,108 +88,22 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-                        <div class="sb-sidenav-menu-heading">Interface</div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Layouts
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                            data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
-                            </nav>
-                        </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                            data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            Pages
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
-                            data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseAuth" aria-expanded="false"
-                                    aria-controls="pagesCollapseAuth">
-                                    Authentication
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="login.html">Login</a>
-                                        <a class="nav-link" href="register.html">Register</a>
-                                        <a class="nav-link" href="password.html">Forgot Password</a>
-                                    </nav>
-                                </div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseError" aria-expanded="false"
-                                    aria-controls="pagesCollapseError">
-                                    Error
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="401.html">401 Page</a>
-                                        <a class="nav-link" href="404.html">404 Page</a>
-                                        <a class="nav-link" href="500.html">500 Page</a>
-                                    </nav>
-                                </div>
-                            </nav>
-                        </div>
-                        <div class="sb-sidenav-menu-heading">Chức năng</div>
-                        {{-- Product --}}
 
-                        <a class="nav-link collapsed  {{ request()->routeIs('products') ? 'active' : '' }} || {{ request()->routeIs('products.*') ? 'active' : '' }}"
-                            href="{{ url('admin/products') }}" data-bs-toggle="collapse" data-bs-target="#collapseProducts"
-                            aria-expanded="false" aria-controls="collapseProducts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Sản phẩm
-                            <div class="sb-sidenav-collapse-arrow"><i
-                                    class="fas fa-angle-{{ request()->routeIs('products') ? 'left' : 'down' }} ||  {{ request()->routeIs('products.*') ? 'left' : 'down' }} "></i>
-                            </div>
-                        </a>
-                        <div class="collapse {{ request()->routeIs('products') ? 'show' : '' }} {{ request()->routeIs('products.*') ? 'show' : '' }} "
-                            id="collapseProducts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ url('admin/products') }}">Tất cả Sản phẩm</a>
-                                <a class="nav-link {{ request()->routeIs('products.add') ? 'active' : '' }}"
-                                    href="{{ url('admin/products/add') }}">Thêm Sản phẩm</a>
-                            </nav>
-                        </div>
+
+                        <div class="sb-sidenav-menu-heading">Quản lí</div>
+                        {{-- Product --}}
+                            <a  class="nav-link collapsed {{ request()->routeIs(['products.*','products']) ? 'active':'' }}" href="{{ route('products') }}">  <div class="sb-nav-link-icon"><i class="fa-solid fa-table-list"></i></div>Sản phẩm</a>
+
 
                         {{-- Category --}}
-                        <a class="nav-link collapsed  {{ request()->routeIs('category.*') ? 'active' : '' }}"
-                            href="{{ url('admin/category') }}" data-bs-toggle="collapse"
-                            data-bs-target="#collapseCategories" aria-expanded="false"
-                            aria-controls="collapseCategories">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Danh mục
-                            <div class="sb-sidenav-collapse-arrow"><i
-                                    class="fas fa-angle-{{ request()->routeIs('category.*') ? 'left' : 'down' }} "></i>
-                            </div>
-                        </a>
-                        <div class="collapse {{ request()->routeIs('category') ? 'show' : '' }} {{ request()->routeIs('category.*') ? 'show' : '' }} "
-                            id="collapseCategories" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('category') }}">Tất cả danh mục</a>
-                                <a class="nav-link {{ request()->routeIs('category.add') ? 'active' : '' }}"
-                                    href="{{ route('category.add') }}">Thêm danh mục</a>
-                            </nav>
-                        </div>
+                        <a  class="nav-link collapsed {{ request()->routeIs(['category.*','category']) ? 'active':'' }}" href="{{ route('category') }}">  <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>Danh mục</a>
+                        {{-- ? Order --}}
+                        <a  class="nav-link collapsed {{ request()->routeIs(['admin.oders.*','admin.oders']) ? 'active':'' }}" href="{{ route('admin.oders') }}">  <div class="sb-nav-link-icon"><i class="fa-solid fa-bag-shopping"></i></div>Đơn hàng</a>
 
 
 
                 </div>
-                <div class="sb-sidenav-footer">
-                    <div class="small">Đăng nhập bởi:</div>
-                    <h6>{{ Auth::user()->name }}</h6>
 
-                </div>
             </nav>
         </div>
         <div id="layoutSidenav_content">
@@ -195,7 +114,7 @@
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                        <div class="text-muted">Copyright &copy; Đặng Hoàng Minh</div>
                         <div>
                             <a href="#">Privacy Policy</a>
                             &middot;

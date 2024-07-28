@@ -11,7 +11,7 @@
           </div>
           <div class="card-body">
             <div class="form-group">
-              <label for="nama">Tên Category</label>
+              <label for="nama">Tên Danh mục</label>
               <input type="text" class="form-control" id="name" name="name" value="{{ isset($category) ? $category->name : '' }}">
             </div>
           </div>

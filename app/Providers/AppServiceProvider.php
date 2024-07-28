@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,7 +27,8 @@ class AppServiceProvider extends ServiceProvider
         //
         $loader = AliasLoader::getInstance();
         $loader->alias('DataTables', \Yajra\DataTables\Facades\DataTables::class);
-        $loader->alias('Cart', \Gloudemans\Shoppingcart\Facades\Cart::class); 
+        $loader->alias('Cart', \Gloudemans\Shoppingcart\Facades\Cart::class);
+        Paginator::useBootstrapFive();
 
     }
 }

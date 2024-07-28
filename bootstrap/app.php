@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CanCheckOut;
 use App\Http\Middleware\NoCache;
 use App\Http\Middleware\SaveCart;
 use Illuminate\Foundation\Application;
@@ -17,7 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
             [
                 'delcache'=> NoCache::class,
-                'savecart'=>SaveCart::class
+                'savecart'=>SaveCart::class,
+                'checkout'=>CanCheckOut::class
             ]
             );
     })

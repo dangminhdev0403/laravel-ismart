@@ -368,3 +368,21 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+
+<script>
+
+   @if (session('message'))
+        <script>
+            Swal.fire({
+                title: "Thành công",
+                text: "{{ session('message') }}",
+                icon: "success",
+                showConfirmButton: true,
+                confirmButtonText: "OK",
+
+            });
+        </script>
+    @endif
+</script>
+@endpush
