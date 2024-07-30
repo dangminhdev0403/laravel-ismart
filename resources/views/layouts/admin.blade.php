@@ -14,6 +14,8 @@
     <link href="{{ asset('admin/css/styles.css') }}" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <!-- Scripts -->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -98,7 +100,7 @@
                         {{-- Category --}}
                         <a  class="nav-link collapsed {{ request()->routeIs(['category.*','category']) ? 'active':'' }}" href="{{ route('category') }}">  <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>Danh mục</a>
                         {{-- ? Order --}}
-                        <a  class="nav-link collapsed {{ request()->routeIs(['admin.oders.*','admin.oders']) ? 'active':'' }}" href="{{ route('admin.oders') }}">  <div class="sb-nav-link-icon"><i class="fa-solid fa-bag-shopping"></i></div>Đơn hàng</a>
+                        <a  class="nav-link collapsed {{ request()->routeIs(['admin.orders.*','admin.orders']) ? 'active':'' }}" href="{{ route('admin.orders') }}">  <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>Danh mục</a>
 
 
 
@@ -136,6 +138,11 @@
     <script src="{{ asset('admin/js/datatables-simple-demo.js') }}"></script>
 
 
+<script>
+    $.ajaxSetup({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    });
+</script>
 
     @stack('scripts')
 

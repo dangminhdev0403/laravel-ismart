@@ -59,8 +59,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     });
     //!Order
     Route::controller(AdminOrderController::class)->prefix('orders')->group(function(){
-        Route::get('','index')->name('admin.oders');
-        Route::get('show/{status}','showByStatus')->name('admin.show');
+        Route::get('','index')->name('admin.orders');
+        Route::get('show/{status}','showByStatus')->name('admin.orders.show');
+        Route::put('update-status/{id}', 'updateStatus')->name('updateStatus');
     });
 });
 
@@ -96,6 +97,8 @@ Route::middleware('auth')->controller(OrderController::class)->prefix('order')->
 Route::middleware('auth')->controller(DetailOrderController::class)->prefix('detailorder')->group(function () {
     Route::get('', 'index')->name('order.show');
     Route::get('cancel/{id}', 'cancel')->name('order.cancel');
+
+
 });
 
 

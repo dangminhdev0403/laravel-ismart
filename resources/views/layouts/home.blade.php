@@ -31,7 +31,9 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <style>
-      
+      .list-item{
+        padding: 0;
+      }
         #delete-cart-all {
             display: inline-block;
             padding: 12px 25px;
