@@ -8,8 +8,28 @@
             </div>
 
             <div class="card-body">
-                <a href="{{ url('admin/category/add') }}" class="btn btn-primary mb-3">Thêm đơn hàng</a>
+                <a href="{{ url('admin/category/add') }}" class="btn btn-primary mb-3" style="margin-left: 13px">Thêm đơn hàng</a>
+                <div class ="form-control d-flex" style="border: none">
+
+                    <div id="form-select-users" class="d-flex">
+                        <select name="" id="" class="form-select text-center mb-3"
+                            style="display: inline;">
+                            <option value="1" class="form-option">
+                                Chọn
+                            </option>
+                        </select>
+                        <button class="btn btn-success"
+                            style="padding: 6px 12px; width: 209.953px; height: 38px; transform: translate(12px, 0px);">Áp
+                            dụng</button>
+                    </div>
+
+                    <div id="form-search" style="margin-left: auto">
+                        <input type="text">
+                        <button class="btn btn-success">Tìm</button>
+                    </div>
+                </div>
                 <div class="table-responsive">
+
                     <a href="{{ route('admin.orders') }}"
                         class="{{ request()->routeIs('admin.orders') ? 'text-danger' : '' }} text-decoration-none"
                         style="font-size:20px; margin:0px 13px 0px 0px">Tất cả <span>({{ $counts['All'] }})</span></a>|
@@ -21,9 +41,14 @@
                     <a href="{{ route('admin.orders.show', 'cancel') }} " style="font-size:20px; margin:0px 13px 0px 0px"
                         id="cancel-link" class="{{ $activeLink === 'cancel' ? 'text-danger' : '' }} text-decoration-none">Hủy ({{ $counts['Cancel']}})</a>
 
+
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                @if ( $activeLink!= '')
+                                <th><input type="checkbox" name="select-all" id=""></th>
+                                @endif
+
                                 <th>No</th>
                                 <th>Tên</th>
                                 <th>Email</th>
@@ -39,6 +64,10 @@
                             @php($no = 1)
                             @foreach ($orders as $row)
                                 <tr>
+                                    @if ( $activeLink!= '')
+                                    <td><input type="checkbox" name="list-item" id=""></td>
+                                    @endif
+
                                     <th>{{ $no++ }}</th>
                                     <td>{{ $row->name }}</td>
                                     <td>{{ $row->email }}</td>

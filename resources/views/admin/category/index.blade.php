@@ -11,10 +11,32 @@
                 <a href="{{ url('admin/category/add') }}" class="btn btn-primary mb-3">Thêm danh mục</a>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <div class ="form-control d-flex" style="border: none">
+
+                            <div id="form-select-users" class="d-flex">
+                                <select name="" id="" class="form-select text-center mb-3"
+                                    style="display: inline;">
+                                    <option value="1" class="form-option">
+                                        Chọn
+                                    </option>
+                                </select>
+                                <button class="btn btn-success"
+                                    style="padding: 6px 12px; width: 209.953px; height: 38px; transform: translate(12px, 0px);">Áp
+                                    dụng</button>
+                            </div>
+
+                            <div id="form-search" style="margin-left: auto">
+                                <input type="text">
+                                <button class="btn btn-success">Tìm</button>
+                            </div>
+                        </div>
                         <thead>
                             <tr>
+                                <td><input type="checkbox"></td>
                                 <th>No</th>
                                 <th>Danh mục</th>
+                                <th>Ngày tạo</th>
+                                <th>Trạng thái</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -22,8 +44,11 @@
                             @php($no = 1)
                             @foreach ($categories as $row)
                                 <tr>
+                                    <td><input type="checkbox" name="" id=""></td>
                                     <th>{{ $no++ }}</th>
                                     <td>{{ $row->name }}</td>
+                                    <td>{{ $row->formatted_date }}</td>
+                                    <td>{{ $row->status}}</td>
                                     <td>
                                         <a href="{{ route('category.edit', $row->id) }}" class="btn btn-warning">Sửa</a>
                                         <a href="{{ route('category.delete', $row->id) }}"

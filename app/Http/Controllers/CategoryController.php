@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Category;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -15,6 +16,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories= Category::paginate(5);
+        foreach($categories as $category){
+            $category->formatted_date = Carbon::parse($category->created_at)->format('d-m-Y ');
+           }
 
         return view('admin.category.index',compact('categories'));
     }
@@ -29,7 +33,7 @@ class CategoryController extends Controller
         $data = [
             'name' =>$request ->name ,
             'slug' => Str::slug($request->name),
-            'order' =>0,
+            'categorie' =>0,
             'status' => 'Active',
             'parent_id' => 0
 
