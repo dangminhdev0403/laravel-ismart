@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified','checkrole'])->name('dashboard');
 
 //! Login
 
@@ -36,8 +36,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->prefix('admin')->group(function () {
 
     //! Category
-    Route::controller(CategoryController::class)->prefix('category')->group(function () {
-        Route::get('/', 'index')->name('category');
+    Route::controller(CategoryController::class)->prefix('category')->middleware('checkrole-admin')->group(function () {
+        Route::get('/', 'index')->name('category')->middleware('checkrole:show-category');
         Route::get('/add', 'add')->name('category.add');
         Route::post('/save', 'save')->name('category.save');
         Route::get('/edit/{id}', 'edit')->name('category.edit');

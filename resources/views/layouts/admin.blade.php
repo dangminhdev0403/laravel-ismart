@@ -98,9 +98,16 @@
 
 
                         {{-- Category --}}
+
+                        @if (Auth::user()->role == 1)
                         <a  class="nav-link collapsed {{ request()->routeIs(['category.*','category']) ? 'active':'' }}" href="{{ route('category') }}">  <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>Danh mục</a>
+                        @endif
+
+
+
+
                         {{-- ? Order --}}
-                        <a  class="nav-link collapsed {{ request()->routeIs(['admin.orders.*','admin.orders']) ? 'active':'' }}" href="{{ route('admin.orders') }}">  <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>Danh mục</a>
+                        <a  class="nav-link collapsed {{ request()->routeIs(['admin.orders.*','admin.orders']) ? 'active':'' }}" href="{{ route('admin.orders') }}">  <div class="sb-nav-link-icon"><i class="fa-solid fa-cart-shopping"></i></div>Đơn hàng</a>
 
 
 

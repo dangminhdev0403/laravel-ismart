@@ -24,11 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Alias loader
         $loader = AliasLoader::getInstance();
         $loader->alias('DataTables', \Yajra\DataTables\Facades\DataTables::class);
         $loader->alias('Cart', \Gloudemans\Shoppingcart\Facades\Cart::class);
         Paginator::useBootstrapFive();
-
     }
 }

@@ -76,9 +76,9 @@
                                             <td class="row-total">{{ number_format($row->total, 0, '', '.') }} đ</td>
                                             <td>
                                                 <a href="{{ route('cart.remove', $row->rowId) }}" title=""
-                                                    class="del-product btn delete-link " onclick="deleteCategory()">
-                                                    <i class="fa-solid fa-trash-can " style="color: #de1212;"></i>
-                                                </a>
+                                                    class="del-product btn delete-link" onclick="deleteCategory(event)">
+                                                    <i class="fa-solid fa-trash-can delete-link" style="color: #de1212;"></i>
+                                                 </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -131,6 +131,20 @@
 @endsection
 
 @push('scripts')
+<script>
+    $(document).ready(function() {
+        // Gán sự kiện click cho thẻ i
+        $('a.del-product i').on('click', function(event) {
+            // Ngăn không cho sự kiện click trên thẻ i ảnh hưởng đến thẻ a
+            event.stopPropagation();
+        });
+
+        // Gán sự kiện click cho thẻ a
+        $('a.del-product').on('click', function() {
+            // Xử lý sự kiện click cho thẻ a tại đây (nếu cần)
+        });
+    });
+    </script>
     <script>
         const deleteLinks = document.querySelectorAll('.delete-link');
 
