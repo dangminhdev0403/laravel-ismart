@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -16,15 +17,19 @@ class AdminOrderController extends Controller
            $Pending = Order::where('status', '=', 'pending')->count();
            $Cancel = Order::where('status', '=', 'cancel')->count();
            $Success = Order::where('status', '=', 'success')->count();
-            $All =  Order::where('status')->count();
+            $All =  Order::select('status')->count();
            return compact('Pending', 'Cancel', 'Success','All');
        }
     public function index(){
-        $counts = $this->calculateCounts();
 
+        $counts = $this->calculateCounts();
+        //? dd($counts);
         $activeLink = '';
         $active= '';
         $orders = Order::paginate(10);
+        foreach($orders as $order){
+            $order->formatted_date = Carbon::parse($order->created_at)->format('d-m-Y ');
+           }
         return view('admin.orders.index',compact('orders','activeLink','active','counts'));
     }
     public function showByStatus($status){
@@ -33,6 +38,9 @@ class AdminOrderController extends Controller
         $active= '';
         $activeLink = $status;
         $orders = Order::where('status', '=',$status)->paginate(10);
+        foreach($orders as $order){
+            $order->formatted_date = Carbon::parse($order->created_at)->format('d-m-Y ');
+           }
         return view('admin.orders.index',compact('orders','activeLink','active','counts'));
     }
     public function updateStatus(Request $request,$id)

@@ -11,16 +11,17 @@
                 <a href="{{ url('admin/category/add') }}" class="btn btn-primary mb-3">Thêm đơn hàng</a>
                 <div class="table-responsive">
                     <a href="{{ route('admin.orders') }}"
-                        class="{{ request()->routeIs('admin.orders') ? 'text-danger' : '' }}"
-                        style="font-size:20px; margin:0px 13px 0px 0px">Tất cả <span>({{ $counts['All'] }})</span></a>
-                    <a href="{{ route('admin.orders.show', 'pending') }}" style="font-size:20px; margin:0px 13px 0px 0px"
+                        class="{{ request()->routeIs('admin.orders') ? 'text-danger' : '' }} text-decoration-none"
+                        style="font-size:20px; margin:0px 13px 0px 0px">Tất cả <span>({{ $counts['All'] }})</span></a>|
+                    <a href="{{ route('admin.orders.show', 'pending') }} " style="font-size:20px; margin:0px 13px 0px 0px"
 
-                        id="pending-link" class="{{ $activeLink === 'pending' ? 'text-danger' : '' }}">Chờ xử lí <span class="text-decoration-none">({{ $counts['Pending']}})</span></a>
-                    <a href="{{ route('admin.orders.show', 'success') }}" style="font-size:20px; margin:0px 13px 0px 0px"
-                        id="success-link" class="{{ $activeLink === 'success' ? 'text-danger' : '' }}">Hoàn tất ({{ $counts['Success']}})</a>
-                    <a href="{{ route('admin.orders.show', 'cancel') }}" style="font-size:20px; margin:0px 13px 0px 0px"
-                        id="cancel-link" class="{{ $activeLink === 'cancel' ? 'text-danger' : '' }}">Hủy ({{ $counts['Cancel']}})</a>
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        id="pending-link" class="{{ $activeLink === 'pending' ? 'text-danger' : '' }} text-decoration-none">Chờ xử lí <span class="text-decoration-none">({{ $counts['Pending']}})</span></a>|
+                    <a href="{{ route('admin.orders.show', 'success') }} " style="font-size:20px; margin:0px 13px 0px 0px"
+                        id="success-link" class="{{ $activeLink === 'success' ? 'text-danger' : '' }} text-decoration-none">Hoàn tất ({{ $counts['Success']}})</a>|
+                    <a href="{{ route('admin.orders.show', 'cancel') }} " style="font-size:20px; margin:0px 13px 0px 0px"
+                        id="cancel-link" class="{{ $activeLink === 'cancel' ? 'text-danger' : '' }} text-decoration-none">Hủy ({{ $counts['Cancel']}})</a>
+
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -43,7 +44,7 @@
                                     <td>{{ $row->email }}</td>
                                     <td>{{ $row->phone }}</td>
                                     <td>{{ $row->address }}</td>
-                                    <td>{{ $row->created_at }}</td>
+                                    <td>  {{ $row->formatted_date }}</td>
                                     <td>
                                         @if (!empty($row['note']))
                                             {{ $row['note'] }}

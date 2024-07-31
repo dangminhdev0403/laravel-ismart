@@ -91,8 +91,11 @@
                             Dashboard
                         </a>
 
-
                         <div class="sb-sidenav-menu-heading">Quản lí</div>
+                        {{-- ? User --}}
+                        @if (Auth::user()->role == 1)
+                        <a  class="nav-link collapsed {{ request()->routeIs(['admin.users.*','admin.users']) ? 'active':'' }}" href="{{ route('admin.users') }}">  <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>Người dùng</a>
+                        @endif
                         {{-- Product --}}
                             <a  class="nav-link collapsed {{ request()->routeIs(['products.*','products']) ? 'active':'' }}" href="{{ route('products') }}">  <div class="sb-nav-link-icon"><i class="fa-solid fa-table-list"></i></div>Sản phẩm</a>
 
@@ -101,6 +104,7 @@
 
                         @if (Auth::user()->role == 1)
                         <a  class="nav-link collapsed {{ request()->routeIs(['category.*','category']) ? 'active':'' }}" href="{{ route('category') }}">  <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>Danh mục</a>
+
                         @endif
 
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminOrderController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckOutController;
@@ -35,6 +36,12 @@ Route::middleware('auth')->group(function () {
 //?Admin
 Route::middleware('auth')->prefix('admin')->group(function () {
 
+    //! User
+    Route::controller( AdminUserController::class)->prefix('users')->middleware('checkrole-admin')->name('admin.')->group(function(){
+        Route::get('/','index')->name('users');
+        Route::post('/updateRole/{id}','updateRole')->name('users.updateRole');
+    });
+
     //! Category
     Route::controller(CategoryController::class)->prefix('category')->middleware('checkrole-admin')->group(function () {
         Route::get('/', 'index')->name('category')->middleware('checkrole:show-category');
@@ -44,7 +51,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::post('/update/{id}', 'update')->name('category.update');
         Route::get('/delete/{id}', 'delete')->name('category.delete');
     });
-    //=====
+
 
 
     //!Product
