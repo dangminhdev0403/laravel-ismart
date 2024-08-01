@@ -126,5 +126,95 @@
 
 
 @push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function showError(input, message){
+        let errorElement = input.next('.text-danger');
+        input.addClass('is-invalid');
+        errorElement.text(message);
+        console.log(input.parent());
+    }
 
+    function validateForm() {
+        var name = $('#name');
+        var email = $('#email');
+        var address = $('#address');
+        var phone = $('#phone');
+        var payment = $('input[name="payment"]:checked');
+        var isValid = true;
+
+        $('.is-invalid').removeClass('is-invalid');
+        $('.text-danger').text('');
+
+        if (name.val().trim() === '') {
+            showError(name, 'Họ tên không được để trống');
+            isValid = false;
+        }
+
+        if (email.val().trim() === '') {
+            showError(email, 'Email không được để trống');
+            isValid = false;
+        }
+
+        if (address.val().trim() === '') {
+            showError(address, 'Địa chỉ không được để trống');
+            isValid = false;
+        }
+
+        if (phone.val().trim() === '') {
+            showError(phone, 'Số điện thoại không được để trống');
+            isValid = false;
+        }
+
+        if (!payment.length) {
+            $('#paymentError').text('Vui lòng chọn hình thức thanh toán');
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    function confirmOrder(event) {
+        if (!validateForm()) {
+            event.preventDefault();
+        }
+    }
+
+    $(document).ready(function() {
+        $('#order-now1').click(confirmOrder);
+
+        // Giữ lại các giá trị đã nhập khi form bị submit lỗi
+        var name = localStorage.getItem('name');
+        var email = localStorage.getItem('email');
+        var address = localStorage.getItem('address');
+        var phone = localStorage.getItem('phone');
+        var payment = localStorage.getItem('payment');
+
+        if (name) $('#name').val(name);
+        if (email) $('#email').val(email);
+        if (address) $('#address').val(address);
+        if (phone) $('#phone').val(phone);
+        if (payment) $('input[name="payment"][value="' + payment + '"]').prop('checked', true);
+
+        // Lưu giá trị vào localStorage khi người dùng nhập liệu
+        $('#name, #email, #address, #phone').on('input', function() {
+            localStorage.setItem($(this).attr('id'), $(this).val());
+        });
+
+        $('input[name="payment"]').on('change', function() {
+            localStorage.setItem('payment', $(this).val());
+        });
+
+        // Xóa giá trị trong localStorage khi form được submit thành công
+        $('#myForm').on('submit', function() {
+            if (validateForm()) {
+                localStorage.removeItem('name');
+                localStorage.removeItem('email');
+                localStorage.removeItem('address');
+                localStorage.removeItem('phone');
+                localStorage.removeItem('payment');
+            }
+        });
+    });
+    </script>
 @endpush

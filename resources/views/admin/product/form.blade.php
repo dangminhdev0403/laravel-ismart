@@ -29,7 +29,8 @@
                                 </div>
                             @endif
                             <label for="images">Hình ảnh Sản phẩm</label>
-                            <input type="file" class="form-control" id="images" name="images[]" multiple>
+                            <input type="file" class="form-control" id="images" name="images[]" style="width: 291px;"
+                                multiple>
 
                             @if (isset($product))
                                 @foreach ($images as $image)
