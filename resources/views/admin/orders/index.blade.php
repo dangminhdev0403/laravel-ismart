@@ -10,18 +10,20 @@
             <div class="card-body">
                 <a href="{{ url('admin/category/add') }}" class="btn btn-primary mb-3" style="margin-left: 13px">Thêm đơn hàng</a>
                 <div class ="form-control d-flex" style="border: none">
+                        @if($activeLink != '')
+                        <div id="form-select-users" class="d-flex">
+                            <select name="" id="" class="form-select text-center mb-3"
+                                style="display: inline;">
+                                <option value="1" class="form-option">
+                                    Chọn
+                                </option>
+                            </select>
+                            <button class="btn btn-success"
+                                style="padding: 6px 12px; width: 209.953px; height: 38px; transform: translate(12px, 0px);">Áp
+                                dụng</button>
+                        </div>
+                        @endif
 
-                    <div id="form-select-users" class="d-flex">
-                        <select name="" id="" class="form-select text-center mb-3"
-                            style="display: inline;">
-                            <option value="1" class="form-option">
-                                Chọn
-                            </option>
-                        </select>
-                        <button class="btn btn-success"
-                            style="padding: 6px 12px; width: 209.953px; height: 38px; transform: translate(12px, 0px);">Áp
-                            dụng</button>
-                    </div>
 
                     <div id="form-search" style="margin-left: auto">
                         <input type="text">

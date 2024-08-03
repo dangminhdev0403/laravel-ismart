@@ -14,9 +14,9 @@ class HomeController extends Controller
         ->orderBy('created_at', 'asc')
         ->get();
 
-        // dd($categories);
-
         $products = Product::orderBy('created_at' , 'desc')->paginate(15);
+       // $products_sold = Product::select('total_sold')->orderBy('created_at','desc')->paginate(6);
+        //  dd($products_sold);
 
         //dd($products);
         return view('product.home',compact('products','categories'));

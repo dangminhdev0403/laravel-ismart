@@ -30,19 +30,23 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        if (Auth::check()) {
+      $remember =  $request->has('remember');
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
+            // Kiểm tra nếu người dùng đã đăng nhập
+            if (Auth::check()) {
+                // Khôi phục giỏ hàng nếu người dùng đã đăng nhập
+                Cart::restore(Auth::id());
 
-            Cart::restore(Auth::id());
-        }
+                // Lấy role của người dùng
+                $role = Auth::user()->role;
 
-
-
-        $role = Auth::user()->role;
-
-        if ($role == 3) {
-            return redirect()->route('home');
-        } else {
-            return redirect()->intended(route('dashboard', absolute: false));
+                // Chuyển hướng người dùng dựa vào role
+                if ($role == 3) {
+                    return redirect()->route('home');
+                } else {
+                    return redirect()->intended(route('dashboard', [], false));
+                }
+            }
         }
     }
 

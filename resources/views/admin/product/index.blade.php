@@ -16,7 +16,7 @@
                                 <th>No</th>
                                 <th>Sản phẩm</th>
                                 <th>Danh mục</th>
-                                <th>Giá</th>
+                                <th>Giá (VND)</th>
                                 <th>Actions</th>
 
                             </tr>
@@ -78,6 +78,7 @@
                     "orderable": false,
                     "searchable": false
                 }
+
             ],
             "language": {
                 "sProcessing":   "Đang xử lý...",

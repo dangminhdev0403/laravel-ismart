@@ -233,6 +233,9 @@
                 confirmButtonText: "OK",
 
             });
+            @php
+            session(['message' => null]);
+         @endphp
         </script>
     @endif
     <script>

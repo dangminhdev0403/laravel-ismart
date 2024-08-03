@@ -26,7 +26,7 @@ class ProductController extends Controller
             ->select([
                 'products.id as id',
                 'products.name as name',
-                'products.price as price',
+                Product::raw('REPLACE(FORMAT(products.price, 0), \',\', \'.\') as price'), // Định dạng giá trong SQL
                 'categories.name as cname',
 
             ]);
