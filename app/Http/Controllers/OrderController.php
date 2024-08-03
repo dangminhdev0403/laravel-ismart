@@ -76,24 +76,40 @@ class OrderController extends Controller
         return response()->json(['message' => 'Cart restored from database successfully!']);
     }
 
-    public function pay(Request $request)
+    public function pay(Request $request )
     {
 
-        $list_check = $request->input('products');
-        //  dd($list_check);
-        $selectedProducts = array_filter($list_check, function ($product) {
-            return isset($product['selected']);
-        });
 
-        //  dd($selectedProducts);
 
-        if (!empty($selectedProducts)) {
-            return view('product.checkout', compact('selectedProducts'));
-        } else {
+            $list_check = $request->input('products');
+            //  dd($list_check);
+            $selectedProducts = array_filter($list_check, function ($product) {
+                return isset($product['selected']);
+            });
 
-            return redirect()->back()->with('error', 'Chưa có đơn hàng nào được chọn');
-        }
+            //  dd($selectedProducts);
+
+            if (!empty($selectedProducts)) {
+                return view('product.checkout', compact('selectedProducts'));
+            } else {
+
+                return redirect()->back()->with('error', 'Chưa có đơn hàng nào được chọn');
+            }
+
+
     }
+
+    public function payOne(Request $request,$id){
+        $product = Product::find($id);
+        $image = $product->images[0]->image_name;
+        // dd($request);
+      $quantity =  $request->input('quantity') ;
+       
+
+        return view('product.checkout', compact('product','quantity'));
+
+    }
+
 
     function checkout(Request $request)
     {
@@ -130,3 +146,4 @@ class OrderController extends Controller
 
     }
 }
+

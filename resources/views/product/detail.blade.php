@@ -1,6 +1,34 @@
 @section('title', 'Chi Tiết Sản Phẩm')
 @extends('layouts.home')
+@push('style')
+<style>
+    .description {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 10; /* Hiển thị 3 dòng đầu tiên */
+        -webkit-box-orient: vertical;
+    }
 
+    .description.expanded {
+        -webkit-line-clamp: unset; /* Hiển thị toàn bộ nội dung khi mở rộng */
+    }
+
+    #show-more {
+        cursor: pointer;
+        color: blue;
+        text-decoration: underline;
+    }
+
+   
+
+</style>
+
+
+
+
+
+
+@endpush
 @section('content')
     <div id="main-content-wp" class="clearfix detail-product-page">
         <div class="wp-inner">
@@ -25,11 +53,11 @@
                     <div class="section-detail clearfix">
                         <div class="thumb-wp fl-left">
                             <a href="" title="" id="main-thumb">
-                                <img id="zoom"
-                                    src="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_ab1f47_350x350_maxb.jpg"
-                                    data-zoom-image="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_70aaf2_700x700_maxb.jpg" />
+                                <img id="zoom" src="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_ab1f47_350x350_maxb.jpg" data-zoom-image="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_70aaf2_700x700_maxb.jpg" />
                             </a>
-                            <div id="list-thumb">
+
+                            <div id="list-thumb" class="zoom-gallery">
+
                                 <a href=""
                                     data-image="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_ab1f47_350x350_maxb.jpg"
                                     data-zoom-image="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_70aaf2_700x700_maxb.jpg">
@@ -69,7 +97,7 @@
                             </div>
                         </div>
                         <div class="thumb-respon-wp fl-left">
-                            <img src="public/images/img-pro-01.png" alt="">
+                            <img src="{{ asset('public/images/img-pro-01.png') }}" alt="">
                         </div>
                         <div class="info fl-right">
                             <h3 class="product-name">{{ $product->name }}</h3>
@@ -94,17 +122,23 @@
                             @else
                                 <p class="price">{{ number_format($product->price, 0, '', '.') }}đ</p>
                             @endif
-                            <form method="GET" action="{{ route('cart.add', $product->id) }}">
+                            <form method="post" action="{{ route('cart.add', $product->id) }}" id="formCart">
+                                @csrf
                                 <div id="num-order-wp">
                                     <a title="" id="minus"><i class="fa fa-minus"></i></a>
 
-                                    <input type="text" name="quantity" value="1" min="1" id="num-order">
+                                    <input type="text" name="quantity" value="1" min="1" max="{{ $product->quantity }}"id="num-order">
                                     <a title="" id="plus"><i class="fa fa-plus"></i></a>
                                 </div>
+                                @if ($product->quantity > 0)
                                 <a href="#" title="Thêm giỏ hàng" class="add-cart" onClick="submitForm(event)">Thêm
                                     giỏ hàng</a>
-                                <a href="{{ route('cart.pay') }}" title="Thêm giỏ hàng" class="add-cart buy-now">Mua
+                                <a href="#" title="Thêm giỏ hàng" class="add-cart buy-now" onclick="submitForm2()">Mua
                                     ngay</a>
+                                @else
+                                    <h4 class="alert alert-danger text-center">Đã hết hàng</h4>
+                                @endif
+
                             </form>
 
                         </div>
@@ -112,12 +146,18 @@
                 </div>
                 <div class="section" id="post-product-wp">
                     <div class="section-head">
-                        <h3 class="section-title">Mô tả sản phẩm</h3>
+                        <h3 class="section-title"  id="product-description2">Mô tả sản phẩm</h3>
                     </div>
-                    <div class="section-detail">
+                    <div class="section-detail description " id="product-description">
                         {!! $product->content !!}
+
+
                     </div>
+
+                    <div id="show-more" class="show-more">Xem thêm</div>
+
                 </div>
+
                 <div class="section" id="same-category-wp">
                     <div class="section-head">
                         <h3 class="section-title">Cùng chuyên mục</h3>
@@ -155,73 +195,68 @@
                 </div>
             </div>
             <div class="sidebar fl-left">
-                <div class="section" id="category-product-wp">
-                    <div class="section-head">
-                        <h3 class="section-title">Danh mục sản phẩm</h3>
-                    </div>
-                    <div class="secion-detail">
-                        <ul class="list-item">
-                            <li>
-                                <a href="?page=category_product" title="">Điện thoại</a>
-                                <ul class="sub-menu">
-                                    <li>
-                                        <a href="?page=category_product" title="">Iphone</a>
-                                    </li>
-                                    <li>
-                                        <a href="?page=category_product" title="">Samsung</a>
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <a href="?page=category_product" title="">Iphone X</a>
-                                            </li>
-                                            <li>
-                                                <a href="?page=category_product" title="">Iphone 8</a>
-                                            </li>
-                                            <li>
-                                                <a href="?page=category_product" title="">Iphone 8 Plus</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="?page=category_product" title="">Oppo</a>
-                                    </li>
-                                    <li>
-                                        <a href="?page=category_product" title="">Bphone</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="?page=category_product" title="">Máy tính bảng</a>
-                            </li>
-                            <li>
-                                <a href="?page=category_product" title="">laptop</a>
-                            </li>
-                            <li>
-                                <a href="?page=category_product" title="">Tai nghe</a>
-                            </li>
-                            <li>
-                                <a href="?page=category_product" title="">Thời trang</a>
-                            </li>
-                            <li>
-                                <a href="?page=category_product" title="">Đồ gia dụng</a>
-                            </li>
-                            <li>
-                                <a href="?page=category_product" title="">Thiết bị văn phòng</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="section" id="banner-wp">
-                    <div class="section-detail">
-                        <a href="" title="" class="thumb">
-                            <img src="public/images/banner.png" alt="">
-                        </a>
-                    </div>
-                </div>
+               @include('layouts.navbar')
             </div>
         </div>
     </div>
 @endsection
 @push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('num-order');
+    const minValue = parseInt(input.min, 10);
+    const maxValue = parseInt(input.max, 10);
+
+    // Đặt sự kiện click cho nút giảm
+    document.getElementById('minus').addEventListener('click', function() {
+        let value = parseInt(input.value, 10);
+        if (value > minValue) {
+            input.value = value - 1;
+        }
+    });
+
+    // Đặt sự kiện click cho nút tăng
+    document.getElementById('plus').addEventListener('click', function() {
+        let value = parseInt(input.value, 10);
+        if (value < maxValue) {
+            input.value = value + 1;
+        }
+    });
+
+    // Theo dõi sự thay đổi của ô input để đảm bảo giá trị không vượt quá max
+    input.addEventListener('input', function() {
+        let value = parseInt(input.value, 10);
+        if (value > maxValue) {
+            input.value = maxValue;
+        }
+        if (value < minValue) {
+            input.value = minValue;
+        }
+    });
+});
+
+
+    document.getElementById('plus').addEventListener('click', function() {
+        const input = document.getElementById('num-order');
+        let value = parseInt(input.value);
+        if (value < parseInt(input.max)) {
+            input.value = value + 1;
+        }
+    });
+</script>
+<script>
+
+    document.getElementById('show-more').addEventListener('click', function() {
+        const desc = document.getElementById('product-description');
+        if (desc.classList.contains('expanded')) {
+            desc.classList.remove('expanded');
+            this.textContent = 'Xem thêm';
+        } else {
+            desc.classList.add('expanded');
+            this.textContent = 'Thu gọn';
+        }
+    });
+</script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @if (session('message'))
         <script>
@@ -243,5 +278,14 @@
             event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
             event.target.closest('form').submit(); // Gọi hàm submit của form
         }
+        function submitForm2() {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
+            const form = document.getElementById('formCart');
+            form.action = "{{ route('cart.payOne',$product->id) }}";  // Đặt URL mới cho thuộc tính action
+
+            form.submit(); // Gọi hàm submit của form
+        }
+
+
     </script>
 @endpush

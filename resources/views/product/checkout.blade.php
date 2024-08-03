@@ -75,7 +75,16 @@
                             </tr>
                         </thead>
                         <tbody>
+
                             @php $total = 0; @endphp
+                           @if (isset($product))
+                           <tr class="cart-item">
+                            <td class="product-name">{{ $product['name'] }}<strong class="product-quantity">x {{ $quantity}}</strong></td>
+                            <td class="product-total">
+                                {{ number_format($product['price'] * $quantity, 0, '', '.') }} đ</td>
+                        </tr>
+                        @php $total += $product['price'] * $quantity; @endphp
+                            @else
                             @foreach ($selectedProducts as $row)
                                 <input type="hidden" name="rowId[]" value="{{ $row['rowId'] }}">
                                 <tr class="cart-item">
@@ -85,6 +94,8 @@
                                 </tr>
                                 @php $total += $row['price'] * $row['quantity']; @endphp
                             @endforeach
+                           @endif
+
                         </tbody>
                         <tfoot>
                             <tr class="order-total">

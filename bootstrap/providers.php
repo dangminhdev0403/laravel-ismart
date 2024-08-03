@@ -2,9 +2,6 @@
 
 return [
     App\Providers\AppServiceProvider::class,
-
-    Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class
-
-
+    Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 
 ];

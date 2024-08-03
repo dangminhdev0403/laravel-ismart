@@ -131,7 +131,7 @@ class ProductController extends Controller
         $data = [
             'name' => $request->name,
             'slug' => Str::slug($request->name),
-            'brand_id' => $request->brand_id,
+           
             'category_id' => $request->category_id,
             'price' => $request->price,
             'description' => $request->description,

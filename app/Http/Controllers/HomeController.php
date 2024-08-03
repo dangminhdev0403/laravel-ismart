@@ -34,13 +34,17 @@ class HomeController extends Controller
     }
 
     public function detailProduct($id){
+        $categories = Category::orderBy('order', 'asc')
+        ->orderBy('created_at', 'asc')
+        ->get();
+
         $product =Product::find($id);
         $slug = $product ->category->slug;
         $category_id = Category::where('slug',$slug)->value('id');
          $products_same = Product::where('category_id','=',$category_id)->orderBy('created_at', 'desc')->paginate(15);
 
 
-        return view('product.detail',compact('product','products_same'));
+        return view('product.detail',compact('product','products_same','categories'));
     }
 
     public function products(){

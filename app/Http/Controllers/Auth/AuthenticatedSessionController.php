@@ -41,10 +41,11 @@ class AuthenticatedSessionController extends Controller
                 $role = Auth::user()->role;
 
                 // Chuyển hướng người dùng dựa vào role
-                if ($role == 3) {
-                    return redirect()->route('home');
-                } else {
+                if ($role < 3) {
                     return redirect()->intended(route('dashboard', [], false));
+
+                } else {
+                    return redirect()->route('home');
                 }
             }
         }

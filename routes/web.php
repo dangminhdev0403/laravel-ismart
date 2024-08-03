@@ -10,11 +10,13 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\ViewComposers\NavbarComposer;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\DetailOrder;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 
 // Route::get('/', function () {
 //     // return view('welcome');
@@ -90,11 +92,12 @@ Route::controller(HomeController::class)->prefix('/')->group(function () {
 //Cart
 Route::middleware('auth')->controller(OrderController::class)->prefix('order')->group(function () {
     Route::get('', 'show')->name('cart.show');
-    Route::get('add/{id}', 'add')->name('cart.add');
+    Route::post('add/{id}', 'add')->name('cart.add');
     Route::get('remove/{rowId?}', 'remove')->name('cart.remove');
     Route::put('update', 'update')->name('cart.update');
     Route::get('destroy', 'destroy')->name('cart.destroy');
     Route::post('pay', 'pay')->name('cart.pay')->middleware('checkout');
+    Route::post('payOne/{id}', 'payOne')->name('cart.payOne');
 
 
     Route::post('checkout','checkout')->name('cart.checkout')->middleware('checkout');
@@ -107,6 +110,7 @@ Route::middleware('auth')->controller(DetailOrderController::class)->prefix('det
 
 
 });
+
 
 
 require __DIR__ . '/auth.php';

@@ -59,7 +59,7 @@
                                                 {{ $row->formatted_date }}
                                             </td>
                                             <td>
-                                                <a href="{{ route('detailProduct', $row->id) }}" title=""
+                                                <a href="{{ route('detailProduct', $row->id) }}" title=" {{ $row->name }}"
                                                     class="thumb">
                                                     {{-- <img src="{{ asset($row->options->image) }}" alt=""> --}}
                                                     <p>Ảnh</p>

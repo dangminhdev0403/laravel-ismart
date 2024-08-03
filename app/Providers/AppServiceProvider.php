@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Http\ViewComposers\NavbarComposer;
+use App\Models\Category;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,10 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $providers = config('providers.providers',[]);
-        foreach ($providers as $provider){
-            $this->app->register($provider);
-        }
+       
     }
 
     /**
@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
         // Alias loader
         $loader = AliasLoader::getInstance();
         $loader->alias('DataTables', \Yajra\DataTables\Facades\DataTables::class);
