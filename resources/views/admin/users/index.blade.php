@@ -8,7 +8,7 @@
             </div>
 
             <div class="card-body">
-                <a href="{{ url('admin/category/add') }}" class="btn btn-primary mb-3" style="margin-left: 13px">Thêm người
+                <a href="{{ route('admin.users.add') }}" class="btn btn-primary mb-3" style="margin-left: 13px">Thêm người
                     dùng</a>
 
                 <div class="table-responsive">
@@ -27,8 +27,10 @@
                         </div>
 
                         <div id="form-search" style="margin-left: auto">
-                            <input type="text">
-                            <button class="btn btn-success">Tìm</button>
+                            <form action="#">
+                                <input type="text" name="keyword" value="{{ request()->keyword}}" placeholder="Nhập tên để tìm">
+                                <button class="btn btn-success" id="btn-search">Tìm</button>
+                            </form>
                         </div>
                     </div>
 
@@ -44,7 +46,9 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
+
                         <tbody>
+                            @if ($users->total() > 0)
                             @php($no = 1)
                             @foreach ($users as $row)
                                 <tr>
@@ -84,7 +88,14 @@
                                     </td>
                                 </tr>
                             @endforeach
+                            @else
+                            <h5 class="alert alert-danger text-center"><b>Không có dữ liệu </b></h5>
+                            @endif
+
                         </tbody>
+
+
+
                     </table>
                     {{ $users->links() }}
                 </div>

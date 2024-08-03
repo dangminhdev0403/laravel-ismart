@@ -20,17 +20,23 @@ class AdminOrderController extends Controller
             $All =  Order::select('status')->count();
            return compact('Pending', 'Cancel', 'Success','All');
        }
-    public function index(){
-
+    public function index(Request $request){
+      $keyword =  $request->keyword;
         $counts = $this->calculateCounts();
         //? dd($counts);
         $activeLink = '';
         $active= '';
-        $orders = Order::paginate(10);
-        foreach($orders as $order){
-            $order->formatted_date = Carbon::parse($order->created_at)->format('d-m-Y ');
-           }
-        return view('admin.orders.index',compact('orders','activeLink','active','counts'));
+        if($keyword){
+            $orders = Order::where('name','like','%'.$keyword.'%')->orWhere('email','like','%'.$keyword.'%')->orderBy('created_at','desc')->paginate(10);
+            return view('admin.orders.index',compact('orders','activeLink','active','counts'));
+        }else{
+            $orders = Order::paginate(10);
+            foreach($orders as $order){
+                $order->formatted_date = Carbon::parse($order->created_at)->format('d-m-Y ');
+               }
+            return view('admin.orders.index',compact('orders','activeLink','active','counts'));
+        }
+
     }
     public function showByStatus($status){
         $counts = $this->calculateCounts();

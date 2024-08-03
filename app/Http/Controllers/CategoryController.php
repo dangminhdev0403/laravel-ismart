@@ -13,14 +13,25 @@ use Illuminate\Support\Str;
 class CategoryController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $categories= Category::paginate(5);
-        foreach($categories as $category){
-            $category->formatted_date = Carbon::parse($category->created_at)->format('d-m-Y ');
-           }
+        $keyword = $request->keyword ;
+        // dd($keyword);
+        if($keyword){
+            $categories = Category::where('name','like','%'.$keyword.'%')->orderBy('created_at','desc')->paginate(10);
+            foreach($categories as $category){
+                $category->formatted_date = Carbon::parse($category->created_at)->format('d-m-Y ');
+               }
+            return view('admin.category.index',compact('categories'));
+        }else{
+            $categories= Category::paginate(5);
+            foreach($categories as $category){
+                $category->formatted_date = Carbon::parse($category->created_at)->format('d-m-Y ');
+               }
 
-        return view('admin.category.index',compact('categories'));
+            return view('admin.category.index',compact('categories'));
+        }
+
     }
     public function add()
 

@@ -104,7 +104,7 @@ class OrderController extends Controller
         $image = $product->images[0]->image_name;
         // dd($request);
       $quantity =  $request->input('quantity') ;
-       
+
 
         return view('product.checkout', compact('product','quantity'));
 
@@ -117,32 +117,42 @@ class OrderController extends Controller
 
 
 
-        $data = $request->except('rowId');
-        //  $data = $request->all();
-        $data['user_id'] = auth()->user()->id;
-        $data['status'] = 'pending';
-        $rowIds = $request->input('rowId', []);
+        if($request->rowId){
+
+            $data = $request->except('rowId');
+            $data['user_id'] = auth()->user()->id;
+            $data['status'] = 'pending';
+            $rowIds = $request->input('rowId', []);
+            foreach ($rowIds as $rowId) {
+                $item = Cart::get($rowId);
+                if($item){
+                    Cart::remove($rowId);
+                    Order::create($data);
 
 
 
+                }else{
+                    return "Lỗi";
+                }
 
 
-        foreach ($rowIds as $rowId) {
-            $item = Cart::get($rowId);
-            if($item){
-                Cart::remove($rowId);
-                Order::create($data);
-
-
-
-            }else{
-                return "Lỗi";
             }
 
+            return redirect()->route('order.show')->with('message', 'Đặt hàng thành công');
 
+        }else{
+            // dd( $data = $request->all());
+
+            $data = $request->all();
+            $data['user_id'] = auth()->user()->id;
+            $data['status'] = 'pending';
+            Order::create($data);
+            return redirect()->route('order.show')->with('message', 'Đặt hàng thành công');
         }
 
-        return redirect()->route('order.show')->with('message', 'Đặt hàng thành công');
+
+
+
 
     }
 }

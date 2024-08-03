@@ -58,7 +58,7 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="section" id="feature-product-wp">
                     <div class="section-head">
                         <h3 class="section-title">Sản phẩm nổi bật</h3>
@@ -118,6 +118,7 @@
                         </div>
                         <div class="section-detail">
                             <ul class="list-item clearfix">
+                                
                                 @foreach ($category->products as $product)
                                     <li style="  padding:   10px 10px 7px;">
                                         <a href="{{ route('detailProduct', $product->id) }}" title="" class="thumb">

@@ -16,18 +16,13 @@
                             <label for="name">Tên Sản phẩm</label>
                             <input type="text" class="form-control" id="name" name="name"
                                 value="{{ isset($product) ? $product->name : '' }}">
+                                @error('name')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="form-group">
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+
                             <label for="images">Hình ảnh Sản phẩm</label>
                             <input type="file" class="form-control" id="images" name="images[]" style="width: 291px;"
                                 multiple>
@@ -38,12 +33,36 @@
                                         style="margin: 20px 0">
                                 @endforeach
                             @endif
+                            @error('images')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                        @foreach ($errors->get('images.*') as $key => $messages)
+                            @foreach ($messages as $message)
+                                <p class="text-danger">{{ $message }}</p>
+                            @endforeach
+                        @endforeach
                         </div>
 
                         <div class="form-group">
-                            <label for="price">Giá Sản phẩm</label>
+                            <label for="price">Giá Sản phẩm(Gốc)</label>
                             <input type="text" class="form-control" id="price" name="price"
-                                value="{{ isset($product) ? $product->price : '' }}">
+                                value="{{ isset($product) ? $product->price : 0 }}">
+                                @error('price')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Giá Sản phẩm(Đã giảm)</label>
+                            <input type="text" class="form-control" id="sale_price" name="sale_price"
+                                value="{{ isset($product) ? $product->sale_price : 0 }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Số lượng:</label>
+                            <input type="text" class="form-control" id="quantity" name="quantity"
+                                value="{{ isset($product) ? $product->quantity : 0 }}">
+                                @error('quantity')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="category_id">Danh mục sản phảm</label>
@@ -55,6 +74,9 @@
                                         {{ $row->name }}</option>
                                 @endforeach
                             </select>
+                            @error('category_id')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
                         </div>
 
                         {{-- Mô tả --}}
@@ -62,12 +84,18 @@
                             <label for="description">Mô tả</label>
                             <textarea name="description" id="description1" cols="30" rows="10">
                            {{ isset($product) ? $product->description : '' }}</textarea>
+                           @error('description')
+                           <p class="text-danger">{{ $message }}</p>
+                       @enderror
                         </div>
                         {{-- Nọi dung --}}
                         <div class="form-group">
                             <label for="content"> Chi tiết</label>
                             <textarea name="content" id="content1" cols="30" rows="10">
                             {{ isset($product) ? $product->content : '' }}</textarea>
+                            @error('content')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
                         </div>
 
 

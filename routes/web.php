@@ -42,6 +42,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::controller( AdminUserController::class)->prefix('users')->middleware('checkrole-admin')->name('admin.')->group(function(){
         Route::get('/','index')->name('users');
         Route::post('/updateRole/{id}','updateRole')->name('users.updateRole');
+        Route::get('/add','add')->name('users.add');
+        Route::post('/save','save')->name('users.save');
     });
 
     //! Category
@@ -100,7 +102,7 @@ Route::middleware('auth')->controller(OrderController::class)->prefix('order')->
     Route::post('payOne/{id}', 'payOne')->name('cart.payOne');
 
 
-    Route::post('checkout','checkout')->name('cart.checkout')->middleware('checkout');
+    Route::post('checkout','checkout')->name('cart.checkout');
 
 });
   //! Deltail Order

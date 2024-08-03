@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ImageProduct;
@@ -28,6 +29,8 @@ class ProductController extends Controller
                 'products.name as name',
                 Product::raw('REPLACE(FORMAT(products.price, 0), \',\', \'.\') as price'), // Định dạng giá trong SQL
                 'categories.name as cname',
+                Product::raw('REPLACE(FORMAT(products.sale_price, 0), \',\', \'.\') as sale_price'),
+                Product::raw('REPLACE(FORMAT(products.quantity, 0), \',\', \'.\') as quantity'),
 
             ]);
 
@@ -65,19 +68,23 @@ class ProductController extends Controller
         return view('admin.product.form', compact('category'));
     }
 
-    public function save(Request $request)
+    public function save(ProductRequest $request)
     {
+            $request->validated();
 
-        $request->validate([
-            'images.*' => 'image | mimes:png,jpg,jpeg,webp | required'
-        ]);
+        if($request->sale_price !=null || $request->sale_price !=0){
+            $sale_price = $request->sale_price;
+        }else{
+            $sale_price =$request->price ;
+        }
+       
         $data = [
             'name' => $request->name,
             'slug' => Str::slug($request->name),
-
+            'quantity' => $request->quantity ,
             'category_id' => $request->category_id,
             'price' => $request->price,
-            'sale_price' => '0',
+            'sale_price' => $sale_price,
             'description' => $request->description,
             'content' => $request->content,
             'status' => 'Active',
@@ -117,6 +124,7 @@ class ProductController extends Controller
     public function edit($id)
 
     {
+
         $product = Product::find($id);
         $category = Category::get();
 
@@ -126,16 +134,23 @@ class ProductController extends Controller
     }
     public function update(Request $request, $id)
     {
+        if($request->sale_price !=null || $request->sale_price !=0){
+            $sale_price = $request->sale_price;
+        }else{
+            $sale_price =$request->price ;
+        }
         $product = Product::find($id);
+
 
         $data = [
             'name' => $request->name,
             'slug' => Str::slug($request->name),
-           
+            'sale_price' => $sale_price,
             'category_id' => $request->category_id,
             'price' => $request->price,
             'description' => $request->description,
             'content' => $request->content,
+            'quantity' => $request->quantity
         ];
 
 

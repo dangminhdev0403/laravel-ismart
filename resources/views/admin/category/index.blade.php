@@ -26,8 +26,10 @@
                             </div>
 
                             <div id="form-search" style="margin-left: auto">
-                                <input type="text">
-                                <button class="btn btn-success">Tìm</button>
+                               <form action="#">
+                                    <input type="text" name="keyword" value="{{ request()->keyword}}" placeholder="Nhập tên danh mục ">
+                                    <button class="btn btn-success">Tìm</button>
+                               </form>
                             </div>
                         </div>
                         <thead>
@@ -41,6 +43,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if($categories->total() > 0 )
                             @php($no = 1)
                             @foreach ($categories as $row)
                                 <tr>
@@ -60,6 +63,10 @@
                                     </td>
                                 </tr>
                             @endforeach
+                            @else
+                            <h5 class="alert alert-danger text-center"><b>Không có dữ liệu </b></h5>
+                            @endif
+
                         </tbody>
                     </table>
                   {{ $categories->links() }}

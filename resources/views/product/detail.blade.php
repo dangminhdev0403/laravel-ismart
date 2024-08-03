@@ -19,7 +19,7 @@
         text-decoration: underline;
     }
 
-   
+
 
 </style>
 
@@ -53,7 +53,7 @@
                     <div class="section-detail clearfix">
                         <div class="thumb-wp fl-left">
                             <a href="" title="" id="main-thumb">
-                                <img id="zoom" src="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_ab1f47_350x350_maxb.jpg" data-zoom-image="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_70aaf2_700x700_maxb.jpg" />
+                                <img id="zoom" src="{{ asset($product->images[0]->image_name) }}" width="350px" height="350px" data-zoom-image="{{  $product->images[0]->image_name}}" />
                             </a>
 
                             <div id="list-thumb" class="zoom-gallery">
@@ -168,7 +168,7 @@
                             @foreach ($products_same as $product_same)
                                 <li>
                                     <a href="" title="" class="thumb">
-                                        <img src="{{ asset($product->images[0]->image_name) }}"
+                                        <img src="{{ asset($product_same->images[0]->image_name) }}"
                                             style="width: 133px ; height: 133px; object-fit: cover;">
                                     </a>
                                     <a href="" title="" class="product-name">{{ $product_same->name }}</a>

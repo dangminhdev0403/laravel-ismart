@@ -26,8 +26,10 @@
 
 
                     <div id="form-search" style="margin-left: auto">
-                        <input type="text">
-                        <button class="btn btn-success">Tìm</button>
+                      <form action="#">
+                            <input type="text" name="keyword" value="{{ request()->keyword}}" placeholder="Nhập tên hoặc email">
+                            <button class="btn btn-success">Tìm</button>
+                      </form>
                     </div>
                 </div>
                 <div class="table-responsive">

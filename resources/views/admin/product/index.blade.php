@@ -16,7 +16,9 @@
                                 <th>No</th>
                                 <th>Sản phẩm</th>
                                 <th>Danh mục</th>
-                                <th>Giá (VND)</th>
+                                <th>Giá gốc(VND)</th>
+                                <th>Giá hiện tại(VND)</th>
+                                <th>Số lượng</th>
                                 <th>Actions</th>
 
                             </tr>
@@ -66,6 +68,15 @@
                 {
                     data: 'price',
                     name: 'price'
+                },
+
+                {
+                    data:'sale_price',
+                    name:'sale_price'
+                },
+                {
+                    data:'quantity',
+                    name:'quantity'
                 },
                 {
                     "data": "actions",
