@@ -195,6 +195,7 @@
         #advisory-wp:after {
             width: 0px;
         }
+
     </style>
 
 
@@ -208,15 +209,11 @@
             <div id="header-wp">
                 <div id="head-top" class="clearfix">
                     <div class="wp-inner">
-
                         <a href="" title="" id="payment-link" class="fl-left">Hình thức thanh toán</a>
                         <div id="main-menu-wp" class="fl-right">
                             <ul id="main-menu" class="clearfix">
                                 <li>
                                     <a href="{{ route('home') }}" title="">Trang chủ</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('home.products') }}" title="">Sản phẩm</a>
                                 </li>
 
                                 <li>
@@ -225,55 +222,59 @@
                                 <li>
                                     <a href="{{ route('contact') }}" title="">Liên hệ</a>
                                 </li>
-
+                                <li>
+                                    <a href="{{ route('order.show') }}" title="">Đơn hàng</a>
+                                </li>
                                 @if (Route::has('login'))
 
-                                    @auth
+                                @auth
 
 
 
+                                    <li>
+                                        <details class="dropdown ">
+                                            <summary role="button">
+                                                <a class="button dropdown-toggle">{{ Auth::user()->name }}</a>
+                                            </summary>
+                                            <ul>
+                                                <li class="">
+                                                    <x-responsive-nav-link :href="route('profile.edit')">
+                                                        {{ __('Profile') }}
+                                                    </x-responsive-nav-link>
+                                                </li>
+                                                <li>
+                                                    <form method="POST" action="{{ route('logout') }}">
+                                                        @csrf
+
+                                                        <x-dropdown-link :href="route('logout')"
+                                                            onclick="event.preventDefault();
+                                                                                this.closest('form').submit();">
+                                                            {{ __('Đăng xuất') }}
+                                                        </x-dropdown-link>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a href="{{ route('login') }}"
+                                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                                            Đăng nhập
+                                        </a>
+                                    </li>
+
+                                    @if (Route::has('register'))
                                         <li>
-                                            <details class="dropdown ">
-                                                <summary role="button">
-                                                    <a class="button dropdown-toggle">{{ Auth::user()->name }}</a>
-                                                </summary>
-                                                <ul>
-                                                    <li class="">
-                                                        <x-responsive-nav-link :href="route('profile.edit')">
-                                                            {{ __('Profile') }}
-                                                        </x-responsive-nav-link>
-                                                    </li>
-                                                    <li>
-                                                        <form method="POST" action="{{ route('logout') }}">
-                                                            @csrf
-
-                                                            <x-dropdown-link :href="route('logout')"
-                                                                onclick="event.preventDefault();
-                                                                                    this.closest('form').submit();">
-                                                                {{ __('Đăng xuất') }}
-                                                            </x-dropdown-link>
-                                                </ul>
-                                            </details>
-                                        </li>
-                                    @else
-                                        <li>
-                                            <a href="{{ route('login') }}"
+                                            <a href="{{ route('register') }}"
                                                 class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                                                Đăng nhập
+                                                Đăng kí
                                             </a>
                                         </li>
+                                    @endif
+                                @endauth
 
-                                        @if (Route::has('register'))
-                                            <li>
-                                                <a href="{{ route('register') }}"
-                                                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                                                    Đăng kí
-                                                </a>
-                                            </li>
-                                        @endif
-                                    @endauth
+                            @endif
 
-                                @endif
+
                             </ul>
                         </div>
                     </div>
@@ -281,11 +282,10 @@
                 <div id="head-body" class="clearfix">
                     <div class="wp-inner">
                         <a href="{{ route('home') }}" title="" id="logo" class="fl-left"><img
-                                src="{{ asset('product/public/images/logo.png') }}" /></a>
+                            src="{{ asset('product/public/images/logo.png') }}" /></a>
                         <div id="search-wp" class="fl-left">
                             <form method="POST" action="">
-                                <input type="text" name="s" id="s"
-                                    placeholder="Nhập từ khóa tìm kiếm tại đây!">
+                                <input type="text" name="s" id="s" placeholder="Nhập từ khóa tìm kiếm tại đây!">
                                 <button type="submit" id="sm-s">Tìm kiếm</button>
                             </form>
                         </div>
@@ -296,10 +296,10 @@
                             </div>
 
 
-
                             @if (Route::has('login'))
-                                <form action="{{ route('cart.pay')}}" method="post" id="myForm">
-                                    @csrf
+
+
+
                                     @auth
                                         <div id="btn-respon" class="fl-right"><i class="fa fa-bars" aria-hidden="true"></i>
                                         </div>
@@ -311,6 +311,7 @@
                                         @if (Route::is('cart.show'))
                                             <div> </div>
                                         @else
+
                                             <div id="cart-wp" class="fl-right">
                                                 <a id="btn-cart" href="{{ route('cart.show') }}" class="text-white">
                                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -326,7 +327,9 @@
                                                             @foreach (Cart::content() as $cart)
                                                                 @if ($count < 5)
                                                                 <li style="display: none">
-                                                                    <input type="hidden" class="product-checkbox"
+                                                                    <form action="{{ route('cart.pay')}}" method="post" id="myForm" >
+                                                                        @csrf
+                                                                        <input type="hidden" class="product-checkbox"
                                                                         name="products[{{ $loop->index }}][selected]" value="1"
                                                                         onchange="updateTotal()">
                                                                     <input type="hidden" name="products[{{ $loop->index }}][rowId]"
@@ -337,6 +340,8 @@
                                                                         value="{{ $cart->qty }}">
                                                                     <input type="hidden" name="products[{{ $loop->index }}][price]"
                                                                         value="{{ $cart->price }}">
+
+
                                                                 </li>
                                                                     <li class="clearfix">
 
@@ -386,7 +391,7 @@
                                                     <p class="desc text-center mt-5"><span>Chưa có sản phẩm nào </span>
                                                     </p>
                                                 @endif
-
+                                            </form>
                                             </div>
                                         </div>
                                     @endif
@@ -394,17 +399,14 @@
 
 
                                 @endauth
-                            </form>
+
 
                         @endif
-
-
-
-                        {{-- ! End Cart --}}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
         @yield('content')
         <div id="footer-wp">
             <div id="foot-body">
