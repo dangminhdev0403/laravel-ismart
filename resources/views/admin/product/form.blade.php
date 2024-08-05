@@ -15,9 +15,9 @@
                         <div class="form-group">
                             <label for="name">Tên Sản phẩm</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                value="{{ isset($product) ? $product->name : '' }}">
+                                value="{{ old('name',isset($product) ? $product->name : 0 )}}">
 
-                              
+
                                 @error('name')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -48,7 +48,7 @@
                         <div class="form-group">
                             <label for="price">Giá Sản phẩm(Gốc)</label>
                             <input type="text" class="form-control" id="price" name="price"
-                                value="{{ isset($product) ? $product->price : 0 }}">
+                                value="{{ old('price',isset($product) ? $product->price : 0 )}} ">
                                 @error('price')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -56,12 +56,12 @@
                         <div class="form-group">
                             <label for="price">Giá Sản phẩm(Đã giảm)</label>
                             <input type="text" class="form-control" id="sale_price" name="sale_price"
-                                value="{{ isset($product) ? $product->sale_price : 0 }}">
+                                value="{{ old('sale_price',isset($product) ? $product->sale_price : 0 )}}   ">
                         </div>
                         <div class="form-group">
                             <label for="price">Số lượng:</label>
                             <input type="text" class="form-control" id="quantity" name="quantity"
-                                value="{{ isset($product) ? $product->quantity : 0 }}">
+                                value="{{ old('quantity', isset($product) ? $product->quantity : 0 )}}  ">
                                 @error('quantity')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -72,7 +72,7 @@
                                 <option value="" selected disabled hidden>-- Chọn danh mục --</option>
                                 @foreach ($category as $row)
                                     <option value="{{ $row->id }}"
-                                        {{ isset($product) ? ($product->category_id == $row->id ? 'selected' : '') : '' }}>
+                                        {{ old('category_id',isset($product) ? ($product->category_id == $row->id ? 'selected' : '') : '') }}>
                                         {{ $row->name }}</option>
                                 @endforeach
                             </select>
@@ -85,7 +85,7 @@
                         <div class="form-group">
                             <label for="description">Mô tả</label>
                             <textarea name="description" id="description1" cols="30" rows="10">
-                           {{ isset($product) ? $product->description : '' }}</textarea>
+                           {{ old('description',isset($product) ? $product->description : '' )}} </textarea>
                            @error('description')
                            <p class="text-danger">{{ $message }}</p>
                        @enderror
@@ -94,7 +94,7 @@
                         <div class="form-group">
                             <label for="content"> Chi tiết</label>
                             <textarea name="content" id="content1" cols="30" rows="10">
-                            {{ isset($product) ? $product->content : '' }}</textarea>
+                            {{ old('content',isset($product) ? $product->content : '') }}</textarea>
                             @error('content')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror

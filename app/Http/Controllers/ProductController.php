@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\ImageProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
@@ -21,9 +22,10 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         // Lấy danh sách sản phẩm
+        $user_id = Auth::user()->id;
         $products = Product::query()
             ->join('categories', 'categories.id', '=', 'products.category_id')
-
+            ->where('user_id','=',$user_id)
             ->select([
                 'products.id as id',
                 'products.name as name',
@@ -70,6 +72,7 @@ class ProductController extends Controller
 
     public function save(ProductRequest $request)
     {
+        $user_id  = Auth::user()->id ;
             $request->validated();
 
         if($request->sale_price !=null || $request->sale_price !=0){
@@ -77,8 +80,9 @@ class ProductController extends Controller
         }else{
             $sale_price =$request->price ;
         }
-       
+
         $data = [
+             'user_id' => $user_id ,
             'name' => $request->name,
             'slug' => Str::slug($request->name),
             'quantity' => $request->quantity ,
@@ -124,7 +128,7 @@ class ProductController extends Controller
     public function edit($id)
 
     {
-
+        
         $product = Product::find($id);
         $category = Category::get();
 

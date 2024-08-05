@@ -33,7 +33,7 @@ class ProductRequest extends FormRequest
             'description' => 'required',
             'content' => 'required',
             'images' => 'required',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,jfif|max:2048',
         ];
     }
     /**
@@ -50,7 +50,7 @@ class ProductRequest extends FormRequest
             'category_id.required' => 'Hãy chọn danh mục',
             'images.required' => 'Bạn phải chọn ít nhất một hình ảnh',
             'images.*.image' => 'Tất cả các tệp phải là hình ảnh',
-            'images.*.mimes' => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif, svg',
+            'images.*.mimes' => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif, svg','jfif',
             'images.*.max' => 'Hình ảnh không được vượt quá 2MB',
         ];
     }
