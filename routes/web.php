@@ -44,6 +44,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::post('/updateRole/{id}','updateRole')->name('users.updateRole');
         Route::get('/add','add')->name('users.add');
         Route::post('/save','save')->name('users.save');
+        Route::get('/edit/{id}','edit')->name('users.edit');
+        Route::post('/update/{id}','update')->name('users.update');
+        Route::get('/action/{action?}','action')->name('users.action');
     });
 
     //! Category

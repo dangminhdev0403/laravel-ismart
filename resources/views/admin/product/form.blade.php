@@ -16,6 +16,8 @@
                             <label for="name">Tên Sản phẩm</label>
                             <input type="text" class="form-control" id="name" name="name"
                                 value="{{ isset($product) ? $product->name : '' }}">
+
+                              
                                 @error('name')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror

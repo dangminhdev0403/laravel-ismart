@@ -65,7 +65,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php($no = 1)
+                            @php
+                            $no = ($orders->currentPage() - 1) * $orders->perPage() + 1;
+                             @endphp
                             @foreach ($orders as $row)
                                 <tr>
                                     @if ( $activeLink!= '')

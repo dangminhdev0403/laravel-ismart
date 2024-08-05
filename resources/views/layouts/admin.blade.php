@@ -32,7 +32,7 @@
         text-align: center;
     }
 </style>
-
+@stack('style')
 </head>
 
 <body class="sb-nav-fixed">

@@ -44,7 +44,9 @@
                         </thead>
                         <tbody>
                             @if($categories->total() > 0 )
-                            @php($no = 1)
+                            @php
+                            $no = ($categories->currentPage() - 1) * $categories->perPage() + 1;
+                             @endphp
                             @foreach ($categories as $row)
                                 <tr>
                                     <td><input type="checkbox" name="" id=""></td>
