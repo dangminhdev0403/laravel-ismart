@@ -28,7 +28,8 @@
                                     <tr>
                                         <td>
                                             <div style="display: flex; ">
-                                                <input type="checkbox" id="check-all" name="check-all" style="cursor: pointer;">
+                                                <input type="checkbox" id="check-all" name="check-all"
+                                                    style="cursor: pointer;">
                                                 <label for="check-all" style="cursor: pointer;">Chọn sản phẩm</label>
 
                                             </div>
@@ -47,29 +48,43 @@
                                     @foreach ($orders as $row)
                                         <tr data-row-id="{{ $row->rowId }}">
                                             @if ($row['status'] == 'pending')
-                                            <td>
-                                                <input type="checkbox" class="product-checkbox"
-                                                    name="products[{{ $loop->index }}][selected]" value="1"
-                                                    onchange="updateTotal()">
-                                            </td>
+                                                <td>
+                                                    <input type="checkbox" class="product-checkbox"
+                                                        name="products[{{ $loop->index }}][selected]" value="1"
+                                                        onchange="updateTotal()">
+                                                </td>
                                             @else
-                                            <td></td>
+                                                <td></td>
                                             @endif
                                             <td>
                                                 {{ $row->formatted_date }}
                                             </td>
                                             <td>
-                                                <a href="{{ route('detailProduct', $row->id) }}" title=" {{ $row->name }}"
-                                                    class="thumb">
-                                                    {{-- <img src="{{ asset($row->options->image) }}" alt=""> --}}
-                                                    <p>Ảnh</p>
+                                                <a href="{{ route('detailProduct', $row->id) }}"
+                                                    title=" {{ $row->name }}" class="thumb">
+
+
+                                                    @foreach ($row->products as $product)
+                                                        <img src="{{ asset($product->images[0]->image_name) }}"
+                                                            alt="" style="max-width: 100%; height: auto;">
+                                                    @endforeach
+
+
+
                                                 </a>
                                             </td>
                                             <td class="product-name">
 
                                                 <a href="{{ route('detailProduct', $row->id) }}" style="color: #000">
+                                                    {{-- {{ $row->products[0]->name  }} --}}
+                                                    @foreach ($row->products as $product)
+                                                        {{ $product->name }}
+                                                        @endforeach
 
-                                                    {{ $row->name }}
+
+
+
+
                                                 </a>
                                             </td>
 
@@ -95,9 +110,10 @@
                                             </td>
                                             @if ($row['status'] == 'pending')
                                                 <td>
-                                                    <a href="{{ route('order.cancel',$row->id) }}" title=""
-                                                        class="del-product btn btn-danger delete-link " onclick="deleteCategory()" style="color: white">
-                                                       Hủy
+                                                    <a href="{{ route('order.cancel', $row->id) }}" title=""
+                                                        class="del-product btn btn-danger delete-link "
+                                                        onclick="deleteCategory()" style="color: white">
+                                                        Hủy
                                                     </a>
                                                 </td>
                                             @else

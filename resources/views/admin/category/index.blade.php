@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+<style>
+    
+</style>
 @section('title', 'Danh mục')
 @section('content')
     <div class="container-fluid px-4">
@@ -26,10 +29,11 @@
                             </div>
 
                             <div id="form-search" style="margin-left: auto">
-                               <form action="#">
-                                    <input type="text" name="keyword" value="{{ request()->keyword}}" placeholder="Nhập tên danh mục ">
+                                <form action="#">
+                                    <input type="text" name="keyword" value="{{ request()->keyword }}"
+                                        placeholder="Nhập tên danh mục ">
                                     <button class="btn btn-success">Tìm</button>
-                               </form>
+                                </form>
                             </div>
                         </div>
                         <thead>
@@ -38,40 +42,40 @@
                                 <th>No</th>
                                 <th>Danh mục</th>
                                 <th>Ngày tạo</th>
-                                <th>Trạng thái</th>
+                                <th width ="50px" style="width: 158.828px;">Sản phẩm đang có</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if($categories->total() > 0 )
-                            @php
-                            $no = ($categories->currentPage() - 1) * $categories->perPage() + 1;
-                             @endphp
-                            @foreach ($categories as $row)
-                                <tr>
-                                    <td><input type="checkbox" name="" id=""></td>
-                                    <th>{{ $no++ }}</th>
-                                    <td>{{ $row->name }}</td>
-                                    <td>{{ $row->formatted_date }}</td>
-                                    <td>{{ $row->status}}</td>
-                                    <td>
-                                        <a href="{{ route('category.edit', $row->id) }}" class="btn btn-warning">Sửa</a>
-                                        <a href="{{ route('category.delete', $row->id) }}"
-                                            class="btn btn-danger delete-link" onclick="deleteCategory()"
-                                            data-name="{{ $row->name }}">Xoá</a>
+                            @if ($categories->total() > 0)
+                                @php
+                                    $no = ($categories->currentPage() - 1) * $categories->perPage() + 1;
+                                @endphp
+                                @foreach ($categories as $row)
+                                    <tr>
+                                        <td><input type="checkbox" name="" id=""></td>
+                                        <th>{{ $no++ }}</th>
+                                        <td>{{ $row->name }}</td>
+                                        <td>{{ $row->formatted_date }}</td>
+                                        <td>{{ $row->products()->count() }}</td>
+                                        <td>
+                                            <a href="{{ route('category.edit', $row->id) }}" class="btn btn-warning">Sửa</a>
+                                            <a href="{{ route('category.delete', $row->id) }}"
+                                                class="btn btn-danger delete-link" onclick="deleteCategory()"
+                                                data-name="{{ $row->name }}">Xoá</a>
 
 
 
-                                    </td>
-                                </tr>
-                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @else
-                            <h5 class="alert alert-danger text-center"><b>Không có dữ liệu </b></h5>
+                                <h5 class="alert alert-danger text-center"><b>Không có dữ liệu </b></h5>
                             @endif
 
                         </tbody>
                     </table>
-                  {{ $categories->links() }}
+                    {{ $categories->links() }}
                 </div>
             </div>
         </div>
@@ -124,4 +128,3 @@
 
 
 @endpush
-

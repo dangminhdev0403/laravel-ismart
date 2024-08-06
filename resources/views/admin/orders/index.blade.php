@@ -59,9 +59,10 @@
                                 <th>SDT</th>
                                 <th>Địa chỉ</th>
                                 <th>Ngày đặt</th>
-                                <th>Ghi chú</th>
+
                                 <th>Thanh toán</th>
                                 <th>Trạng thái</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,18 +76,17 @@
                                     @endif
 
                                     <th>{{ $no++ }}</th>
-                                    <td>{{ $row->name }}</td>
+                                    {{-- <td>{{ $row->name }}</td> --}}
+                                    <td>
+                                        @foreach ($row->products as $product)
+                                        {{ $product->name }}
+                                        @endforeach
+                                    </td>
                                     <td>{{ $row->email }}</td>
                                     <td>{{ $row->phone }}</td>
                                     <td>{{ $row->address }}</td>
                                     <td>  {{ $row->formatted_date }}</td>
-                                    <td>
-                                        @if (!empty($row['note']))
-                                            {{ $row['note'] }}
-                                        @else
-                                            <p>Không</p>
-                                        @endif
-                                    </td>
+
                                     <td>
                                         @if ($row['payment'] == 'transfer')
                                             <p>Chuyển khoản</p>
@@ -120,6 +120,8 @@
 
                                         </form>
                                     </td>
+                                    <td><a href="" class="btn btn-primary">Chi tiết</a>
+                                   <a href="" class="btn btn-danger">Xóa</a></td>
                                 </tr>
                             @endforeach
                         </tbody>

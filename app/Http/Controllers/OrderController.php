@@ -76,27 +76,28 @@ class OrderController extends Controller
         return response()->json(['message' => 'Cart restored from database successfully!']);
     }
 
-    public function pay(Request $request )
+    public function pay(Request $request)
     {
+        // Lấy danh sách sản phẩm từ request
+        $list_check = $request->input('products', []);
 
+        // Kiểm tra dữ liệu để xem có sản phẩm mặc định không mong muốn
+        // dd($list_check);
 
+        // Lọc các sản phẩm đã được chọn
+        $selectedProducts = array_filter($list_check, function ($product) {
+            // Đảm bảo rằng trường 'selected' có giá trị đúng
+            return isset($product['selected']) && $product['selected'];
+        });
 
-            $list_check = $request->input('products');
-            //  dd($list_check);
-            $selectedProducts = array_filter($list_check, function ($product) {
-                return isset($product['selected']);
-            });
-
-            //  dd($selectedProducts);
-
-            if (!empty($selectedProducts)) {
-                return view('product.checkout', compact('selectedProducts'));
-            } else {
-
-                return redirect()->back()->with('error', 'Chưa có đơn hàng nào được chọn');
-            }
-
-
+        // Kiểm tra nếu có sản phẩm được chọn
+        if (!empty($selectedProducts)) {
+            // Truyền dữ liệu sản phẩm đã chọn vào view
+            return view('product.checkout', compact('selectedProducts'));
+        } else {
+            // Trở lại trang trước với thông báo lỗi
+            return redirect()->back()->with('error', 'Chưa có đơn hàng nào được chọn');
+        }
     }
 
     public function payOne(Request $request,$id){
@@ -123,12 +124,16 @@ class OrderController extends Controller
             $data['user_id'] = auth()->user()->id;
             $data['status'] = 'pending';
             $rowIds = $request->input('rowId', []);
+            $order = null;
+
             foreach ($rowIds as $rowId) {
                 $item = Cart::get($rowId);
+                $product_id = $item->id ;
+
                 if($item){
                     Cart::remove($rowId);
-                    Order::create($data);
-
+                    $order =  Order::create($data);
+                    $order->products()->attach($product_id,['quantity'=>$item->qty]);
 
 
                 }else{

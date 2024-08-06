@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class DetailOrderController extends Controller
 {
     public function index(){
-       $orders = Order::orderBy('created_at','desc')->get() ;
+       $user_id =  Auth::user()->id;
+       $orders = Order::where('user_id','=',$user_id)->orderBy('created_at','desc')->get() ;
 
        foreach($orders as $order){
         $order->formatted_date = Carbon::parse($order->created_at)->format('d-m-Y ');
