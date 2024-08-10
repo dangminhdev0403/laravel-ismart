@@ -32,24 +32,67 @@ class AdminOrderController extends Controller
        // Phương thức tính toán các biến count
        private function calculateCounts()
        {
-           $Pending = Order::where('status', '=', 'pending')->count();
-           $Cancel = Order::where('status', '=', 'cancel')->count();
-           $Success = Order::where('status', '=', 'success')->count();
-            $All =  Order::select('status')->count();
+
+        $user_id = Auth::user()->id ;
+        $userProductIds =  Product::where('user_id','=',$user_id)->pluck('id');
+        $order = Order::whereHas('products', function($query) use ($userProductIds) {
+            $query->whereIn('products.id', $userProductIds);
+        });
+
+            $Cancel = Order::whereHas('products', function($query) use ($userProductIds) {
+                $query->whereIn('products.id', $userProductIds);
+            })->where('status', '=', 'cancel')->count();
+           $Pending = Order::whereHas('products', function($query) use ($userProductIds) {
+            $query->whereIn('products.id', $userProductIds);
+        })->where('status', '=', 'pending')->count();
+           $Success =Order::whereHas('products', function($query) use ($userProductIds) {
+            $query->whereIn('products.id', $userProductIds);
+        })->where('status', '=', 'success')->count();
+            $All = Order::whereHas('products', function($query) use ($userProductIds) {
+            $query->whereIn('products.id', $userProductIds);
+        })->select('status')->count();
            return compact('Pending', 'Cancel', 'Success','All');
        }
-    public function index(Request $request){
-        $user_id = Auth::user()->id ;
-      $userProductIds =  Product::where('user_id','=',$user_id)->pluck('id');
 
 
+       public function index(Request $request)
+       {
+           $user_id = Auth::user()->id;
+           $userProductIds = Product::where('user_id', $user_id)->pluck('id');
 
-
-        $keyword =  $request->keyword;
+           $keyword = $request->keyword;
            $counts = $this->calculateCounts();
-        //? dd($counts);
-        $activeLink = '';
+           $activeLink = '';
+           $active = '';
+
+           $ordersQuery = Order::whereHas('products', function($query) use ($userProductIds) {
+               $query->whereIn('products.id', $userProductIds);
+           });
+
+           if ($keyword) {
+               $ordersQuery->where(function($query) use ($keyword) {
+                   $query->where('name', 'like', '%' . $keyword . '%')
+                         ->orWhere('email', 'like', '%' . $keyword . '%');
+               });
+           }
+
+           $orders = $ordersQuery->orderBy('created_at', 'desc')->paginate(10);
+
+           foreach($orders as $order) {
+               $order->formatted_date = Carbon::parse($order->created_at)->format('d-m-Y');
+           }
+
+           return view('admin.orders.index', compact('orders', 'activeLink', 'active', 'counts'));
+       }
+
+    public function showByStatus($status){
+       $keyword = request()->input('keyword');
+        $user_id = Auth::user()->id ;
+        $userProductIds =  Product::where('user_id','=',$user_id)->pluck('id');
+        $counts = $this->calculateCounts();
+        // dd($counts);
         $active= '';
+        $activeLink = $status;
         if($keyword){
             $orders = Order::where('name','like','%'.$keyword.'%')->orWhere('email','like','%'.$keyword.'%')->orderBy('created_at','desc')->whereHas('products', function($query) use ($userProductIds) {
                 $query->whereIn('products.id', $userProductIds);
@@ -58,23 +101,12 @@ class AdminOrderController extends Controller
         }else{
             $orders = Order::whereHas('products', function($query) use ($userProductIds) {
                 $query->whereIn('products.id', $userProductIds);
-            })->paginate(10);
-            foreach($orders as $order){
-                $order->formatted_date = Carbon::parse($order->created_at)->format('d-m-Y ');
-               }
-            return view('admin.orders.index',compact('orders','activeLink','active','counts'));
-        }
-
-    }
-    public function showByStatus($status){
-        $counts = $this->calculateCounts();
-
-        $active= '';
-        $activeLink = $status;
-        $orders = Order::where('status', '=',$status)->paginate(10);
+            })->where('status', '=',$status)->paginate(10);
         foreach($orders as $order){
             $order->formatted_date = Carbon::parse($order->created_at)->format('d-m-Y ');
            }
+        }
+
         return view('admin.orders.index',compact('orders','activeLink','active','counts'));
     }
     public function updateStatus(Request $request,$id)

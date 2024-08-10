@@ -284,8 +284,8 @@
                         <a href="{{ route('home') }}" title="" id="logo" class="fl-left"><img
                             src="{{ asset('product/public/images/logo.png') }}" /></a>
                         <div id="search-wp" class="fl-left">
-                            <form method="POST" action="">
-                                <input type="text" name="s" id="s" placeholder="Nhập từ khóa tìm kiếm tại đây!">
+                            <form action="#">
+                                <input type="text" name="keyword" id="s" placeholder="Nhập từ khóa tìm kiếm tại đây!">
                                 <button type="submit" id="sm-s">Tìm kiếm</button>
                             </form>
                         </div>
@@ -472,7 +472,7 @@
             </div>
         </div>
     </div>
-   
+
     <div id="btn-top"><img src="{{ asset('product/public/images/icon-to-top.png') }}" alt="" /></div>
     <div id="fb-root"></div>
     <script>

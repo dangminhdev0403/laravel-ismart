@@ -1,5 +1,12 @@
 @extends('layouts.home')
 @section('title', 'Trang sản phẩm')
+@push('style')
+
+<style>
+
+</style>
+
+@endpush
 @section('content')
     <div id="main-content-wp" class="clearfix category-product-page">
         <div class="wp-inner">
@@ -9,8 +16,9 @@
                         <li>
                             <a href="" title="">Trang chủ</a>
                         </li>
+                      
                         <li>
-                            <a href="" title="">Điện thoại</a>
+                            <a href="" title="">{{  $category_name }}</a>
                         </li>
                     </ul>
                 </div>
@@ -18,7 +26,7 @@
             <div class="main-content fl-right">
                 <div class="section" id="list-product-wp">
                     <div class="section-head clearfix">
-                        <h3 class="section-title fl-left">Tất cả sản phẩm</h3>
+                        <h3 class="section-title fl-left">{{  $category_name }}</h3>
                         <div class="filter-wp fl-right">
                             <p class="desc">Hiển thị 45 trên 50 sản phẩm</p>
                             <div class="form-filter">
@@ -37,48 +45,34 @@
                     </div>
                     <div class="section-detail">
                         <ul class="list-item clearfix">
+                            @if ($products->total() < 1 )
+                                <p class="alert alert-danger text-center">Không có sản phẩm nào trong danh mục này</p>
+                            @else
                             @foreach ($products as $product)
-                                <li>
-                                    <a href="{{ route('detailProduct', $product->id) }}" title="" class="thumb">
-                                        <img src="{{ asset($product->images[0]->image_name) }}">
-                                    </a>
-                                    <a href="{{ route('detailProduct', $product->id) }}" title=""
-                                        class="product-name">{{ $product->name }}
-                                    </a>
-                                    <div class="price">
-
-                                        @if ($product->sale_price > 0)
-                                            <span class="new">{{ number_format($product->sale_price, 0, '', '.') }}
-                                                đ</span>
-                                            <span class="old">{{ number_format($product->price, 0, '', '.') }} đ</span>
-                                        @else
-                                            <span class="new"> {{ number_format($product->price, 0, '', '.') }} đ</span>
-                                        @endif
-                                                
-
-                                    </div>
-                                    <div class="action clearfix">
-                                        <a href="?page=cart" title="Thêm giỏ hàng" class="add-cart fl-left">Thêm giỏ
-                                            hàng</a>
-                                        <a href="?page=checkout" title="Mua ngay" class="buy-now fl-right">Mua ngay</a>
-                                    </div>
-                                </li>
-                            @endforeach
-                            <li>
-                                <a href="?page=detail_product" title="" class="thumb">
-                                    <img src="{{ asset('product/public/images/img-pro-17.png') }}">
+                            <li style="width = 213px; height: 274px;">
+                                <a href="{{ route('detailProduct', $product->id) }}" title="" class="thumb">
+                                    <img src="{{ asset($product->images[0]->image_name) }}" style="width: 139px; height: 145px; ">
                                 </a>
-                                <a href="?page=detail_product" title="" class="product-name">Laptop HP Probook
-                                    4430s</a>
+                                <a href="{{ route('detailProduct', $product->id) }}" title=""
+                                    class="product-name">{{ $product->name }}
+                                </a>
                                 <div class="price">
-                                    <span class="new">17.900.000đ</span>
-                                    <span class="old">20.900.000đ</span>
+
+                                    @if ($product->sale_price > 0)
+                                        <span class="new">{{ number_format($product->sale_price, 0, '', '.') }}
+                                            đ</span>
+                                        <span class="old">{{ number_format($product->price, 0, '', '.') }} đ</span>
+                                    @else
+                                        <span class="new"> {{ number_format($product->price, 0, '', '.') }} đ</span>
+                                    @endif
+
+
                                 </div>
-                                <div class="action clearfix">
-                                    <a href="?page=cart" title="Thêm giỏ hàng" class="add-cart fl-left">Thêm giỏ hàng</a>
-                                    <a href="?page=checkout" title="Mua ngay" class="buy-now fl-right">Mua ngay</a>
-                                </div>
+
                             </li>
+                        @endforeach
+                            @endif
+
 
                         </ul>
                     </div>

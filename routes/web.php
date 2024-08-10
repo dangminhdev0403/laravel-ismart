@@ -15,6 +15,8 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\DetailOrder;
 use App\Models\Order;
+use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
@@ -24,7 +26,25 @@ use Illuminate\Support\Facades\View;
 // });
 
 Route::get('/dashboard', function () {
-    return view('admin.dashboard');
+
+    $user_id = Auth::user()->id ;
+    $userProductIds =  Product::where('user_id','=',$user_id)->pluck('id');
+
+    $Cancel = Order::whereHas('products', function($query) use ($userProductIds) {
+        $query->whereIn('products.id', $userProductIds);
+    })->where('status', '=', 'cancel')->count();
+   $Pending = Order::whereHas('products', function($query) use ($userProductIds) {
+    $query->whereIn('products.id', $userProductIds);
+})->where('status', '=', 'pending')->count();
+   $Success =Order::whereHas('products', function($query) use ($userProductIds) {
+    $query->whereIn('products.id', $userProductIds);
+})->where('status', '=', 'success')->count();
+   
+
+
+
+
+    return view('admin.dashboard',compact('Pending', 'Cancel', 'Success'));
 })->middleware(['auth', 'verified','checkrole'])->name('dashboard');
 
 //! Login

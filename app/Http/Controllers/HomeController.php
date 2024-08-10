@@ -9,12 +9,20 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function home(){
+        public function home(Request $request){
+            $keyword = $request->keyword;
+
         $categories = Category::orderBy('order', 'asc')
         ->orderBy('created_at', 'asc')
         ->get();
 
-        $products = Product::orderBy('created_at' , 'desc')->paginate(15);
+        // dd($keyword);
+        if($keyword){
+            $products = Product::where('name','like','%'.$keyword.'%')->orderBy('created_at' , 'desc')->paginate(15);
+        }else{
+            $products = Product::orderBy('created_at' , 'desc')->paginate(15);
+        }
+
        // $products_sold = Product::select('total_sold')->orderBy('created_at','desc')->paginate(6);
         //  dd($products_sold);
 
@@ -26,10 +34,13 @@ class HomeController extends Controller
         $categories = Category::orderBy('order', 'asc')
         ->orderBy('created_at', 'asc')
         ->get();
-        $category_id = Category::where('slug',$slug)->value('id');
-        $products = Product::where('category_id','=',$category_id)->orderBy('created_at', 'desc')->paginate(15);
 
-        return view('product.home',compact('products','categories'));
+        $category_id = Category::where('slug',$slug)->value('id');
+        $category_name = Category::where('slug',$slug)->value('name');
+
+        $products = Product::where('category_id','=',$category_id)->orderBy('created_at', 'desc')->paginate(15);
+           
+        return view('product.productsByCategory',compact('products','categories','category_name'));
 
     }
 
