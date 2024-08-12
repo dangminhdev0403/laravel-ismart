@@ -72,7 +72,9 @@ class ProductController extends Controller
 
     public function save(ProductRequest $request)
     {
+        
         $user_id  = Auth::user()->id ;
+
             $request->validated();
 
         if($request->sale_price !=null || $request->sale_price !=0){
@@ -128,7 +130,7 @@ class ProductController extends Controller
     public function edit($id)
 
     {
-        
+
         $product = Product::find($id);
         $category = Category::get();
 

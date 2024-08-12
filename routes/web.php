@@ -39,7 +39,7 @@ Route::get('/dashboard', function () {
    $Success =Order::whereHas('products', function($query) use ($userProductIds) {
     $query->whereIn('products.id', $userProductIds);
 })->where('status', '=', 'success')->count();
-   
+
 
 
 
@@ -96,6 +96,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::get('','index')->name('admin.orders');
         Route::get('show/{status}','showByStatus')->name('admin.orders.show');
         Route::put('update-status/{id}', 'updateStatus')->name('updateStatus');
+        Route::get('edit/{id}','edit')->name('admin.orders.edit');
+        Route::get('update/{id}','update')->name('admin.orders.update');
+        Route::get('delete/{id}','delete')->name('admin.orders.delete');
     });
 });
 

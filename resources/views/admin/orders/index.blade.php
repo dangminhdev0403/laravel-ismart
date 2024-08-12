@@ -120,8 +120,8 @@
 
                                         </form>
                                     </td>
-                                    <td><a href="" class="btn btn-primary">Chi tiết</a>
-                                   <a href="" class="btn btn-danger">Xóa</a></td>
+                                    <td><a href="{{ route('admin.orders.edit',$row->id) }}" class="btn btn-primary">Chi tiết</a>
+                                   <a href="{{ route('admin.orders.delete',$row->id) }}" class="btn btn-danger delete-link">Xóa</a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -204,7 +204,7 @@
 
             Swal.fire({
                 title: "Xác nhận xóa",
-                text: `Bạn có chắc chắn muốn xóa đơn hàng ${name}?`,
+                text: `Bạn có chắc chắn muốn xóa đơn hàng này?`,
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
