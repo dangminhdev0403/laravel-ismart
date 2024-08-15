@@ -46,9 +46,7 @@
                                 <li>
                                     <a href="{{ route('home.products') }}" title="">Sản phẩm</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('blog') }}" title="">Blog</a>
-                                </li>
+                               
                                 <li>
                                     <a href="{{ route('about') }}" title="">Giới thiệu</a>
                                 </li>

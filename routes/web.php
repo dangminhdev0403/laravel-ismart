@@ -109,7 +109,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 //? Home
 
 Route::controller(HomeController::class)->prefix('/')->group(function () {
-    Route::get('', 'home')->name('home');
+    Route::get('', 'home')->name('home')->middleware('verifed-email');
     Route::get('products', 'products')->name('home.products');
     Route::get('/category/{slug}', 'getProductByCategory')->name('getProductByCategory');
     Route::get('/detail/{id}', 'detailProduct')->name('detailProduct');

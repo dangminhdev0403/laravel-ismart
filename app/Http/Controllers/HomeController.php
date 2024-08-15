@@ -6,10 +6,12 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
         public function home(Request $request){
+           
             $keyword = $request->keyword;
 
         $categories = Category::orderBy('order', 'asc')
@@ -39,7 +41,7 @@ class HomeController extends Controller
         $category_name = Category::where('slug',$slug)->value('name');
 
         $products = Product::where('category_id','=',$category_id)->orderBy('created_at', 'desc')->paginate(15);
-           
+
         return view('product.productsByCategory',compact('products','categories','category_name'));
 
     }

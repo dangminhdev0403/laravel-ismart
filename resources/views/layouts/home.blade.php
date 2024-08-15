@@ -31,9 +31,10 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <style>
-      .list-item{
-        padding: 0;
-      }
+        .list-item {
+            padding: 0;
+        }
+
         #delete-cart-all {
             display: inline-block;
             padding: 12px 25px;
@@ -195,10 +196,9 @@
         #advisory-wp:after {
             width: 0px;
         }
-
     </style>
 
-@stack('style')
+    @stack('style')
 
 </head>
 
@@ -222,57 +222,57 @@
                                 <li>
                                     <a href="{{ route('contact') }}" title="">Liên hệ</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('order.show') }}" title="">Đơn hàng</a>
-                                </li>
+
                                 @if (Route::has('login'))
 
-                                @auth
+                                    @auth
 
-
-
-                                    <li>
-                                        <details class="dropdown ">
-                                            <summary role="button">
-                                                <a class="button dropdown-toggle">{{ Auth::user()->name }}</a>
-                                            </summary>
-                                            <ul>
-                                                <li class="">
-                                                    <x-responsive-nav-link :href="route('profile.edit')">
-                                                        {{ __('Profile') }}
-                                                    </x-responsive-nav-link>
-                                                </li>
-                                                <li>
-                                                    <form method="POST" action="{{ route('logout') }}">
-                                                        @csrf
-
-                                                        <x-dropdown-link :href="route('logout')"
-                                                            onclick="event.preventDefault();
-                                                                                this.closest('form').submit();">
-                                                            {{ __('Đăng xuất') }}
-                                                        </x-dropdown-link>
-                                            </ul>
-                                        </details>
-                                    </li>
-                                @else
-                                    <li>
-                                        <a href="{{ route('login') }}"
-                                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                                            Đăng nhập
-                                        </a>
-                                    </li>
-
-                                    @if (Route::has('register'))
                                         <li>
-                                            <a href="{{ route('register') }}"
+                                            <a href="{{ route('order.show') }}" title="">Đơn hàng</a>
+                                        </li>
+
+                                        <li>
+                                            <details class="dropdown ">
+                                                <summary role="button">
+                                                    <a class="button dropdown-toggle">{{ Auth::user()->name }}</a>
+                                                </summary>
+                                                <ul>
+                                                    <li class="">
+                                                        <x-responsive-nav-link :href="route('profile.edit')">
+                                                            {{ __('Profile') }}
+                                                        </x-responsive-nav-link>
+                                                    </li>
+                                                    <li>
+                                                        <form method="POST" action="{{ route('logout') }}">
+                                                            @csrf
+
+                                                            <x-dropdown-link :href="route('logout')"
+                                                                onclick="event.preventDefault();
+                                                                                this.closest('form').submit();">
+                                                                {{ __('Đăng xuất') }}
+                                                            </x-dropdown-link>
+                                                </ul>
+                                            </details>
+                                        </li>
+                                    @else
+                                        <li>
+                                            <a href="{{ route('login') }}"
                                                 class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                                                Đăng kí
+                                                Đăng nhập
                                             </a>
                                         </li>
-                                    @endif
-                                @endauth
 
-                            @endif
+                                        @if (Route::has('register'))
+                                            <li>
+                                                <a href="{{ route('register') }}"
+                                                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                                                    Đăng kí
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endauth
+
+                                @endif
 
 
                             </ul>
@@ -282,10 +282,11 @@
                 <div id="head-body" class="clearfix">
                     <div class="wp-inner">
                         <a href="{{ route('home') }}" title="" id="logo" class="fl-left"><img
-                            src="{{ asset('product/public/images/logo.png') }}" /></a>
+                                src="{{ asset('product/public/images/logo.png') }}" /></a>
                         <div id="search-wp" class="fl-left">
                             <form action="#">
-                                <input type="text" name="keyword" id="s" placeholder="Nhập từ khóa tìm kiếm tại đây!">
+                                <input type="text" name="keyword" id="s"
+                                    placeholder="Nhập từ khóa tìm kiếm tại đây!">
                                 <button type="submit" id="sm-s">Tìm kiếm</button>
                             </form>
                         </div>
@@ -300,112 +301,119 @@
 
 
 
-                                    @auth
-                                        <div id="btn-respon" class="fl-right"><i class="fa fa-bars" aria-hidden="true"></i>
-                                        </div>
-                                        <a href="?page=cart" title="giỏ hàng" id="cart-respon-wp" class="fl-right">
-                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                            <span id="num">3</span>
-                                        </a>
+                                @auth
+                                    <div id="btn-respon" class="fl-right"><i class="fa fa-bars" aria-hidden="true"></i>
+                                    </div>
+                                    <a href="?page=cart" title="giỏ hàng" id="cart-respon-wp" class="fl-right">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        <span id="num">3</span>
+                                    </a>
 
-                                        @if (Route::is('cart.show'))
-                                            <div> </div>
-                                        @else
+                                    @if (Route::is('cart.show'))
+                                        <div> </div>
+                                    @else
+                                        <div id="cart-wp" class="fl-right">
+                                            <a id="btn-cart" href="{{ route('cart.show') }}" class="text-white">
+                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                <span id="num">{{ Cart::count() }}</span>
+                                            </a>
+                                            <div id="dropdown">
 
-                                            <div id="cart-wp" class="fl-right">
-                                                <a id="btn-cart" href="{{ route('cart.show') }}" class="text-white">
-                                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                                    <span id="num">{{ Cart::count() }}</span>
-                                                </a>
-                                                <div id="dropdown">
-
-                                                    @if (Cart::count() > 0)
-                                                        <ul class="list-cart">
-                                                            @php
-                                                                $count = 0;
-                                                            @endphp
-                                                            @foreach (Cart::content() as $cart)
-                                                                @if ($count < 5)
+                                                @if (Cart::count() > 0)
+                                                    <ul class="list-cart">
+                                                        @php
+                                                            $count = 0;
+                                                        @endphp
+                                                        @foreach (Cart::content() as $cart)
+                                                            @if ($count < 5)
                                                                 <li style="display: none">
-                                                                    <form action="{{ route('cart.pay')}}" method="post" id="myForm" >
+                                                                    <form action="{{ route('cart.pay') }}" method="post"
+                                                                        id="myForm">
                                                                         @csrf
                                                                         <input type="hidden" class="product-checkbox"
-                                                                        name="products[{{ $loop->index }}][selected]" value="1"
-                                                                        onchange="updateTotal()">
-                                                                    <input type="hidden" name="products[{{ $loop->index }}][rowId]"
-                                                                        value="{{ $cart->rowId }}">
-                                                                    <input type="hidden" name="products[{{ $loop->index }}][name]"
-                                                                        value="{{ $cart->name }}">
-                                                                    <input type="hidden" name="products[{{ $loop->index }}][quantity]"
-                                                                        value="{{ $cart->qty }}">
-                                                                    <input type="hidden" name="products[{{ $loop->index }}][price]"
-                                                                        value="{{ $cart->price }}">
+                                                                            name="products[{{ $loop->index }}][selected]"
+                                                                            value="1" onchange="updateTotal()">
+                                                                        <input type="hidden"
+                                                                            name="products[{{ $loop->index }}][rowId]"
+                                                                            value="{{ $cart->rowId }}">
+                                                                        <input type="hidden"
+                                                                            name="products[{{ $loop->index }}][name]"
+                                                                            value="{{ $cart->name }}">
+                                                                        <input type="hidden"
+                                                                            name="products[{{ $loop->index }}][quantity]"
+                                                                            value="{{ $cart->qty }}">
+                                                                        <input type="hidden"
+                                                                            name="products[{{ $loop->index }}][price]"
+                                                                            value="{{ $cart->price }}">
 
 
                                                                 </li>
-                                                                    <li class="clearfix">
+                                                                <li class="clearfix">
 
 
+                                                                    <a href="" title=""
+                                                                        class="thumb fl-left">
+                                                                        <img src="{{ asset($cart->options->image) }}"
+                                                                            alt="">
+                                                                    </a>
+                                                                    <div class="info fl-right">
                                                                         <a href="" title=""
-                                                                            class="thumb fl-left">
-                                                                            <img src="{{ asset($cart->options->image) }}"
-                                                                                alt="">
-                                                                        </a>
-                                                                        <div class="info fl-right">
-                                                                            <a href="" title=""
-                                                                                class="product-name">{{ $cart->name }}</a>
-                                                                            <p class="price">
-                                                                                {{ number_format($cart->price, 0, '', '.') }}
-                                                                                đ
-                                                                            </p>
-                                                                            <p class="qty">Số lượng: <span>
-                                                                                    {{ $cart->qty }}</span></p>
-                                                                        </div>
-                                                                        @php
-                                                                            $count++;
-                                                                        @endphp
-                                                                    </li>
-                                                                @else
-                                                                @break
-                                                            @endif
-                                                        @endforeach
+                                                                            class="product-name">{{ $cart->name }}</a>
+                                                                        <p class="price">
+                                                                            {{ number_format($cart->price, 0, '', '.') }}
+                                                                            đ
+                                                                        </p>
+                                                                        <p class="qty">Số lượng: <span>
+                                                                                {{ $cart->qty }}</span></p>
+                                                                    </div>
+                                                                    @php
+                                                                        $count++;
+                                                                    @endphp
+                                                                </li>
+                                                            @else
+                                                            @break
+                                                        @endif
+                                                    @endforeach
 
 
-                                                    </ul>
-                                                    <p class="desc text-center">
-                                                        Hiện<span>{{ $count }}/{{ Cart::content()->count() }}</span>
-                                                        sản phẩm trong giỏ </p>
-                                                    <div class="total-price clearfix">
-                                                        <p class="title fl-left">Tổng:</p>
-                                                        <p class="price fl-right" style="font-size: 14px; margin:12px 0 16px">{{ Cart::subtotal() }} đ</p>
-                                                    </div>
-                                                    <div class="action-cart clearfix">
-                                                        <a href="{{ route('cart.show') }}" title="Giỏ hàng"
-                                                            class="view-cart fl-left">Xem thêm
-                                                        </a>
-                                                        <a  type="submit"   title="Thanh toán" href="#"
-                                                            class="checkout fl-right" onclick="document.getElementById('myForm').submit();">Thanh
-                                                            toán</a>
-                                                    </div>
-                                                @else
-                                                    <p class="desc text-center mt-5"><span>Chưa có sản phẩm nào </span>
-                                                    </p>
-                                                @endif
+                                                </ul>
+                                                <p class="desc text-center">
+                                                    Hiện<span>{{ $count }}/{{ Cart::content()->count() }}</span>
+                                                    sản phẩm trong giỏ </p>
+                                                <div class="total-price clearfix">
+                                                    <p class="title fl-left">Tổng:</p>
+                                                    <p class="price fl-right"
+                                                        style="font-size: 14px; margin:12px 0 16px">
+                                                        {{ Cart::subtotal() }} đ</p>
+                                                </div>
+                                                <div class="action-cart clearfix">
+                                                    <a href="{{ route('cart.show') }}" title="Giỏ hàng"
+                                                        class="view-cart fl-left">Xem thêm
+                                                    </a>
+                                                    <a type="submit" title="Thanh toán" href="#"
+                                                        class="checkout fl-right"
+                                                        onclick="document.getElementById('myForm').submit();">Thanh
+                                                        toán</a>
+                                                </div>
+                                            @else
+                                                <p class="desc text-center mt-5"><span>Chưa có sản phẩm nào </span>
+                                                </p>
+                                            @endif
                                             </form>
-                                            </div>
                                         </div>
-                                    @endif
+                                    </div>
+                                @endif
 
 
 
-                                @endauth
+                            @endauth
 
 
                         @endif
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
         @yield('content')
         <div id="footer-wp">
