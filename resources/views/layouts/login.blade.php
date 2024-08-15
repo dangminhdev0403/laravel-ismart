@@ -210,6 +210,8 @@
             <script src="{{ asset('formlogin/js/popper.js') }}"></script>
             <script src="{{ asset('formlogin/js/bootstrap.min.js') }}"></script>
                 <script src="{{ asset('formlogin/js/main.js') }}"></script>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
                 @stack('script')
 
 </html>
