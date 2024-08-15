@@ -10,9 +10,9 @@
                 </div>
             </div>
 
-            <form method="POST" action="{{ route('password.email') }}">
+            <form method="POST" action="{{ route('password.store') }}">
                 @csrf
-
+                <input type="hidden" name="token" value="{{ $request->route('token') }}">
                 <div class="form-group mb-3">
 
 

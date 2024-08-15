@@ -94,7 +94,15 @@
 @endsection
 
 @push('script')
-
+@if(session('status'))
+<script>
+    Swal.fire({
+   title: "Thành công!",
+   text: "{{session('status') }}",
+   icon: "success"
+ });
+ </script>
+@endif
 
 
 

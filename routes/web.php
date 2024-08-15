@@ -109,14 +109,14 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 //? Home
 
 Route::controller(HomeController::class)->prefix('/')->group(function () {
-    Route::get('', 'home')->name('home')->middleware('verifed-email');
+    Route::get('', 'home')->name('home');
     Route::get('products', 'products')->name('home.products');
     Route::get('/category/{slug}', 'getProductByCategory')->name('getProductByCategory');
     Route::get('/detail/{id}', 'detailProduct')->name('detailProduct');
     Route::get('blog', 'blog')->name('blog');
     Route::get('about', 'about')->name('about');
     Route::get('contact', 'contact')->name('contact');
-});
+})->middleware('verifed-email');
 //Cart
 Route::middleware('auth')->controller(OrderController::class)->prefix('order')->group(function () {
     Route::get('', 'show')->name('cart.show');
