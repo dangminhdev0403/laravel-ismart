@@ -49,14 +49,14 @@ Route::get('/dashboard', function () {
 
 //! Login
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth','verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 //?Admin
-Route::middleware('auth')->prefix('admin')->group(function () {
+Route::middleware('auth','verified')->prefix('admin')->group(function () {
 
     //! User
     Route::controller( AdminUserController::class)->prefix('users')->middleware('checkrole-admin')->name('admin.')->group(function(){
@@ -108,7 +108,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
 //? Home
 
-Route::controller(HomeController::class)->prefix('/')->group(function () {
+Route::controller(HomeController::class)->prefix('/')->middleware('verifed-email')->group(function () {
     Route::get('', 'home')->name('home');
     Route::get('products', 'products')->name('home.products');
     Route::get('/category/{slug}', 'getProductByCategory')->name('getProductByCategory');
@@ -116,9 +116,9 @@ Route::controller(HomeController::class)->prefix('/')->group(function () {
     Route::get('blog', 'blog')->name('blog');
     Route::get('about', 'about')->name('about');
     Route::get('contact', 'contact')->name('contact');
-})->middleware('verifed-email');
+});
 //Cart
-Route::middleware('auth')->controller(OrderController::class)->prefix('order')->group(function () {
+Route::middleware('auth','verifed-email')->controller(OrderController::class)->prefix('order')->group(function () {
     Route::get('', 'show')->name('cart.show');
     Route::post('add/{id}', 'add')->name('cart.add');
     Route::get('remove/{rowId?}', 'remove')->name('cart.remove');
@@ -132,7 +132,7 @@ Route::middleware('auth')->controller(OrderController::class)->prefix('order')->
 
 });
   //! Deltail Order
-Route::middleware('auth')->controller(DetailOrderController::class)->prefix('detailorder')->group(function () {
+Route::middleware('auth','verifed-email')->controller(DetailOrderController::class)->prefix('detailorder')->group(function () {
     Route::get('', 'index')->name('order.show');
     Route::get('cancel/{id}', 'cancel')->name('order.cancel');
 

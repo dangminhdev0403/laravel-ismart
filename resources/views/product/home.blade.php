@@ -84,7 +84,7 @@
                                             src="{{ asset($product->images[0]->image_name) }}"style="width: 133px ; height: 133px; object-fit: cover; padding:0px 0px 0px 23px;">
                                     </a>
                                     <a href="{{ route('detailProduct', $product->id) }}" title=""
-                                        class="product-name">{{ $product->name }}</a>
+                                        class="product-name">{{ $product->name }}  </a>
 
                                     <div class="price">
                                         @if ($product->sale_price > 0)
@@ -118,7 +118,7 @@
                         </div>
                         <div class="section-detail">
                             <ul class="list-item clearfix">
-                                
+
                                 @foreach ($category->products as $product)
                                     <li style="  padding:   10px 10px 7px;">
                                         <a href="{{ route('detailProduct', $product->id) }}" title="" class="thumb">

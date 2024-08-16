@@ -76,11 +76,12 @@
                                     @endif
 
                                     <th>{{ $no++ }}</th>
-                                    {{-- <td>{{ $row->name }}</td> --}}
+
                                     <td>
-                                        @foreach ($row->products as $product)
+                                        {{-- @foreach ($row->products as $product)
                                         {{ $product->name }}
-                                        @endforeach
+                                        @endforeach --}}
+                                            {{ $row->name }}
                                     </td>
                                     <td>{{ $row->email }}</td>
                                     <td>{{ $row->phone }}</td>

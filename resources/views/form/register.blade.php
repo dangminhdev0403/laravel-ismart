@@ -43,7 +43,7 @@
 
                                     <x-input-label class="label" for="name" :value="__('Họ Và tên')" />
                                     <x-text-input id="name" class="block mt-1 w-full form-control"
-                                        placeholder="Họ và tên" type="text" name="name" :value="old('name')" required
+                                        placeholder="Họ và tên" type="text" name="name" :value="old('name')" 
                                         autofocus autocomplete="name" />
                                     <x-input-error :messages="$errors->get('name')" class="mt-2 text-danger" />
 
@@ -51,7 +51,7 @@
                                 <div class="form-group mb-3">
                                     <x-input-label class="label" for="email" :value="__('Email')" />
                                     <x-text-input id="email" class="block mt-1 w-full form-control" placeholder="Email"
-                                        type="email" name="email" :value="old('email')" required autocomplete="username" />
+                                        type="email" name="email" :value="old('email')"  autocomplete="username" />
                                     <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                                 </div>
                                 <div class="form-group mb-3">
@@ -59,7 +59,7 @@
                                     <x-input-label class="label" for="password" :value="__('Mật khẩu')" />
 
                                     <x-text-input id="password" class="block mt-1 w-full form-control" type="password"
-                                        name="password" required autocomplete="new-password" />
+                                        name="password"  autocomplete="new-password" />
 
                                     <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
 
@@ -73,7 +73,7 @@
                                     <x-input-label class="label" for="password_confirmation" :value="__('Xác nhận mật khẩu')" />
 
                                     <x-text-input id="password_confirmation" class="block mt-1 w-full form-control" type="password"
-                                        name="password_confirmation" required autocomplete="new-password" />
+                                        name="password_confirmation"  autocomplete="new-password" />
 
                                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-danger" />
                                 </div>
