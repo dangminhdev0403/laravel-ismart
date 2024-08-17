@@ -125,4 +125,54 @@ class AdminOrderController extends Controller
             return response()->json(['success' => false], 404);
         }
     }
+    
+    public function delete(Request $request,$id){
+        $order = Order::find($id);
+             $order->delete();
+             return redirect()->back()->with('message',"Xoá thành công");
+    }
+
+    public function action(Request $request){
+        $data= ['status'=>'success'];
+        $orders = $request['list-check-hidden'];
+        $act = $request['act'];
+        if(!empty($orders)){
+            if($act=='delete'){
+                foreach($orders as $id){
+                    $order = Order::find($id);
+                    $order->delete();
+                }
+                return redirect()->back()->with('message',"Xoá thành công");
+            }elseif($act=='canncel'){
+                $data['status'] = 'cancel';
+                foreach($orders as $id){
+                    $order = Order::find($id);
+                    $order->update($data);
+                }
+                return redirect()->back()->with('message',"Cập nhật trạng thái thành công");
+            }elseif($act=='success'){
+                foreach($orders as $id){
+                    $order = Order::find($id);
+                    $order->update($data);
+
+                }
+                return redirect()->back()->with('message',"Cập nhật trạng thái thành công");
+            }elseif($act=='pending'){
+                $data['status'] = 'pending';
+                foreach($orders as $id){
+                    $order = Order::find($id);
+                    $order->update($data);
+                }
+                return redirect()->back()->with('message',"Cập nhật trạng thái thành công");
+            }else{
+                return redirect()->back()->with('error',"Chưa chọn thao tác");
+            }
+
+
+        }else{
+            return redirect()->back()->with('error',"Chưa chọn đơn hàng");
+        }
+
+
+    }
 }

@@ -82,4 +82,18 @@ class CategoryController extends Controller
 
         return redirect()->route('category')->with('message', "Danh mục {$category->name} đã được xóa thành công.");
     }
+    public function deleteSelect(Request $request){
+        $categories = $request['list-check-hidden'];
+           
+        if(($categories)){
+            foreach($categories as $id){
+                $category = Category::find($id);
+                $category->delete();
+            }
+            return redirect()->route('category')->with('message', "Danh mục đã được xóa thành công.");
+        }else{
+            return redirect()->route('category')->with('error', "Chưa chọn danh mục");
+        }
+
+    }
 }

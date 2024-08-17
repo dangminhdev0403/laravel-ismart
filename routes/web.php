@@ -77,6 +77,7 @@ Route::middleware('auth','verified')->prefix('admin')->group(function () {
         Route::get('/edit/{id}', 'edit')->name('category.edit');
         Route::post('/update/{id}', 'update')->name('category.update');
         Route::get('/delete/{id}', 'delete')->name('category.delete');
+        Route::get('/deleteSelect', 'deleteSelect')->name('admin.category.deleteSelect');
     });
 
 
@@ -99,6 +100,7 @@ Route::middleware('auth','verified')->prefix('admin')->group(function () {
         Route::get('edit/{id}','edit')->name('admin.orders.edit');
         Route::get('update/{id}','update')->name('admin.orders.update');
         Route::get('delete/{id}','delete')->name('admin.orders.delete');
+        Route::get('action','action')->name('admin.orders.action');
     });
 });
 
@@ -126,6 +128,7 @@ Route::middleware('auth','verifed-email')->controller(OrderController::class)->p
     Route::get('destroy', 'destroy')->name('cart.destroy');
     Route::post('pay', 'pay')->name('cart.pay')->middleware('checkout');
     Route::post('payOne/{id}', 'payOne')->name('cart.payOne');
+    Route::post('delete/selected', 'deleteSelected')->name('cart.deleteSelected');
 
 
     Route::post('checkout','checkout')->name('cart.checkout');
@@ -135,6 +138,8 @@ Route::middleware('auth','verifed-email')->controller(OrderController::class)->p
 Route::middleware('auth','verifed-email')->controller(DetailOrderController::class)->prefix('detailorder')->group(function () {
     Route::get('', 'index')->name('order.show');
     Route::get('cancel/{id}', 'cancel')->name('order.cancel');
+    Route::post('delete/selected', 'deleteSelected')->name('order.deleteSelected');
+
 
 
 });

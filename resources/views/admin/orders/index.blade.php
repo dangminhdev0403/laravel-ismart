@@ -8,28 +8,45 @@
             </div>
 
             <div class="card-body">
-                <a href="{{ url('admin/category/add') }}" class="btn btn-primary mb-3" style="margin-left: 13px">Thêm đơn hàng</a>
+
                 <div class ="form-control d-flex" style="border: none">
-                        @if($activeLink != '')
+
+                    <form id="main-form" action="{{ route('admin.orders.action') }}">
                         <div id="form-select-users" class="d-flex">
-                            <select name="" id="" class="form-select text-center mb-3"
-                                style="display: inline;">
+                            <select name="act" class="form-select text-center mb-3" style="display: inline;">
                                 <option value="1" class="form-option">
                                     Chọn
+                                </option>
+                                <option value="success" class="form-option">
+                                    Hoàn tất
+                                </option>
+                                <option value="pending" class="form-option">
+                                    Chờ xử lí
+                                </option>
+
+
+                                <option value="canncel" class="form-option">
+                                    Huỷ đơn hàng
+                                </option>
+
+                                <option value="delete" class="form-option">
+                                    Xoá
                                 </option>
                             </select>
                             <button class="btn btn-success"
                                 style="padding: 6px 12px; width: 209.953px; height: 38px; transform: translate(12px, 0px);">Áp
                                 dụng</button>
                         </div>
-                        @endif
+                    </form>
+
 
 
                     <div id="form-search" style="margin-left: auto">
-                      <form action="#">
-                            <input type="text" name="keyword" value="{{ request()->keyword}}" placeholder="Nhập tên hoặc email">
+                        <form action="#">
+                            <input type="text" name="keyword" value="{{ request()->keyword }}"
+                                placeholder="Nhập tên hoặc email">
                             <button class="btn btn-success">Tìm</button>
-                      </form>
+                        </form>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -38,20 +55,25 @@
                         class="{{ request()->routeIs('admin.orders') ? 'text-danger' : '' }} text-decoration-none"
                         style="font-size:20px; margin:0px 13px 0px 0px">Tất cả <span>({{ $counts['All'] }})</span></a>|
                     <a href="{{ route('admin.orders.show', 'pending') }} " style="font-size:20px; margin:0px 13px 0px 0px"
-
-                        id="pending-link" class="{{ $activeLink === 'pending' ? 'text-danger' : '' }} text-decoration-none">Chờ xử lí <span class="text-decoration-none">({{ $counts['Pending']}})</span></a>|
+                        id="pending-link"
+                        class="{{ $activeLink === 'pending' ? 'text-danger' : '' }} text-decoration-none">Chờ xử lí <span
+                            class="text-decoration-none">({{ $counts['Pending'] }})</span></a>|
                     <a href="{{ route('admin.orders.show', 'success') }} " style="font-size:20px; margin:0px 13px 0px 0px"
-                        id="success-link" class="{{ $activeLink === 'success' ? 'text-danger' : '' }} text-decoration-none">Hoàn tất ({{ $counts['Success']}})</a>|
+                        id="success-link"
+                        class="{{ $activeLink === 'success' ? 'text-danger' : '' }} text-decoration-none">Hoàn tất
+                        ({{ $counts['Success'] }})</a>|
                     <a href="{{ route('admin.orders.show', 'cancel') }} " style="font-size:20px; margin:0px 13px 0px 0px"
-                        id="cancel-link" class="{{ $activeLink === 'cancel' ? 'text-danger' : '' }} text-decoration-none">Hủy ({{ $counts['Cancel']}})</a>
+                        id="cancel-link"
+                        class="{{ $activeLink === 'cancel' ? 'text-danger' : '' }} text-decoration-none">Hủy
+                        ({{ $counts['Cancel'] }})</a>
 
 
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                @if ( $activeLink!= '')
-                                <th><input type="checkbox" name="select-all" id=""></th>
-                                @endif
+
+                                <th><input type="checkbox" name="checkall" id="checkall"></th>
+
 
                                 <th>No</th>
                                 <th>Tên</th>
@@ -67,13 +89,14 @@
                         </thead>
                         <tbody>
                             @php
-                            $no = ($orders->currentPage() - 1) * $orders->perPage() + 1;
-                             @endphp
+                                $no = ($orders->currentPage() - 1) * $orders->perPage() + 1;
+                            @endphp
                             @foreach ($orders as $row)
                                 <tr>
-                                    @if ( $activeLink!= '')
-                                    <td><input type="checkbox" name="list-item" id=""></td>
-                                    @endif
+
+                                    <td><input type="checkbox" name="list-check[]" value="{{ $row->id }}"
+                                            class="outside-checkbox"></td>
+
 
                                     <th>{{ $no++ }}</th>
 
@@ -81,12 +104,12 @@
                                         {{-- @foreach ($row->products as $product)
                                         {{ $product->name }}
                                         @endforeach --}}
-                                            {{ $row->name }}
+                                        {{ $row->name }}
                                     </td>
                                     <td>{{ $row->email }}</td>
                                     <td>{{ $row->phone }}</td>
                                     <td>{{ $row->address }}</td>
-                                    <td>  {{ $row->formatted_date }}</td>
+                                    <td> {{ $row->formatted_date }}</td>
 
                                     <td>
                                         @if ($row['payment'] == 'transfer')
@@ -121,8 +144,11 @@
 
                                         </form>
                                     </td>
-                                    <td><a href="{{ route('admin.orders.edit',$row->id) }}" class="btn btn-primary">Chi tiết</a>
-                                   <a href="{{ route('admin.orders.delete',$row->id) }}" class="btn btn-danger delete-link">Xóa</a></td>
+                                    <td><a href="{{ route('admin.orders.edit', $row->id) }}" class="btn btn-primary">Chi
+                                            tiết</a>
+                                        <a href="{{ route('admin.orders.delete', $row->id) }}"
+                                            class="btn btn-danger delete-link">Xóa</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -144,9 +170,9 @@
             @foreach ($orders as $row)
                 $('#statusSelect{{ $row->id }}').change(function(e) {
 
-                        $('#statusForm{{ $row->id }}').submit();
-                    });
-                    @endforeach
+                    $('#statusForm{{ $row->id }}').submit();
+                });
+            @endforeach
 
 
 

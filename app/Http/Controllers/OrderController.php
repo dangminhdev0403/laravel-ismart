@@ -111,12 +111,14 @@ class OrderController extends Controller
 
     }
 
+    
+
 
     function checkout(Request $request)
     {
 
 
-            
+
 
         if($request->rowId){
 

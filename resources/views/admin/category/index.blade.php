@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 <style>
-    
+
 </style>
 @section('title', 'Danh mục')
 @section('content')
@@ -11,21 +11,19 @@
             </div>
 
             <div class="card-body">
-                <a href="{{ url('admin/category/add') }}" class="btn btn-primary mb-3">Thêm danh mục</a>
+
                 <div class="table-responsive">
+
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <div class ="form-control d-flex" style="border: none">
+                            <a href="{{ url('admin/category/add') }}" class="btn btn-primary mb-3">Thêm danh mục</a>
+                          <form action="{{ route('admin.category.deleteSelect') }}" id="main-form">
+                            @csrf
+                                <div id="form-select-users" class="d-flex">
 
-                            <div id="form-select-users" class="d-flex">
-                                <select name="" id="" class="form-select text-center mb-3"
-                                    style="display: inline;">
-                                    <option value="1" class="form-option">
-                                        Chọn
-                                    </option>
-                                </select>
-                                <button class="btn btn-success"
-                                    style="padding: 6px 12px; width: 209.953px; height: 38px; transform: translate(12px, 0px);">Áp
-                                    dụng</button>
+                                    <button class="btn btn-danger "
+                                        style="padding: 6px 12px;  height: 38px; transform: translate(12px, 0px);" >Xoá đã chọn</button>
+                          </form>
                             </div>
 
                             <div id="form-search" style="margin-left: auto">
@@ -38,7 +36,7 @@
                         </div>
                         <thead>
                             <tr>
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" name="checkall" id="checkall"></td>
                                 <th>No</th>
                                 <th>Danh mục</th>
                                 <th>Ngày tạo</th>
@@ -53,7 +51,7 @@
                                 @endphp
                                 @foreach ($categories as $row)
                                     <tr>
-                                        <td><input type="checkbox" name="" id=""></td>
+                                        <td><input type="checkbox" name="list-checks[]" value="{{ $row->id }}" class="outside-checkbox"></td>
                                         <th>{{ $no++ }}</th>
                                         <td>{{ $row->name }}</td>
                                         <td>{{ $row->formatted_date }}</td>
@@ -111,7 +109,7 @@
 
             Swal.fire({
                 title: "Xác nhận xóa",
-                text: `Bạn có chắc chắn muốn xóa danh mục ${name}?`,
+                text: `Bạn có chắc chắn muốn xóa danh mục`,
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -124,6 +122,25 @@
                 }
             });
         }
+
+        $('#delete-order').on('click', function(e) {
+        e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+
+        Swal.fire({
+            title: "Xác nhận",
+            text: "Bạn có chắc chắn muốn xoá danh mục?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Chắc chắn",
+            cancelButtonText: "Không",
+        }).then((result) => {
+            if (result.isConfirmed) {  // Chỉ submit form khi người dùng xác nhận
+                $('#main-form').submit();
+            }
+        });
+    });
     </script>
 
 

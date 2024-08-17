@@ -161,33 +161,7 @@
     </div>
 @endsection
 @push('scripts')
-<script>
-      // Lắng nghe sự kiện click trên checkbox "checkall"
-      document.getElementById('checkall').addEventListener('change', function(event) {
-            // Lấy tất cả các checkbox có class "outside-checkbox"
-            var checkboxes = document.querySelectorAll('.outside-checkbox');
-            // Lặp qua tất cả các checkbox và thay đổi trạng thái checked dựa trên checkbox "checkall"
-            checkboxes.forEach(function(checkbox) {
-                checkbox.checked = event.target.checked;
-            });
-        });
-        //submit
-    document.getElementById('main-form').addEventListener('submit', function(event) {
-        // Xóa tất cả các input ẩn hiện có trong form
-        document.querySelectorAll('input[name="list-check-hidden[]"]').forEach(function(element) {
-            element.remove();
-        });
 
-        // Thêm giá trị từ các checkbox bên ngoài vào form dưới dạng các input ẩn
-        document.querySelectorAll('.outside-checkbox:checked').forEach(function(checkbox) {
-            var hiddenInput = document.createElement('input');
-            hiddenInput.type = 'hidden';
-            hiddenInput.name = 'list-check-hidden[]';
-            hiddenInput.value = checkbox.value;
-            document.getElementById('main-form').appendChild(hiddenInput);
-        });
-    });
-</script>
 
     <script>
         $(document).ready(function() {

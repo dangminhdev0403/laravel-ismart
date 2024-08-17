@@ -31,4 +31,21 @@ class DetailOrderController extends Controller
            return redirect()->back()->with('message',"Hủy đơn hàng thành công");
             }
 
+            public function deleteSelected(Request $request){
+                $data = [
+                    'status' => "cancel"
+                ];
+                $products = $request->input('products',[]);
+                if($products != null){
+                    foreach($products as $id => $value){
+
+                        $order = Order::find($id);
+                        $order->update($data);
+                    }
+                    return redirect()->back()->with('message',"Hủy đơn hàng thành công");
+                }else{
+                    return redirect()->back()->with('error',"Bạn chưa chọn đơn hàng để huỷ");
+                };
+            }
+
 }

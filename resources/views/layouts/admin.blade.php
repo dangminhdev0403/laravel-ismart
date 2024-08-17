@@ -154,10 +154,57 @@
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
     });
 </script>
+  @stack('scripts')
+  <script>
+    // Lắng nghe sự kiện click trên checkbox "checkall"
+    document.getElementById('checkall').addEventListener('change', function(event) {
+          // Lấy tất cả các checkbox có class "outside-checkbox"
+          var checkboxes = document.querySelectorAll('.outside-checkbox');
+          // Lặp qua tất cả các checkbox và thay đổi trạng thái checked dựa trên checkbox "checkall"
+          checkboxes.forEach(function(checkbox) {
+              checkbox.checked = event.target.checked;
+          });
+      });
+      //submit
+  document.getElementById('main-form').addEventListener('submit', function(event) {
+      // Xóa tất cả các input ẩn hiện có trong form
+      document.querySelectorAll('input[name="list-check-hidden[]"]').forEach(function(element) {
+          element.remove();
+      });
 
-    @stack('scripts')
+      // Thêm giá trị từ các checkbox bên ngoài vào form dưới dạng các input ẩn
+      document.querySelectorAll('.outside-checkbox:checked').forEach(function(checkbox) {
+          var hiddenInput = document.createElement('input');
+          hiddenInput.type = 'hidden';
+          hiddenInput.name = 'list-check-hidden[]';
+          hiddenInput.value = checkbox.value;
+          document.getElementById('main-form').appendChild(hiddenInput);
+      });
+  });
 
 
+</script>
+@if (session('error'))
+<script>
+    Swal.fire({
+        title: 'Thất bại',
+        text: "{{ session('error') }}",
+        icon: 'error',
+        showConfirmButton: true,
+        confirmButtonText: 'OK'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Xóa dữ liệu trong sessionStorage sau khi người dùng nhấn OK
+            sessionStorage.clear();
+            location.reload();
+
+            // Nếu cần xóa cookie hoặc localStorage, bạn có thể thêm mã tương tự ở đây
+            // document.cookie = 'cookieName=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+            // localStorage.clear();
+        }
+    });
+</script>
+@endif
 </body>
 
 </html>

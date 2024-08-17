@@ -20,10 +20,11 @@
             <div class="section" id="info-cart-wp">
                 <div class="section-detail table-responsive">
 
-                    <form action="{{ route('cart.pay') }}" method="post">
+                    <form action="{{ route('cart.pay') }}" method="post" id="myForm">
                         @csrf
                         @if (!empty($orders))
                             <table class="table">
+
                                 <thead>
                                     <tr>
                                         <td>
@@ -43,6 +44,7 @@
                                         <td>Trạng thái</td>
                                         <td colspan="2">Thao tác</td>
                                     </tr>
+
                                 </thead>
                                 <tbody>
                                     @foreach ($orders as $row)
@@ -50,7 +52,7 @@
                                             @if ($row['status'] == 'pending')
                                                 <td>
                                                     <input type="checkbox" class="product-checkbox"
-                                                        name="products[{{ $loop->index }}][selected]" value="1"
+                                                        name="products[{{ $row->id }}][selected]" value="1"
                                                         onchange="updateTotal()">
                                                 </td>
                                             @else
@@ -79,7 +81,7 @@
                                                     {{-- {{ $row->products[0]->name  }} --}}
                                                     @foreach ($row->products as $product)
                                                         {{ $product->name }}
-                                                        @endforeach
+                                                    @endforeach
 
 
 
@@ -131,11 +133,12 @@
                                         <td colspan="7">
                                             <div class="clearfix" style="margin-bottom: 1px; margin-top: 17px;">
                                                 <div class="fl-right">
-                                                    <a href="javascript:void(0)" title="" id="delete-cart-all">Xoá đã
+                                                    <a href="javascript:void(0)" title="" id="delete-cart-all"
+                                                       >Huỷ đơn hàng đã chọn
                                                         chọn</a>
 
 
-                                                    <button id="checkout-cart">Thanh toán</button>
+
                                                 </div>
                                             </div>
                                         </td>
@@ -240,6 +243,54 @@
                     window.location.href = url; // Chỉ thực hiện khi đã xác nhận xóa
                 }
             });
-        }
+        }$(document).ready(function() {
+    $('#delete-cart-all').on('click', function(e) {
+        e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+
+        Swal.fire({
+            title: "Xác nhận",
+            text: "Bạn có chắc chắn muốn hủy đơn hàng?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Chắc chắn",
+            cancelButtonText: "Không",
+        }).then((result) => {
+            if (result.isConfirmed) {  // Chỉ submit form khi người dùng xác nhận
+                // Đổi action của form
+                $('#myForm').attr('action', '{{ route('order.deleteSelected') }}');
+
+                // Submit form
+                $('#myForm').submit();
+            }
+        });
+    });
+});
+
+
+        // $(document).ready(function() {
+        //     $('#delete-cart-all').on('click', function(e) {
+        //             e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+        //             Swal.fire({
+        //                 title: "Xác nhận ",
+        //                 text: `Bạn có chắc chắn muốn hủy đơn hàng?`,
+        //                 icon: "warning",
+        //                 showCancelButton: true,
+        //                 confirmButtonColor: "#3085d6",
+        //                 cancelButtonColor: "#d33",
+        //                 confirmButtonText: "Chắc chắn",
+        //                 cancelButtonText: "Không",
+        //             }).then((result) => {
+        //                     // Đổi action của form
+        //                     $('#myForm').attr('action', '{{ route('order.deleteSelected') }}');
+
+        //                     // // Submit form
+        //                     $('#myForm').submit();
+        //                 }
+        //             });
+
+        //     });
+        // });
     </script>
 @endpush

@@ -126,7 +126,7 @@
                                                 src="{{ asset($product->images[0]->image_name) }}"style="width: 133px ; height: 133px; object-fit: cover; padding:0px 0px 0px 23px;">
                                         </a>
                                         <a href="{{ route('detailProduct', $product->id) }}" title=""
-                                            class="product-name">{{ $product->name }}</a>
+                                            class="product-name">{{ $product->name }} </a>
 
                                         <div class="price">
                                             @if ($product->sale_price > 0)
