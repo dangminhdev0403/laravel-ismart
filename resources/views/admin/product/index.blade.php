@@ -17,7 +17,7 @@
                                 <th>Sản phẩm</th>
                                 <th>Danh mục</th>
                                 <th>Giá gốc(VND)</th>
-                                <th>Giá hiện tại(VND)</th>
+                                <th>Giá được giảm(VND)</th>
                                 <th>Số lượng</th>
                                 <th>Actions</th>
 

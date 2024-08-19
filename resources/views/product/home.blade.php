@@ -85,7 +85,9 @@
                                     </a>
                                     <a href="{{ route('detailProduct', $product->id) }}" title=""
                                         class="product-name">{{ $product->name }}  </a>
-
+                                            @if (strlen( $product->name )<24)
+                                                <div style="height: 19px"></div>
+                                            @endif
                                     <div class="price">
                                         @if ($product->sale_price > 0)
                                             <span
@@ -118,8 +120,13 @@
                         </div>
                         <div class="section-detail">
                             <ul class="list-item clearfix">
-
+                                @php
+                                    $t =0;
+                                @endphp
                                 @foreach ($category->products as $product)
+                                @php
+                                $t++;
+                            @endphp
                                     <li style="  padding:   10px 10px 7px;">
                                         <a href="{{ route('detailProduct', $product->id) }}" title="" class="thumb">
                                             <img
@@ -127,7 +134,9 @@
                                         </a>
                                         <a href="{{ route('detailProduct', $product->id) }}" title=""
                                             class="product-name">{{ $product->name }} </a>
-
+                                            @if (strlen( $product->name )<24)
+                                            <div style="height: 19px"></div>
+                                        @endif
                                         <div class="price">
                                             @if ($product->sale_price > 0)
                                                 <span
@@ -141,6 +150,9 @@
                                         </div>
 
                                     </li>
+                                    @if($t==8)
+                                    @break
+                                    @endif
                                 @endforeach
 
 

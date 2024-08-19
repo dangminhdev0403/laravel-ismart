@@ -496,8 +496,54 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('error'))
+    <script>
+        Swal.fire({
+            title: 'Thất bại',
+            text: "{{ session('error') }}",
+            icon: 'error',
+            showConfirmButton: true,
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Xóa dữ liệu trong sessionStorage sau khi người dùng nhấn OK
+                sessionStorage.clear();
+                location.reload();
 
-    @stack('scripts')
+                // Nếu cần xóa cookie hoặc localStorage, bạn có thể thêm mã tương tự ở đây
+                // document.cookie = 'cookieName=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+                // localStorage.clear();
+            }
+        });
+    </script>
+
+@endif
+
+@if (session('message'))
+<script>
+    Swal.fire({
+        title: 'Thành công',
+        text: "{{ session('message') }}",
+        icon: 'success',
+        showConfirmButton: true,
+        confirmButtonText: 'OK'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Xóa dữ liệu trong sessionStorage sau khi người dùng nhấn OK
+            sessionStorage.clear();
+            location.reload();
+
+            // Nếu cần xóa cookie hoặc localStorage, bạn có thể thêm mã tương tự ở đây
+            // document.cookie = 'cookieName=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+            // localStorage.clear();
+        }
+    });
+</script>
+
+@endif
+
+
+@stack('scripts')
 
 
 

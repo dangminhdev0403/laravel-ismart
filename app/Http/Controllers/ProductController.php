@@ -72,13 +72,17 @@ class ProductController extends Controller
 
     public function save(ProductRequest $request)
     {
-        
+
         $user_id  = Auth::user()->id ;
 
             $request->validated();
 
         if($request->sale_price !=null || $request->sale_price !=0){
+
             $sale_price = $request->sale_price;
+            if($sale_price >  $request->price){
+                return redirect()->back()->with('error','Giá gốc phải thấp hơn');
+            }
         }else{
             $sale_price =$request->price ;
         }
@@ -142,6 +146,9 @@ class ProductController extends Controller
     {
         if($request->sale_price !=null || $request->sale_price !=0){
             $sale_price = $request->sale_price;
+            if($sale_price >  $request->price){
+                return redirect()->back()->with('error','Giá gốc phải thấp hơn');
+            }
         }else{
             $sale_price =$request->price ;
         }

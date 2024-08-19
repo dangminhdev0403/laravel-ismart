@@ -180,5 +180,15 @@ class AdminUserController extends Controller
 
     }
 
+    public function delete($id){
+        $record = User::find($id);
+        $record->delete();
+        return redirect()->back()->with('message','Vô hiệu hóa thành công');
+    }
+    public function restore($id){
+
+       User::onlyTrashed()->find($id)->restore();
+        return redirect()->back()->with('message','Khôi phục thành công');
+    }
 
 }

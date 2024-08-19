@@ -144,7 +144,7 @@
 
                                         </form>
                                     </td>
-                                    <td><a href="{{ route('admin.orders.edit', $row->id) }}" class="btn btn-primary">Chi
+                                    <td><a href="{{ route('admin.orders.detailOrder', $row->id) }}" class="btn btn-primary">Chi
                                             tiết</a>
                                         <a href="{{ route('admin.orders.delete', $row->id) }}"
                                             class="btn btn-danger delete-link">Xóa</a>

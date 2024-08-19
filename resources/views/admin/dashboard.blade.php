@@ -8,7 +8,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-body text-center fw-bold text-uppercase">Doanh thu</div>
-                                    <div class="text-center fw-bold text-uppercase">100.000.000đ</div>
+                                    <div class="text-center fw-bold text-uppercase">{{ number_format($revenue, 0, '', '.') }} Đ </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="">Chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>

@@ -62,11 +62,12 @@
                                                 {{ $row->formatted_date }}
                                             </td>
                                             <td>
-                                                <a href="{{ route('detailProduct', $row->id) }}"
+                                                @foreach ($row->products as $product)
+                                                <a href="{{ route('detailProduct', $product->id) }}"
                                                     title=" {{ $row->name }}" class="thumb">
 
 
-                                                    @foreach ($row->products as $product)
+
                                                         <img src="{{ asset($product->images[0]->image_name) }}"
                                                             alt="" style="max-width: 100%; height: auto;">
                                                     @endforeach
@@ -76,10 +77,10 @@
                                                 </a>
                                             </td>
                                             <td class="product-name">
-
-                                                <a href="{{ route('detailProduct', $row->id) }}" style="color: #000">
+                                                @foreach ($row->products as $product)
+                                                <a href="{{ route('detailProduct', $product->id) }}" style="color: #000">
                                                     {{-- {{ $row->products[0]->name  }} --}}
-                                                    @foreach ($row->products as $product)
+
                                                         {{ $product->name }}
                                                     @endforeach
 
@@ -135,7 +136,7 @@
                                                 <div class="fl-right">
                                                     <a href="javascript:void(0)" title="" id="delete-cart-all"
                                                        >Huỷ đơn hàng đã chọn
-                                                        chọn</a>
+                                                        </a>
 
 
 
@@ -243,7 +244,10 @@
                     window.location.href = url; // Chỉ thực hiện khi đã xác nhận xóa
                 }
             });
-        }$(document).ready(function() {
+
+        }
+
+        $(document).ready(function() {
     $('#delete-cart-all').on('click', function(e) {
         e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
 
@@ -269,28 +273,6 @@
 });
 
 
-        // $(document).ready(function() {
-        //     $('#delete-cart-all').on('click', function(e) {
-        //             e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
-        //             Swal.fire({
-        //                 title: "Xác nhận ",
-        //                 text: `Bạn có chắc chắn muốn hủy đơn hàng?`,
-        //                 icon: "warning",
-        //                 showCancelButton: true,
-        //                 confirmButtonColor: "#3085d6",
-        //                 cancelButtonColor: "#d33",
-        //                 confirmButtonText: "Chắc chắn",
-        //                 cancelButtonText: "Không",
-        //             }).then((result) => {
-        //                     // Đổi action của form
-        //                     $('#myForm').attr('action', '{{ route('order.deleteSelected') }}');
 
-        //                     // // Submit form
-        //                     $('#myForm').submit();
-        //                 }
-        //             });
-
-        //     });
-        // });
     </script>
 @endpush

@@ -20,7 +20,6 @@
     }
 
 
-
 </style>
 
 
@@ -58,42 +57,7 @@
 
                             <div id="list-thumb" class="zoom-gallery">
 
-                                <a href=""
-                                    data-image="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_ab1f47_350x350_maxb.jpg"
-                                    data-zoom-image="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_70aaf2_700x700_maxb.jpg">
-                                    <img id="zoom"
-                                        src="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_02d57e_50x50_maxb.jpg" />
-                                </a>
-                                <a href=""
-                                    data-image="https://media3.scdn.vn/img2/2017/10_30/BlccRg_simg_ab1f47_350x350_maxb.jpg"
-                                    data-zoom-image="https://media3.scdn.vn/img2/2017/10_30/BlccRg_simg_70aaf2_700x700_maxb.jpg">
-                                    <img id="zoom"
-                                        src="https://media3.scdn.vn/img2/2017/10_30/BlccRg_simg_02d57e_50x50_maxb.jpg" />
-                                </a>
-                                <a href=""
-                                    data-image="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_ab1f47_350x350_maxb.jpg"
-                                    data-zoom-image="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_70aaf2_700x700_maxb.jpg">
-                                    <img id="zoom"
-                                        src="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_02d57e_50x50_maxb.jpg" />
-                                </a>
-                                <a href=""
-                                    data-image="https://media3.scdn.vn/img2/2017/10_30/BlccRg_simg_ab1f47_350x350_maxb.jpg"
-                                    data-zoom-image="https://media3.scdn.vn/img2/2017/10_30/BlccRg_simg_70aaf2_700x700_maxb.jpg">
-                                    <img id="zoom"
-                                        src="https://media3.scdn.vn/img2/2017/10_30/BlccRg_simg_02d57e_50x50_maxb.jpg" />
-                                </a>
-                                <a href=""
-                                    data-image="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_ab1f47_350x350_maxb.jpg"
-                                    data-zoom-image="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_70aaf2_700x700_maxb.jpg">
-                                    <img id="zoom"
-                                        src="https://media3.scdn.vn/img2/2017/10_30/sxlpFs_simg_02d57e_50x50_maxb.jpg" />
-                                </a>
-                                <a href=""
-                                    data-image="https://media3.scdn.vn/img2/2017/10_30/BlccRg_simg_ab1f47_350x350_maxb.jpg"
-                                    data-zoom-image="https://media3.scdn.vn/img2/2017/10_30/BlccRg_simg_70aaf2_700x700_maxb.jpg">
-                                    <img id="zoom"
-                                        src="https://media3.scdn.vn/img2/2017/10_30/BlccRg_simg_02d57e_50x50_maxb.jpg" />
-                                </a>
+                              
                             </div>
                         </div>
                         <div class="thumb-respon-wp fl-left">
@@ -167,11 +131,11 @@
 
                             @foreach ($products_same as $product_same)
                                 <li>
-                                    <a href="" title="" class="thumb">
+                                    <a href="{{ route('detailProduct', $product_same->id) }}" title="" class="thumb">
                                         <img src="{{ asset($product_same->images[0]->image_name) }}"
                                             style="width: 133px ; height: 133px; object-fit: cover;">
                                     </a>
-                                    <a href="" title="" class="product-name">{{ $product_same->name }}</a>
+                                    <a href="{{ route('detailProduct', $product_same->id) }}" title="" class="product-name">{{ $product_same->name }}</a>
                                     <div class="price">
 
                                         @if ($product->sale_price > 0)
@@ -236,13 +200,7 @@
 });
 
 
-    document.getElementById('plus').addEventListener('click', function() {
-        const input = document.getElementById('num-order');
-        let value = parseInt(input.value);
-        if (value < parseInt(input.max)) {
-            input.value = value + 1;
-        }
-    });
+
 </script>
 <script>
 

@@ -12,11 +12,12 @@ class DetailOrderController extends Controller
     public function index(){
        $user_id =  Auth::user()->id;
        $orders = Order::where('user_id','=',$user_id)->orderBy('created_at','desc')->get() ;
-
-       foreach($orders as $order){
+        // dd($orders[2]->products);
+        foreach($orders as $order){
         $order->formatted_date = Carbon::parse($order->created_at)->format('d-m-Y ');
+
        }
-    //    dd($orders);
+
         return view('product.order',compact('orders'));
     }
     public function cancel($id){

@@ -111,7 +111,7 @@ class OrderController extends Controller
 
     }
 
-    
+
 
 
     function checkout(Request $request)
@@ -148,12 +148,16 @@ class OrderController extends Controller
             return redirect()->route('order.show')->with('message', 'Đặt hàng thành công');
 
         }else{
-            // dd( $data = $request->all());
+            //   dd( $data = $request->all());
+            $product_id =$request->product_id ;
+            //   dd($product_id);
+            $quantity=  $request->qty;
 
             $data = $request->all();
             $data['user_id'] = auth()->user()->id;
             $data['status'] = 'pending';
-            Order::create($data);
+          $order =  Order::create($data);
+             $order->products()->attach($product_id,['quantity'=>$quantity]);
             return redirect()->route('order.show')->with('message', 'Đặt hàng thành công');
         }
 
@@ -162,5 +166,29 @@ class OrderController extends Controller
 
 
     }
+
+    public function deleteSelected(Request $request)
+    {
+        // dd($request->products);
+        $t = 0 ;
+        $products = $request->products;
+        // dd($products[0]['selected']);
+        foreach(  $products as $product){
+
+            if(isset($product['selected'])){
+                $t++ ;
+                $rowId = $product['rowId'];
+                Cart::remove($rowId);
+
+            }
+
+        }
+        // Cart::remove($rowId);
+        if($t == 0){
+            return redirect()->back()->with('error', 'Bạn chưa chọn đơn hàng');
+        }
+        return redirect()->back()->with('message', 'Xoá thành công');
+    }
+
 }
 

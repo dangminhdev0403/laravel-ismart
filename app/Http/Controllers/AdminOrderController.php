@@ -125,7 +125,7 @@ class AdminOrderController extends Controller
             return response()->json(['success' => false], 404);
         }
     }
-    
+
     public function delete(Request $request,$id){
         $order = Order::find($id);
              $order->delete();
@@ -174,5 +174,11 @@ class AdminOrderController extends Controller
         }
 
 
+    }
+
+    public function detailOrder($id){
+        $order = Order::find($id);
+     
+        return view('admin.orders.form',compact('order'));
     }
 }

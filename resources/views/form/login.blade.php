@@ -43,7 +43,7 @@
 
                                     <x-input-label class="label" for="email" :value="__('Email')" />
                                     <x-text-input id="email" class="block mt-1 w-full form-control" type="email"
-                                        name="email" :value="old('email')" placeholder="Email" autofocus
+                                        name="email" :value="old('email')" placeholder="Email"
                                         autocomplete="username" />
                                     <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
 
@@ -53,7 +53,7 @@
 
                                     <div class="input-group">
                                         <x-text-input id="password" class="block mt-1 w-full form-control" type="password"
-                                            name="password" required autocomplete="current-password" />
+                                            name="password"  autocomplete="current-password" />
 
                                     </div>
 

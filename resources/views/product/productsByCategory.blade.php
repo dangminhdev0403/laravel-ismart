@@ -79,17 +79,7 @@
                 </div>
                 <div class="section" id="paging-wp">
                     <div class="section-detail">
-                        <ul class="list-item clearfix">
-                            <li>
-                                <a href="" title="">1</a>
-                            </li>
-                            <li>
-                                <a href="" title="">2</a>
-                            </li>
-                            <li>
-                                <a href="" title="">3</a>
-                            </li>
-                        </ul>
+                        {{ $products->links() }}
                     </div>
                 </div>
             </div>

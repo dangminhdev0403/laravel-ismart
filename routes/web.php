@@ -40,11 +40,14 @@ Route::get('/dashboard', function () {
     $query->whereIn('products.id', $userProductIds);
 })->where('status', '=', 'success')->count();
 
+$revenue  = Order::whereHas('products', function($query) use ($userProductIds) {
+    $query->whereIn('products.id', $userProductIds);
+})->where('status', '=', 'success')->sum('total_price');
 
 
 
 
-    return view('admin.dashboard',compact('Pending', 'Cancel', 'Success'));
+    return view('admin.dashboard',compact('Pending', 'Cancel', 'Success','revenue'));
 })->middleware(['auth', 'verified','checkrole'])->name('dashboard');
 
 //! Login
@@ -65,6 +68,8 @@ Route::middleware('auth','verified')->prefix('admin')->group(function () {
         Route::get('/add','add')->name('users.add');
         Route::post('/save','save')->name('users.save');
         Route::get('/edit/{id}','edit')->name('users.edit');
+        Route::get('/delete/{id}','delete')->name('users.delete');
+        Route::get('/restore/{id}','restore')->name('users.restore');
         Route::post('/update/{id}','update')->name('users.update');
         Route::get('/action/{action?}','action')->name('users.action');
     });
@@ -101,6 +106,7 @@ Route::middleware('auth','verified')->prefix('admin')->group(function () {
         Route::get('update/{id}','update')->name('admin.orders.update');
         Route::get('delete/{id}','delete')->name('admin.orders.delete');
         Route::get('action','action')->name('admin.orders.action');
+        Route::get('detail/{id}','detailOrder')->name('admin.orders.detailOrder');
     });
 });
 

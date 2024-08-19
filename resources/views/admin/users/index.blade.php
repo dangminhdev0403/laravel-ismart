@@ -137,8 +137,14 @@
                                         <td>
                                             <a href="{{ route('admin.users.edit', $row->id) }}"
                                                 class="btn btn-warning">Sửa</a>
-                                            <a href="" class="btn btn-danger delete-link" onclick="deleteCategory()"
-                                                data-name="{{ $row->name }}">Xoá</a>
+                                                @if ($status == 'trash' )
+                                                <a href="{{ route('admin.users.restore', $row->id) }}" class="btn btn-info restore-link" onclick="deleteCategory()"
+                                                    data-name="{{ $row->name }}">Khôi phục</a>
+                                                    @else
+                                                    <a href="{{ route('admin.users.delete', $row->id) }}" class="btn btn-danger delete-link" onclick="deleteCategory()"
+                                                        data-name="{{ $row->name }}">Vô hiệu hoá</a>
+                                                @endif
+
 
 
 

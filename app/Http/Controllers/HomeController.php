@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
         public function home(Request $request){
-           
+
             $keyword = $request->keyword;
 
         $categories = Category::orderBy('order', 'asc')
@@ -40,7 +40,7 @@ class HomeController extends Controller
         $category_id = Category::where('slug',$slug)->value('id');
         $category_name = Category::where('slug',$slug)->value('name');
 
-        $products = Product::where('category_id','=',$category_id)->orderBy('created_at', 'desc')->paginate(15);
+        $products = Product::where('category_id','=',$category_id)->orderBy('created_at', 'desc')->paginate(9);
 
         return view('product.productsByCategory',compact('products','categories','category_name'));
 

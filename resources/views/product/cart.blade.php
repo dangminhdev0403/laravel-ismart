@@ -20,7 +20,7 @@
             <div class="section" id="info-cart-wp">
                 <div class="section-detail table-responsive">
 
-                    <form action="{{ route('cart.pay') }}" method="post">
+                    <form action="{{ route('cart.pay') }}" method="post" id="myForm">
                         @csrf
                         @if (Cart::count() > 0)
                             <table class="table">
@@ -236,5 +236,31 @@
                 }
             });
         }
+    </script>
+    <script>
+         $(document).ready(function() {
+    $('#delete-cart-all').on('click', function(e) {
+        e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+
+        Swal.fire({
+            title: "Xác nhận",
+            text: "Bạn có chắc chắn muốn xoá đơn hàng?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Chắc chắn",
+            cancelButtonText: "Không",
+        }).then((result) => {
+            if (result.isConfirmed) {  // Chỉ submit form khi người dùng xác nhận
+                // Đổi action của form
+                $('#myForm').attr('action', '{{ route('cart.deleteSelected') }}');
+
+                // Submit form
+                $('#myForm').submit();
+            }
+        });
+    });
+});
     </script>
 @endpush
