@@ -684,6 +684,7 @@
     </script>
     <script>
 
+        ScrollReveal().reveal('.headline', { duration: 2000,container: '#list-product-wp' });
         ScrollReveal().reveal('.headline', { duration: 2000 });
         ScrollReveal().reveal('.widget1', { interval: 100 });
         ScrollReveal().reveal('.widget', { interval: 100 });

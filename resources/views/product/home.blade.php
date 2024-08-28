@@ -176,7 +176,7 @@
                 <div class="section" id="list-product-wp">
 
                     <div class="section-head">
-                        <h3 class="section-title">Từ khoá cho {{ $keyword }}</h3>
+                        <h3 class="section-title headline">Từ khoá cho {{ $keyword }}</h3>
                     </div>
                     <div class="section-detail ">
                         <ul class="list-item clearfix">
