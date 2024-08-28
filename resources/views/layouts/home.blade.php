@@ -307,9 +307,10 @@
 
 
                           <div id="search-wp" class="fl-left">
-
-                           <div id="search-form" >
-                                <form action="#" >
+                            @if (Route::has('login'))
+                            @auth
+                            <div id="search-form" >
+                                <form action="#"  >
 
                                     <input type="text" name="keyword1" id="s" placeholder="Nhập từ khóa tìm kiếm tại đây!">
                                     <a id="sm-s"  onclick="document.getElementById('search-form').submit(); return false;" style="cursor: pointer" class="btn-search23">Tìm kiếm</a>
@@ -317,6 +318,20 @@
                                 </form>
 
                            </div>
+
+
+
+                            @else
+
+                            <form action="#" id="search-form"  >
+
+                                <input type="text" name="keyword1" id="s" placeholder="Nhập từ khóa tìm kiếm tại đây!">
+                                <a id="sm-s"  onclick="document.getElementById('search-form').submit(); return false;" style="cursor: pointer" class="btn-search23">Tìm kiếm</a>
+
+                                  </form>
+                                  @endauth
+                            @endif
+
 
                         </div>
 
