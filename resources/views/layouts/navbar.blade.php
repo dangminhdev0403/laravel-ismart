@@ -6,12 +6,12 @@
         <ul class="list-item">
             @foreach ($categories as $category )
             <li>
-                <a href="{{ route('getProductByCategory',$category->slug) }}" title="">{{ $category-> name }}</a>
+                <a class="headline"  href="{{ route('getProductByCategory',$category->slug) }}" title="">{{ $category-> name }}</a>
 
             </li>
 
             @endforeach
-           
+
 
 
         </ul>

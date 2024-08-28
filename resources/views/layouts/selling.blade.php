@@ -15,7 +15,7 @@
              $t++
              @endphp
 
-            <li class="clearfix">
+            <li class="clearfix widget">
                 <a href="{{ route('detailProduct', $product->id) }}" title="" class="thumb fl-left">
                     <img src="{{ asset($product->images[0]->image_name) }}" alt="">
                 </a>
@@ -38,9 +38,9 @@
 
                 </div>
             </li>
-            @if ($t>25)
+            {{-- @if ($t>25)
             @break
-            @endif
+            @endif --}}
 
             @endforeach
 
@@ -48,3 +48,9 @@
         </ul>
     </div>
 </div>
+@push('scripts')
+<script>
+
+   ScrollReveal().reveal('.list-item" .widget', { container: '.list-item"' });
+</script>
+@endpush

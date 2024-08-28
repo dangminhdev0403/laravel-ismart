@@ -30,6 +30,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
+    <script src="https://unpkg.com/scrollreveal@4"></script>
+    <script>
+        ScrollReveal({ reset: true });
+    </script>
     <style>
         .list-item {
             padding: 0;
@@ -678,6 +682,14 @@
             info.textContent = "Trình duyệt của bạn không hỗ trợ nhận diện giọng nói";
         }
     </script>
+    <script>
+
+        ScrollReveal().reveal('.headline', { duration: 2000 });
+        ScrollReveal().reveal('.widget1', { interval: 100 });
+        ScrollReveal().reveal('.widget', { interval: 100 });
+        ScrollReveal().reveal('#list-product-wp .widget1', { container: '#list-product-wp'});
+
+      </script>
     @stack('scripts')
 </body>
 

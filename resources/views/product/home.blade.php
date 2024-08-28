@@ -1,5 +1,6 @@
 @extends('layouts.home')
 @section('title', 'ISMART STORE')
+
 @section('content')
     <div id="main-content-wp" class="home-page clearfix">
         <div class="wp-inner">
@@ -119,14 +120,14 @@
                         <div class="section" id="list-product-wp">
                             <div class="section-head" style="display: flex  justify-content: space-between;">
 
-                                <h3 class="section-title">{{ $category->name }}</h3>
+                                <h3 class="section-title headline">{{ $category->name }}</h3>
                                 <a href="{{ route('getProductByCategory', $category->slug) }}"
-                                    style="float: right; color: rgb(205, 10, 114) ;"> <u>xem thêm</u></a>
+                                    style="float: right; color: rgb(205, 10, 114) ;" class="headline"> <u>xem thêm</u></a>
 
 
                             </div>
-                            <div class="section-detail">
-                                <ul class="list-item clearfix">
+                            <div class="section-detail ">
+                                <ul class="list-item clearfix  ">
                                     @php
                                         $t = 0;
                                     @endphp
@@ -134,7 +135,7 @@
                                         @php
                                             $t++;
                                         @endphp
-                                        <li style="  padding:   10px 10px 7px;">
+                                        <li style="  padding:   10px 10px 7px;" class="widget1">
                                             <a href="{{ route('detailProduct', $product->id) }}" title=""
                                                 class="thumb">
                                                 <img
@@ -177,14 +178,14 @@
                     <div class="section-head">
                         <h3 class="section-title">Từ khoá cho {{ $keyword }}</h3>
                     </div>
-                    <div class="section-detail">
+                    <div class="section-detail ">
                         <ul class="list-item clearfix">
                             @if ($products->isEmpty())
                             <h4 class="alert  text-danger text-center"> Không có sản phẩm</h4>
                             @endif
                             @foreach ($products as $product)
 
-                                <li style="  padding:   10px 10px 7px;">
+                                <li style="  padding:   10px 10px 7px;" class="widget1" >
                                     <a href="{{ route('detailProduct', $product->id) }}" title=""
                                         class="thumb">
                                         <img
@@ -343,5 +344,6 @@
             info.textContent = "Trình duyệt của bạn không hỗ trợ nhận diện giọng nói";
         }
 </script>
+
 
 @endpush

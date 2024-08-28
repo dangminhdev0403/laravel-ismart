@@ -40,7 +40,7 @@ class HomeController extends Controller
         $category_id = Category::where('slug',$slug)->value('id');
         $category_name = Category::where('slug',$slug)->value('name');
 
-        $products = Product::where('category_id','=',$category_id)->orderBy('created_at', 'desc')->paginate(9);
+        $products = Product::where('category_id','=',$category_id)->orderBy('created_at', 'desc')->get();
 
         return view('product.productsByCategory',compact('products','categories','category_name'));
 

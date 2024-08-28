@@ -26,7 +26,7 @@
             <div class="main-content fl-right">
                 <div class="section" id="list-product-wp">
                     <div class="section-head clearfix">
-                        <h3 class="section-title fl-left">{{  $category_name }}</h3>
+                        <h3 class="section-title fl-left headline">{{  $category_name }}</h3>
                         <div class="filter-wp fl-right">
                             <p class="desc">Hiển thị 45 trên 50 sản phẩm</p>
                             <div class="form-filter">
@@ -45,11 +45,11 @@
                     </div>
                     <div class="section-detail">
                         <ul class="list-item clearfix">
-                            @if ($products->total() < 1 )
-                                <p class="alert alert-danger text-center">Không có sản phẩm nào trong danh mục này</p>
-                            @else
+                            @if ($products->isEmpty())
+                            <p class="alert alert-danger text-center">Không có sản phẩm nào trong danh mục này</p>
+                        @else
                             @foreach ($products as $product)
-                            <li style="height: 274px; width: 239.133px;">
+                            <li style="height: 274px; width: 239.133px;" class="widget1">
                                 <a href="{{ route('detailProduct', $product->id) }}" title="" class="thumb">
                                     <img src="{{ asset($product->images[0]->image_name) }}" style="width: 139px; height: 145px; ">
                                 </a>
@@ -77,11 +77,11 @@
                         </ul>
                     </div>
                 </div>
-                <div class="section" id="paging-wp">
+                {{-- <div class="section" id="paging-wp">
                     <div class="section-detail">
-                        {{ $products->links() }}
+
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="sidebar fl-left">
                 @include('layouts.navbar')
