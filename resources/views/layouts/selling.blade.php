@@ -1,15 +1,18 @@
 <div class="section" id="selling-wp">
     <div class="section-head">
-        <h3 class="section-title">Sản phẩm bán chạy</h3>
+        <h3 class="section-title">Sản phẩm nổi bật</h3>
     </div>
     <div class="section-detail">
         <ul class="list-item">
             @php
                 $t = 0
             @endphp
+             @if ($products->isEmpty())
+             <h5 class="alert  text-danger"> Không có sản phẩm</h5>
+             @endif
             @foreach ($products as $product )
              @php
-            $t++
+             $t++
              @endphp
 
             <li class="clearfix">
@@ -35,9 +38,10 @@
 
                 </div>
             </li>
-            @if ($t>18)
+            @if ($t>25)
             @break
-             @endif
+            @endif
+
             @endforeach
 
 

@@ -10,27 +10,27 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-        public function home(Request $request){
+    public function home(Request $request){
 
-            $keyword = $request->keyword;
+        $keyword = $request->keyword1;
 
-        $categories = Category::orderBy('order', 'asc')
-        ->orderBy('created_at', 'asc')
-        ->get();
+    $categories = Category::orderBy('order', 'asc')
+    ->orderBy('created_at', 'asc')
+    ->get();
 
-        // dd($keyword);
-        if($keyword){
-            $products = Product::where('name','like','%'.$keyword.'%')->orderBy('created_at' , 'desc')->paginate(15);
-        }else{
-            $products = Product::orderBy('created_at' , 'desc')->paginate(15);
-        }
-
-       // $products_sold = Product::select('total_sold')->orderBy('created_at','desc')->paginate(6);
-        //  dd($products_sold);
-
-        //dd($products);
-        return view('product.home',compact('products','categories'));
+    // dd($keyword);
+    if($keyword){
+        $products = Product::where('name','like','%'.$keyword.'%')->orderBy('created_at' , 'desc')->get();
+    }else{
+        $products = Product::orderBy('created_at' , 'desc')->get();
     }
+
+   // $products_sold = Product::select('total_sold')->orderBy('created_at','desc')->paginate(6);
+    //  dd($products_sold);
+
+    //dd($products);
+    return view('product.home',compact('products','categories','keyword'));
+}
 
     public function getProductByCategory($slug){
         $categories = Category::orderBy('order', 'asc')

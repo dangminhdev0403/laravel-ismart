@@ -308,15 +308,13 @@
 
                           <div id="search-wp" class="fl-left">
 
-                           <div id="search-form" >
-                                <form action="#" >
+                            <div  id="search-form" >
 
-                                    <input type="text" name="keyword1" id="s" placeholder="Nhập từ khóa tìm kiếm tại đây!">
-                                    <a id="sm-s"  onclick="document.getElementById('search-form').submit(); return false;" style="cursor: pointer" class="btn-search23">Tìm kiếm</a>
+                                <input type="text" name="keyword1" id="s" placeholder="Nhập từ khóa tìm kiếm tại đây!">
+                                <a id="sm-s"  onclick="document.getElementById('search-form').submit(); return false;" style="cursor: pointer" class="btn-search23">Tìm kiếm</a>
 
-                                </form>
+                            </div>
 
-                           </div>
 
                         </div>
 

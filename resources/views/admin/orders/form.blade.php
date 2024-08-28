@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Trở về</button>
+                        <a href="{{ url()->previous() }}" class="btn btn-primary">Trở về</a>
                     </div>
                 </div>
             </div>
