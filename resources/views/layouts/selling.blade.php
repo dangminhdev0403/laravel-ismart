@@ -1,4 +1,4 @@
-<div class="section" id="selling-wp">
+<div class="section heading-left-lv2" id="selling-wp">
     <div class="section-head">
         <h3 class="section-title">Sản phẩm nổi bật</h3>
     </div>
@@ -38,9 +38,12 @@
 
                 </div>
             </li>
-            {{-- @if ($t>25)
+
+            @if ( $t== $totalProduct+3 )
             @break
-            @endif --}}
+
+
+            @endif
 
             @endforeach
 

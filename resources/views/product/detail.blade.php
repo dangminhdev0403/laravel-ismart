@@ -47,7 +47,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="main-content fl-right">
+            <div class="main-content fl-right heading-right">
                 <div class="section" id="detail-product-wp">
                     <div class="section-detail clearfix">
                         <div class="thumb-wp fl-left">
@@ -57,18 +57,18 @@
 
                             <div id="list-thumb" class="zoom-gallery">
 
-                              
+
                             </div>
                         </div>
                         <div class="thumb-respon-wp fl-left">
                             <img src="{{ asset('public/images/img-pro-01.png') }}" alt="">
                         </div>
-                        <div class="info fl-right">
+                        <div class="info fl-right heading-right-lv2">
                             <h3 class="product-name">{{ $product->name }}</h3>
-                            <div class="desc">
+                            <div class="desc heading-right-lv3 ">
                                 {!! $product->description !!}
                             </div>
-                            <div class="num-product">
+                            <div class="num-product  heading-right-lv3">
                                 <span class="title">Tình trạng: </span>
                                 @if ($product->quantity == 0)
                                     <span class="status">Hết hàng</span>
@@ -82,22 +82,22 @@
                             </div>
 
                             @if ($product->sale_price > 0)
-                                <p class="price">{{ number_format($product->sale_price, 0, '', '.') }}đ</p>
+                                <p class="price  heading-right-lv3">{{ number_format($product->sale_price, 0, '', '.') }}đ</p>
                             @else
-                                <p class="price">{{ number_format($product->price, 0, '', '.') }}đ</p>
+                                <p class="price  heading-right-lv3">{{ number_format($product->price, 0, '', '.') }}đ</p>
                             @endif
                             <form method="post" action="{{ route('cart.add', $product->id) }}" id="formCart">
                                 @csrf
-                                <div id="num-order-wp">
+                                <div id="num-order-wp ">
                                     <a title="" id="minus"><i class="fa fa-minus"></i></a>
 
                                     <input type="text" name="quantity" value="1" min="1" max="{{ $product->quantity }}"id="num-order">
                                     <a title="" id="plus"><i class="fa fa-plus"></i></a>
                                 </div>
                                 @if ($product->quantity > 0)
-                                <a href="#" title="Thêm giỏ hàng" class="add-cart" onClick="submitForm(event)">Thêm
+                                <a href="#" title="Thêm giỏ hàng" class="add-cart  heading-right-lv3 " onClick="submitForm(event)">Thêm
                                     giỏ hàng</a>
-                                <a href="#" title="Thêm giỏ hàng" class="add-cart buy-now" onclick="submitForm2()">Mua
+                                <a href="#" title="Thêm giỏ hàng" class="add-cart buy-now  heading-right-lv3" onclick="submitForm2()">Mua
                                     ngay</a>
                                 @else
                                     <h4 class="alert alert-danger text-center">Đã hết hàng</h4>
@@ -245,5 +245,16 @@
         }
 
 
+    </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        ScrollReveal().reveal('.headline-left', {
+            origin: 'left',
+            distance: '200px',
+            duration: 800,
+            easing: 'ease-in-out',
+            interval: 1000,
+        });
+    });
     </script>
 @endpush

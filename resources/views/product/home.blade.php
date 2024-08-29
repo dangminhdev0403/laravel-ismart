@@ -91,7 +91,7 @@
                                     </a>
                                     <a href="{{ route('detailProduct', $product->id) }}" title=""
                                         class="product-name">{{ $product->name }} </a>
-                                    @if (strlen($product->name) < 24)
+                                    @if (strlen($product->name) < 27)
                                         <div style="height: 19px"></div>
                                     @endif
                                     <div class="price">
@@ -115,8 +115,18 @@
 
             </div>
 
+            @php
+
+                $totalProduct = 0;
+                $time = 0;
+
+            @endphp
                 @foreach ($categories as $category)
+
                     @unless ($category->products->Isempty())
+                    @php
+                    $time++
+                    @endphp
                         <div class="section" id="list-product-wp">
                             <div class="section-head" style="display: flex  justify-content: space-between;">
 
@@ -143,7 +153,7 @@
                                             </a>
                                             <a href="{{ route('detailProduct', $product->id) }}" title=""
                                                 class="product-name">{{ $product->name }} </a>
-                                            @if (strlen($product->name) < 24)
+                                            @if (strlen($product->name) < 27)
                                                 <div style="height: 19px"></div>
                                             @endif
                                             <div class="price">
@@ -160,6 +170,7 @@
 
                                         </li>
                                         @if ($t == 8)
+
                                         @break
                                     @endif
                                 @endforeach
@@ -170,9 +181,16 @@
                     </div>
                 @endunless
             @endforeach
+            @php
+            $totalProduct = $t * $time ;
+           @endphp
 
 
                 @else
+                @php
+
+                $totalProduct=0 ;
+               @endphp
                 <div class="section" id="list-product-wp">
 
                     <div class="section-head">
@@ -184,7 +202,10 @@
                             <h4 class="alert  text-danger text-center"> Không có sản phẩm</h4>
                             @endif
                             @foreach ($products as $product)
+                            @php
 
+                            $totalProduct++ ;
+                           @endphp
                                 <li style="  padding:   10px 10px 7px;" class="widget1" >
                                     <a href="{{ route('detailProduct', $product->id) }}" title=""
                                         class="thumb">
@@ -193,7 +214,7 @@
                                     </a>
                                     <a href="{{ route('detailProduct', $product->id) }}" title=""
                                         class="product-name">{{ $product->name }} </a>
-                                    @if (strlen($product->name) < 24)
+                                    @if (strlen($product->name) < 27)
                                         <div style="height: 19px"></div>
                                     @endif
                                     <div class="price">
@@ -345,16 +366,6 @@
         }
 </script>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    ScrollReveal().reveal('.widget2', {
-        origin: 'bottom',
-        distance: '20px',
-        duration: 600,
-        easing: 'ease-in-out',
-        interval: 100,
-    });
-});
-</script>
+
 
 @endpush

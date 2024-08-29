@@ -1,4 +1,4 @@
-<div class="section" id="category-product-wp">
+<div class="section heading-left" id="category-product-wp">
     <div class="section-head">
         <h3 class="section-title">Danh mục sản phẩm</h3>
     </div>
