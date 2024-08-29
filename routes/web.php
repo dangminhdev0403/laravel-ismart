@@ -150,6 +150,8 @@ Route::middleware('auth','verifed-email')->controller(DetailOrderController::cla
 
 });
 
+// routes/web.php
+Route::get('/autocomplete', [HomeController::class, 'autocomplete'])->name('autocomplete');
 
 
 require __DIR__ . '/auth.php';

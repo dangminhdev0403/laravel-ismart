@@ -5,13 +5,13 @@
     <title>@yield('title')</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/smoothness/jquery-ui.css">
     <link href="{{ asset('product/public/css/bootstrap/bootstrap-theme.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('product/public/css/bootstrap/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('product/public/reset.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('product/public/css/carousel/owl.carousel.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('product/public/css/carousel/owl.theme.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('product/public/css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"
-        type="text/css" />
+    <link href="{{ asset('product/public/css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"type="text/css" />
     <link href="{{ asset('product/public/style.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('product/public/responsive.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -316,7 +316,7 @@
                             <div id="search-form" >
                                 <form action="#"  >
 
-                                    <input type="text" name="keyword1" id="s" placeholder="Nhập từ khóa tìm kiếm tại đây!">
+                                    <input type="text" name="keyword1" id="s" class="btn-search123" placeholder="Nhập từ khóa tìm kiếm tại đây!">
                                     <a id="sm-s"  onclick="document.getElementById('search-form').submit(); return false;" style="cursor: pointer" class="btn-search23">Tìm kiếm</a>
 
                                 </form>
@@ -684,13 +684,45 @@
     </script>
     <script>
 
-        ScrollReveal().reveal('.headline', { duration: 2000,container: '#list-product-wp' });
+ScrollReveal().reveal('.headline', { duration: 2000,container: '#list-product-wp' });
         ScrollReveal().reveal('.headline', { duration: 2000 });
         ScrollReveal().reveal('.widget1', { interval: 100 });
         ScrollReveal().reveal('.widget', { interval: 100 });
-        ScrollReveal().reveal('#list-product-wp .widget1', { container: '#list-product-wp'});
+        ScrollReveal().reveal('#list-product-wp .widget1', {container: '#list-product-wp'});
+
 
       </script>
+     <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <script>
+    $(function() {
+    $(".btn-search123").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: "{{ route('autocomplete') }}",
+                data: {
+                    query: request.term
+                },
+                success: function(data) {
+                    response($.map(data, function(item) {
+                        return {
+                            label: item.name,
+                            value: item.name,
+                            id: item.id
+                        };
+                    }));
+                }
+            });
+        },
+        minLength: 2,
+        select: function(event, ui) {
+            // Có thể xử lý thêm khi người dùng chọn sản phẩm từ danh sách gợi ý
+            console.log("Selected product ID: " + ui.item.id);
+        }
+    });
+});
+
+</script>
+    </script>
     @stack('scripts')
 </body>
 

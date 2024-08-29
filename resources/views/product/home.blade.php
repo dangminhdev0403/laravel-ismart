@@ -68,7 +68,7 @@
                     <div class="section-head">
                         <h3 class="section-title">Sản phẩm mới nhất</h3>
                     </div>
-                    <div class="section-detail">
+                    <div class="section-detail" >
 
                         @if ($products->isEmpty())
                             <h3 class="text-danger  text-center">Không có sản phẩm nào trong danh mục này</h3>
@@ -84,7 +84,7 @@
                                 @php
                                     $count1++;
                                 @endphp --}}
-                                <li style="  padding:   10px 10px 7px;">
+                                <li style="  padding:   10px 10px 7px;" class="">
                                     <a href="{{ route('detailProduct', $product->id) }}" title="" class="thumb">
                                         <img
                                             src="{{ asset($product->images[0]->image_name) }}"style="width: 133px ; height: 133px; object-fit: cover; padding:0px 0px 0px 23px;">
@@ -126,8 +126,8 @@
 
 
                             </div>
-                            <div class="section-detail ">
-                                <ul class="list-item clearfix  ">
+                            <div class="section-detail">
+                                <ul class="list-item clearfix widget-list1">
                                     @php
                                         $t = 0;
                                     @endphp
@@ -135,7 +135,7 @@
                                         @php
                                             $t++;
                                         @endphp
-                                        <li style="  padding:   10px 10px 7px;" class="widget1">
+                                        <li style="  padding:   10px 10px 7px;" class="widget2">
                                             <a href="{{ route('detailProduct', $product->id) }}" title=""
                                                 class="thumb">
                                                 <img
@@ -179,7 +179,7 @@
                         <h3 class="section-title headline">Từ khoá cho {{ $keyword }}</h3>
                     </div>
                     <div class="section-detail ">
-                        <ul class="list-item clearfix">
+                        <ul class="list-item clearfix widget-list">
                             @if ($products->isEmpty())
                             <h4 class="alert  text-danger text-center"> Không có sản phẩm</h4>
                             @endif
@@ -345,5 +345,16 @@
         }
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    ScrollReveal().reveal('.widget2', {
+        origin: 'bottom',
+        distance: '20px',
+        duration: 600,
+        easing: 'ease-in-out',
+        interval: 100,
+    });
+});
+</script>
 
 @endpush

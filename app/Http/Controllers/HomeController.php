@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+    public function autocomplete(Request $request)
+    {
+        $query = $request->get('query');
+        $products = Product::where('name', 'LIKE', "%{$query}%")->get();
+
+        return response()->json($products);
+    }
+
     public function home(Request $request){
 
         $keyword = $request->keyword1;
