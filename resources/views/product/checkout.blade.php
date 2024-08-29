@@ -17,6 +17,7 @@
                 </div>
             </div>
         </div>
+      
 
         <div id="wrapper" class="wp-inner clearfix">
             <div class="section" id="customer-info-wp">
