@@ -136,6 +136,10 @@
                                             style="width: 133px ; height: 133px; object-fit: cover;">
                                     </a>
                                     <a href="{{ route('detailProduct', $product_same->id) }}" title="" class="product-name">{{ $product_same->name }}</a>
+                                    @if (strlen($product_same->name) < 25 )
+                                        <div style="height: 19px"></div>
+                                    @endif
+
                                     <div class="price">
 
                                         @if ($product->sale_price > 0)
@@ -151,6 +155,7 @@
 
 
                                     </div>
+
 
                                 </li>
                             @endforeach
