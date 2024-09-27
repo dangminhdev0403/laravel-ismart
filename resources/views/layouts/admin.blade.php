@@ -13,6 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="{{ asset('admin/css/styles.css') }}" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    {{-- <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" /> --}}
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -24,6 +25,8 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     {{-- TinyCME --}}
     <script src="https://cdn.tiny.cloud/1/tvilg3hpnwujo4kchvbhw5j17e6g7cytu1y4fxqp7qwfachz/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    {{-- <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script> --}}
+
 
     <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
 

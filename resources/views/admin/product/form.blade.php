@@ -15,10 +15,10 @@
                         <div class="form-group">
                             <label for="name">Tên Sản phẩm</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                value="{{ old('name',isset($product) ? $product->name : 0 )}}">
+                                value="{{ old('name', isset($product) ? $product->name : 0) }}">
 
 
-                                @error('name')
+                            @error('name')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
@@ -26,43 +26,43 @@
                         <div class="form-group">
 
                             <label for="images">Hình ảnh Sản phẩm</label>
-                            <input type="file" class="form-control" id="images" name="images[]" style="width: 291px;"
-                                multiple>
-
+                            <input type="file" class="form-control filepond" id="images" name="images[]"
+                                style="width: 291px;" multiple>
+                            <div id="imagePreview"></div>
                             @if (isset($product))
                                 @foreach ($images as $image)
                                     <img src="{{ asset($image->image_name) }}" alt="" srcset="" width="100px"
-                                        style="margin: 20px 0">
+                                        class="listImage" style="margin: 20px 0">
                                 @endforeach
                             @endif
                             @error('images')
-                            <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                        @foreach ($errors->get('images.*') as $key => $messages)
-                            @foreach ($messages as $message)
                                 <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                            @foreach ($errors->get('images.*') as $key => $messages)
+                                @foreach ($messages as $message)
+                                    <p class="text-danger">{{ $message }}</p>
+                                @endforeach
                             @endforeach
-                        @endforeach
                         </div>
 
                         <div class="form-group">
                             <label for="price">Giá Sản phẩm(Gốc)</label>
                             <input type="text" class="form-control" id="price" name="price"
-                                value="{{ old('price',isset($product) ? $product->price : 0 )}} ">
-                                @error('price')
+                                value="{{ old('price', isset($product) ? $product->price : 0) }} ">
+                            @error('price')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="price">Giá Sản phẩm(Đã giảm)</label>
                             <input type="text" class="form-control" id="sale_price" name="sale_price"
-                                value="{{ old('sale_price',isset($product) ? $product->sale_price : 0 )}}   ">
+                                value="{{ old('sale_price', isset($product) ? $product->sale_price : 0) }}   ">
                         </div>
                         <div class="form-group">
                             <label for="price">Số lượng:</label>
                             <input type="text" class="form-control" id="quantity" name="quantity"
-                                value="{{ old('quantity', isset($product) ? $product->quantity : 0 )}}  ">
-                                @error('quantity')
+                                value="{{ old('quantity', isset($product) ? $product->quantity : 0) }}  ">
+                            @error('quantity')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
@@ -72,32 +72,32 @@
                                 <option value="" selected disabled hidden>-- Chọn danh mục --</option>
                                 @foreach ($category as $row)
                                     <option value="{{ $row->id }}"
-                                        {{ old('category_id',isset($product) ? ($product->category_id == $row->id ? 'selected' : '') : '') }}>
+                                        {{ old('category_id', isset($product) ? ($product->category_id == $row->id ? 'selected' : '') : '') }}>
                                         {{ $row->name }}</option>
                                 @endforeach
                             </select>
                             @error('category_id')
-                            <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         {{-- Mô tả --}}
                         <div class="form-group">
                             <label for="description">Mô tả</label>
                             <textarea name="description" id="description1" cols="30" rows="10">
-                           {{ old('description',isset($product) ? $product->description : '' )}} </textarea>
-                           @error('description')
-                           <p class="text-danger">{{ $message }}</p>
-                       @enderror
+                           {{ old('description', isset($product) ? $product->description : '') }} </textarea>
+                            @error('description')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                         {{-- Nọi dung --}}
                         <div class="form-group">
                             <label for="content"> Chi tiết</label>
                             <textarea name="content" id="content1" cols="30" rows="10">
-                            {{ old('content',isset($product) ? $product->content : '') }}</textarea>
+                            {{ old('content', isset($product) ? $product->content : '') }}</textarea>
                             @error('content')
-                            <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
 
 
@@ -141,6 +141,32 @@
                 'alignright alignjustify | bullist numlist outdent indent | ' +
                 'removeformat | help',
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+        });
+    </script>
+    <script>
+        document.getElementById('images').addEventListener('change', function(event) {
+            let imagePreview = document.getElementById('imagePreview');
+            imagePreview.innerHTML = ''; // Xóa nội dung cũ nếu có
+
+            let files = event.target.files; // Lấy danh sách file đã chọn
+            if (files) {
+
+                for (let i = 0; i < files.length; i++) {
+                    let listImage = document.querySelectorAll('.listImage');
+                    let file = files[i];
+                    let reader = new FileReader();
+                    listImage.forEach(image => image.remove());
+                    reader.onload = function(e) {
+                        let img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.style.maxWidth = '200px'; // Thiết lập kích thước ảnh
+                        img.style.margin = '10px';
+                        imagePreview.appendChild(img);
+                    }
+
+                    reader.readAsDataURL(file); // Đọc file dưới dạng URL
+                }
+            }
         });
     </script>
 @endpush

@@ -31,9 +31,9 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <script src="https://unpkg.com/scrollreveal@4"></script>
-    <script>
+    {{-- <script>
         ScrollReveal({ reset: true });
-    </script>
+    </script> --}}
     <style>
         .list-item {
             padding: 0;

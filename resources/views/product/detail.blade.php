@@ -1,6 +1,7 @@
 @section('title', 'Chi Tiết Sản Phẩm')
 @extends('layouts.home')
 @push('style')
+
 <style>
     .description {
         overflow: hidden;
@@ -252,6 +253,10 @@
 
     </script>
   <script>
+    // Kiểm tra nếu hiệu ứng đã được hiển thị
+if (!sessionStorage.getItem('effectShown')) {
+    // Gọi hàm hiển thị hiệu ứng của bạn ở đây
+
     document.addEventListener('DOMContentLoaded', function() {
         ScrollReveal().reveal('.headline-left', {
             origin: 'left',
@@ -261,5 +266,17 @@
             interval: 1000,
         });
     });
+
+    showEffect();
+
+    // Đánh dấu là hiệu ứng đã hiển thị
+    sessionStorage.setItem('effectShown', 'true');
+}
+
+function showEffect() {
+    // Code để hiển thị hiệu ứng của bạn
+    console.log("Hiệu ứng xuất hiện!");
+}
+
     </script>
 @endpush

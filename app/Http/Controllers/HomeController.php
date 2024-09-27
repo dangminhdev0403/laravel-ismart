@@ -13,7 +13,7 @@ class HomeController extends Controller
     public function autocomplete(Request $request)
     {
         $query = $request->get('query');
-        $products = Product::where('name', 'LIKE', "%{$query}%")->get();
+        $products = Product::where('name', 'LIKE', "%{$query}%")->limit(10)->get();
 
         return response()->json($products);
     }

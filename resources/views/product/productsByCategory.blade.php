@@ -49,7 +49,7 @@
                             <p class="alert alert-danger text-center">Không có sản phẩm nào trong danh mục này</p>
                         @else
                             @foreach ($products as $product)
-                            <li style="height: 274px; width: 239.133px;" class="widget1">
+                            <li style="height: 274px; width: 239.133px;" class="widget2">
                                 <a href="{{ route('detailProduct', $product->id) }}" title="" class="thumb">
                                     <img src="{{ asset($product->images[0]->image_name) }}" style="width: 139px; height: 145px; ">
                                 </a>
