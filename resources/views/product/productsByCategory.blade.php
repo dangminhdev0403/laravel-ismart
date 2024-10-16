@@ -1,11 +1,11 @@
 @extends('layouts.home')
 @section('title', 'Trang sản phẩm')
-@push('style')
-
-<style>
-
-</style>
-
+@push('ScrollReveal')
+    <script>
+        ScrollReveal({
+            reset: true
+        });
+    </script>
 @endpush
 @section('content')
     <div id="main-content-wp" class="clearfix category-product-page">
@@ -18,7 +18,7 @@
                         </li>
 
                         <li>
-                            <a href="" title="">{{  $category_name }}</a>
+                            <a href="" title="">{{ $category_name }}</a>
                         </li>
                     </ul>
                 </div>
@@ -26,17 +26,19 @@
             <div class="main-content fl-right">
                 <div class="section" id="list-product-wp">
                     <div class="section-head clearfix">
-                        <h3 class="section-title fl-left headline">{{  $category_name }}</h3>
+                        <h3 class="section-title fl-left headline">{{ $category_name }}</h3>
                         <div class="filter-wp fl-right">
-                            <p class="desc">Hiển thị 45 trên 50 sản phẩm</p>
+                            <p class="desc"> </p>
                             <div class="form-filter">
-                                <form method="POST" action="">
+                                <form method="get" action="{{ url()->current() }}">
+                                    @csrf
                                     <select name="select">
-                                        <option value="0">Sắp xếp</option>
-                                        <option value="1">Từ A-Z</option>
-                                        <option value="2">Từ Z-A</option>
-                                        <option value="3">Giá cao xuống thấp</option>
-                                        <option value="3">Giá thấp lên cao</option>
+                                        <option value="0" {{ $select == null ? 'selected' : '' }}>Sắp xếp</option>
+                                        <option value="1" {{ $select == 1 ? 'selected' : '' }}>Từ A-Z</option>
+                                        <option value="2" {{ $select == 2 ? 'selected' : '' }}>Từ Z-A</option>
+                                        <option value="3" {{ $select == 3 ? 'selected' : '' }}>Giá cao xuống thấp
+                                        </option>
+                                        <option value="3" {{ $select == 4 ? 'selected' : '' }}>Giá thấp lên cao</option>
                                     </select>
                                     <button type="submit">Lọc</button>
                                 </form>
@@ -46,31 +48,34 @@
                     <div class="section-detail">
                         <ul class="list-item clearfix">
                             @if ($products->isEmpty())
-                            <p class="alert alert-danger text-center">Không có sản phẩm nào trong danh mục này</p>
-                        @else
-                            @foreach ($products as $product)
-                            <li style="height: 274px; width: 239.133px;" class="widget2">
-                                <a href="{{ route('detailProduct', $product->id) }}" title="" class="thumb">
-                                    <img src="{{ asset($product->images[0]->image_name) }}" style="width: 139px; height: 145px; ">
-                                </a>
-                                <a href="{{ route('detailProduct', $product->id) }}" title=""
-                                    class="product-name">{{ $product->name }}
-                                </a>
-                                <div class="price">
+                                <p class="alert alert-danger text-center">Không có sản phẩm nào trong danh mục này</p>
+                            @else
+                                @foreach ($products as $product)
+                                    <li style="height: 274px; width: 239.133px;" class="widget2">
+                                        <a href="{{ route('detailProduct', $product->id) }}" title="" class="thumb">
+                                            <img src="{{ asset($product->images[0]->image_name) }}"
+                                                style="width: 139px; height: 145px; ">
+                                        </a>
+                                        <a href="{{ route('detailProduct', $product->id) }}" title=""
+                                            class="product-name">{{ $product->name }}
+                                        </a>
+                                        <div class="price">
 
-                                    @if ($product->sale_price > 0)
-                                        <span class="new">{{ number_format($product->sale_price, 0, '', '.') }}
-                                            đ</span>
-                                        <span class="old">{{ number_format($product->price, 0, '', '.') }} đ</span>
-                                    @else
-                                        <span class="new"> {{ number_format($product->price, 0, '', '.') }} đ</span>
-                                    @endif
+                                            @if ($product->sale_price > 0)
+                                                <span class="new">{{ number_format($product->sale_price, 0, '', '.') }}
+                                                    đ</span>
+                                                <span class="old">{{ number_format($product->price, 0, '', '.') }}
+                                                    đ</span>
+                                            @else
+                                                <span class="new"> {{ number_format($product->price, 0, '', '.') }}
+                                                    đ</span>
+                                            @endif
 
 
-                                </div>
+                                        </div>
 
-                            </li>
-                        @endforeach
+                                    </li>
+                                @endforeach
                             @endif
 
 
@@ -184,3 +189,6 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script></script>
+@endpush

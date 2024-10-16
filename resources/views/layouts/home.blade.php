@@ -34,6 +34,7 @@
     {{-- <script>
         ScrollReveal({ reset: true });
     </script> --}}
+    @stack('ScrollReveal')
     <style>
         .list-item {
             padding: 0;
@@ -370,7 +371,7 @@
                                             <div id="dropdown">
 
                                                 @if (Cart::count() > 0)
-                                                    <ul class="list-cart">
+                                                    <ul class="list-cart d-flex align-items-center justify-content-center">
                                                         @php
                                                             $count = 0;
                                                         @endphp
@@ -421,6 +422,7 @@
                                                                     @endphp
                                                                 </li>
                                                             @else
+
                                                             @break
                                                         @endif
                                                     @endforeach
@@ -446,7 +448,7 @@
                                                         toán</a>
                                                 </div>
                                             @else
-                                                <p class="desc text-center mt-5"><span>  </span>
+                                                <p class="desc text-center mt-5 "><span> Không có sản phẩm </span>
                                                 </p>
                                             @endif
                                          </form>

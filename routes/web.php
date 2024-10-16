@@ -119,11 +119,13 @@ Route::middleware('auth','verified')->prefix('admin')->group(function () {
 Route::controller(HomeController::class)->prefix('/')->middleware('verifed-email')->group(function () {
     Route::get('', 'home')->name('home');
     Route::get('products', 'products')->name('home.products');
-    Route::get('/category/{slug}', 'getProductByCategory')->name('getProductByCategory');
+
     Route::get('/detail/{id}', 'detailProduct')->name('detailProduct');
     Route::get('blog', 'blog')->name('blog');
     Route::get('about', 'about')->name('about');
     Route::get('contact', 'contact')->name('contact');
+      //  Category
+      Route::get('/category/{slug}', 'getProductByCategory')->name('getProductByCategory');
 });
 //Cart
 Route::middleware('auth','verifed-email')->controller(OrderController::class)->prefix('order')->group(function () {
