@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
@@ -43,35 +43,72 @@ class HomeController extends Controller
 
     public function getProductByCategory($slug, Request $request)
     {
+
+        $status = "";
         $categories = Category::orderBy('order', 'asc')
             ->orderBy('created_at', 'asc')
             ->get();
         $category_id = Category::where('slug', $slug)->value('id');
         $category_name = Category::where('slug', $slug)->value('name');
-        $select = $request->input('select');
-        if ($select === null || $select == 0) {
-            $products = Product::where('category_id', '=', $category_id)->orderBy('created_at', 'desc')->get();
+
+
+        $select = $request->input('sort');
+        $price = $request->input('price');
+
+
+
+        $query = Product::where('category_id', '=', $category_id);
+
+        if ($select === null) {
+            // Nếu không có điều kiện sắp xếp
+            $query->orderBy('created_at', 'desc');
         } else {
-            if ($select == 1) {
-
-                $products = Product::where('category_id', '=', $category_id)->orderBy('name', 'asc')->get();
-            } else if ($select == 2) {
-                $products = Product::where('category_id', '=', $category_id)->orderBy('name', 'desc')->get();
-            }else if($select == 3){
-                $products = Product::where('category_id', '=', $category_id)->orderBy('sale_price', 'asc')->get();
-                // dd($products);
-            }else if($select == 4){
-                $products = Product::where('category_id', '=', $category_id)->orderBy('sale_price', 'desc')->get();
-                // dd($products);
-
+            // Sắp xếp theo điều kiện được chọn
+            switch ($select) {
+                case 1:
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 2:
+                    $query->orderBy('name', 'desc');
+                    break;
+                case 3:
+                    $query->orderByRaw('CASE WHEN sale_price = 0 THEN price ELSE sale_price END')->orderBy('sale_price', 'desc');
+                    break;
+                case 4:
+                    $query->orderByRaw('CASE WHEN sale_price = 0 THEN price ELSE sale_price END')->orderBy('sale_price', 'asc');
+                    break;
             }
-            // dd($select);
         }
 
 
+        if ($price === 'null') {
+            $price = null ;
+            $status = "null";
+        }
+        if ($price != null ) {
+
+            $parts = explode('-', $price);
+
+            $status = $parts[0];
+
+            $min = (float)$parts[1] *1000 ;
+            $max = (float)$parts[2] * 1000 ;
+
+            // Chỉ cần gán giá trị tối đa
+            if ($status == "t5") {
+                $max = PHP_INT_MAX; // Không cần sử dụng str_replace
+            }
+
+            $query->whereBetween(DB::raw('CASE WHEN sale_price = 0 THEN price ELSE sale_price END'), [$min, $max]);
+            //             $sql = $query->toSql();
+// dd($sql);
+        }
 
 
-        return view('product.productsByCategory', compact('products', 'categories', 'category_name' ,'select'));
+        // Lấy danh sách sản phẩm thỏa mãn điều kiện
+        $products = $query->get();
+
+        return view('product.productsByCategory', compact('products', 'categories', 'category_name', 'select', 'status'));
     }
 
     public function detailProduct($id)
